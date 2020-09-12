@@ -1,0 +1,48 @@
+{
+  "name": "bunch",
+  "version": "1.0.0",
+  "description": "Social app for creating and joining events",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack --mode development --watch ./index.tsx --output ../../app/assets/javascripts/index.js",
+    "build": "webpack --mode production ./index.tsx --output ../../app/assets/javascripts/index.js",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx ."
+  },
+  "author": "Corona Crew",
+  "license": "ISC",
+  "repository": "https://github.tamu.edu/2020CapstoneFall900/Bunch",
+  "devDependencies": {
+    "@types/classnames": "^2.2.9",
+    "@types/react": "^16.9.8",
+    "@types/react-dom": "^16.9.8",
+    "@typescript-eslint/eslint-plugin": "^2.4.0",
+    "@typescript-eslint/parser": "^2.4.0",
+    "css-loader": "^3.2.0",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-import-resolver-typescript": "^2.0.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.16.0",
+    "eslint-plugin-react-hooks": "^1.7.0",
+    "source-map-loader": "^0.2.4",
+    "style-loader": "^1.0.0",
+    "ts-loader": "^6.2.0",
+    "typescript": "^3.6.4",
+    "typescript-eslint": "0.0.1-alpha.0",
+    "webpack": "^4.41.0",
+    "webpack-cli": "^3.3.9",
+    "webpack-livereload-plugin": "^2.2.0"
+  },
+  "dependencies": {
+    "@reach/router": "^1.2.1",
+    "@types/reach__router": "^1.2.6",
+    "@types/react-redux": "^7.1.5",
+    "react": "^16.10.2",
+    "react-dom": "^16.10.2",
+    "react-redux": "^7.1.1",
+    "redux": "^4.0.4",
+    "redux-thunk": "^2.3.0"
+  }
+}
