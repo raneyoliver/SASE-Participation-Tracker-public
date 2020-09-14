@@ -57,7 +57,7 @@ Run `rails server` and navigate to `localhost:3000` in your browser.
 Run `install bundler` to install new changes made in Gemfile.
 
 ## RuboCop
-RuboCop is a static code analyser and code formatter. It will auto-crrect many of the code offenses it detects.
+RuboCop is a static code analyser and code formatter. It will auto-correct many of the code offenses it detects.
 The gemfile has already been changed to include  `gem 'rubocop', '~> 0.90.0', require: false`
 Run `rubocop` in the root folder
 
@@ -79,6 +79,5 @@ Run `cucumber features/demo.feature` in the root folder to see cucumber in actio
 RSpec is a computer domain-specific language testing tool written in Ruby to test Ruby code.
 The gemfile has already been changed to include `gem "rspec"`
 Run `rspec --init`
-
 
 
