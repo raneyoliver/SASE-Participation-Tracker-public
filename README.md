@@ -51,3 +51,34 @@ If you don't have VS code, you can cd to `frontend/src` and run `npm run dev` (t
 
 # Running the server
 Run `rails server` and navigate to `localhost:3000` in your browser.
+
+
+# Tool Set Up
+Run `install bundler` to install new changes made in Gemfile.
+
+## RuboCop
+RuboCop is a static code analyser and code formatter. It will auto-crrect many of the code offenses it detects.
+The gemfile has already been changed to include  `gem 'rubocop', '~> 0.90.0', require: false`
+Run `rubocop` in the root folder
+
+## SimpleCov
+SimpleCov is a code coverage anaylis took for Ruby.
+The gemfile has already been changed to include `gem 'simplecov', require: false, group: :test`
+To add a file for code coverage do the following:
+Add `require "simplecov"` at the top of the ruby file.
+Add `SimpleCov.start` underneath the require.
+Run `rake test` to generate the html file that has the coverage report.
+
+## Cucumber
+Cucumber is a tool for running automated tests.
+The gemfile has already been changed to include `gem 'cucumber'`
+A features folder has been added to the root directory to include a sample testing for Cucumber.
+Run `cucumber features/demo.feature` in the root folder to see cucumber in action.
+
+## RSpec
+RSpec is a computer domain-specific language testing tool written in Ruby to test Ruby code.
+The gemfile has already been changed to include `gem "rspec"`
+Run `rspec --init`
+
+
+

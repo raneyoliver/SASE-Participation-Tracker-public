@@ -22,6 +22,18 @@ gem 'jbuilder', '~> 2.7'
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
+# RuboCop. Read more: https://github.com/rubocop-hq/rubocop
+gem 'rubocop', '~> 0.90.0', require: false
+
+# RSpec. Read more: https://github.com/rspec/rspec
+gem 'rspec'
+
+# SimpleCov. Read more: https://github.com/simplecov-ruby/simplecov
+gem 'simplecov', require: false, group: :test
+
+# Cucumber. Read more: https://github.com/cucumber/cucumber-ruby
+gem 'cucumber'
+
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
@@ -51,3 +63,5 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # Use dotenv to manage secrets
 gem 'dotenv-rails'
+
+
