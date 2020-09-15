@@ -6,12 +6,13 @@ import { SASEBlue } from '../../theme';
 
 interface CardWithHeaderProps {
   title: string;
+  action?: JSX.Element;
 }
 
-const CardWithHeader: React.FC<CardWithHeaderProps> = ({ title, children }) => (
+const CardWithHeader: React.FC<CardWithHeaderProps> = ({ title, action, children }) => (
   <Card>
     <Box bgcolor={SASEBlue} color="white">
-      <CardHeader title={title} />
+      <CardHeader title={title} action={action} />
     </Box>
     <CardContent>
       {children}

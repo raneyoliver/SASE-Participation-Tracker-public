@@ -1,11 +1,13 @@
 import * as React from 'react';
 import { RouteComponentProps, navigate } from '@reach/router';
 import {
-  Typography, Box, TextField, Button,
+  Box, TextField, Button,
 } from '@material-ui/core';
 import { DateTimePicker } from '@material-ui/pickers';
 import AddIcon from '@material-ui/icons/Add';
 import CardWithHeader from '../CardWithHeader/CardWithHeader';
+import { Event } from '../../types/Event';
+import getCSRFToken from '../../utils/getCSRFToken';
 
 // Format datetimes like the following: 12/31/2020 12:00 PM
 const dateFormat = 'MM/dd/yyyy hh:mm a';
@@ -43,7 +45,24 @@ const CreateEventPage: React.FC<RouteComponentProps> = () => {
 
   const handleSubmit = (): void => {
     if (!formValid) return;
-    console.log(name, description, startTime, endTime);
+    // Form is valid, convert times to UTC format and post
+    const body: Event = {
+      name,
+      description,
+      start_time: startTime.toUTCString(),
+      end_time: endTime.toUTCString(),
+    };
+
+    fetch('/api/events/create', {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+        'X-CSRF-Token': getCSRFToken(),
+      },
+      body: JSON.stringify(body),
+    }).then(() => { // Once request has been processed, go back to homepage
+      navigate('/');
+    });
   };
 
   return (

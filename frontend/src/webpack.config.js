@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const LiveReloadPlugin = require('webpack-livereload-plugin');
-const webpack = require('webpack');
 
 module.exports = {
   mode: 'production',

@@ -70,6 +70,7 @@ module.exports = {
     "@typescript-eslint/no-explicit-any": 0,
     "semi": "off",
     "@typescript-eslint/semi": ["error"],
+    "@typescript-eslint/camelcase": "off",
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
   },
