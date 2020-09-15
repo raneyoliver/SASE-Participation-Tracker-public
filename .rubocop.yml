@@ -1,0 +1,25 @@
+AllCops:
+  NewCops: enable
+  Exclude:
+    - bin/**
+
+Layout/EndOfLine:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/SymbolArray:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/BlockComments:
+  Enabled: false
+
+Style/StderrPuts:
+  Enabled: false
+
+Metrics/MethodLength:
+  Max: 20
