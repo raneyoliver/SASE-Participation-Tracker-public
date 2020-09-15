@@ -30,12 +30,14 @@ const CreateEventPage: React.FC<RouteComponentProps> = () => {
 
   const handleStartTimeChange = (date: Date): void => {
     setStartTime(date);
-    // If end time comes after new start time, set it to an hour afterwards
+    // If end time comes beforenew start time, set it to an hour afterwards to keep valid
     if (date > endTime) setEndTime(new Date(date.valueOf() + 60 * 60 * 1000));
   };
 
   const handleEndTimeChange = (date: Date): void => {
     setEndTime(date);
+    // If start time comes after new end time, set it to an hour before to keep valid
+    if (date < startTime) setStartTime(new Date(date.valueOf() - 60 * 60 * 1000));
   };
 
   // Validate form info to show errors and determine whether to allow submit
