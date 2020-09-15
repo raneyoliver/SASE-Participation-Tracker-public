@@ -31,9 +31,6 @@ gem 'rspec'
 # SimpleCov. Read more: https://github.com/simplecov-ruby/simplecov
 gem 'simplecov', require: false, group: :test
 
-# Cucumber. Read more: https://github.com/cucumber/cucumber-ruby
-gem 'cucumber'
-
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
@@ -51,6 +48,9 @@ group :development do
 end
 
 group :test do
+  # Cucumber. Read more: https://github.com/cucumber/cucumber-ruby
+  gem 'cucumber-rails', require: false
+  gem 'database_cleaner'
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '>= 2.15'
   gem 'selenium-webdriver'

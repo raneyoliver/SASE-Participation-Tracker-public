@@ -17,7 +17,7 @@ const Homepage: React.SFC<RouteComponentProps> = () => {
       <EventCards />
       <Box position="fixed" bottom={8} right={8}>
         <Tooltip title="New Event" placement="left">
-          <Fab color="primary" size="large" onClick={handleFabClick} aria-label="create new event">
+          <Fab id="new-event" color="primary" size="large" onClick={handleFabClick} aria-label="create new event">
             <AddIcon />
           </Fab>
         </Tooltip>

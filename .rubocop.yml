@@ -4,6 +4,7 @@ AllCops:
     - bin/**
     - db/schema.rb
     - db/migrate/**
+    - lib/tasks/**
 
 Layout/EndOfLine:
   Enabled: false

@@ -1,6 +1,3 @@
-require 'simplecov'
-SimpleCov.start
-
 # Controller for api functionality related to events
 class Api::EventsController < ApplicationController
   def list

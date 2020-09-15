@@ -71,11 +71,11 @@ const CreateEventPage: React.FC<RouteComponentProps> = () => {
     <Box margin="auto" width="50%" minWidth={500}>
       <CardWithHeader title="Create New Event">
         <Box paddingBottom={1}>
-          <TextField required error={!name} label="Name" value={name} onChange={handleNameChange} />
+          <TextField id="event-name" required error={!name} label="Name" value={name} onChange={handleNameChange} />
         </Box>
 
         <Box paddingBottom={1}>
-          <TextField multiline fullWidth label="Description" value={description} onChange={handleDescriptionChange} />
+          <TextField id="event-description" multiline fullWidth label="Description" value={description} onChange={handleDescriptionChange} />
         </Box>
 
         <Box paddingBottom={1}>
@@ -86,7 +86,7 @@ const CreateEventPage: React.FC<RouteComponentProps> = () => {
           <DateTimePicker disablePast label="End Time" format={dateFormat} value={endTime} onChange={handleEndTimeChange} />
         </Box>
 
-        <Button variant="contained" color="secondary" disabled={!formValid} startIcon={<AddIcon />} onClick={handleSubmit}>
+        <Button id="submit" variant="contained" color="secondary" disabled={!formValid} startIcon={<AddIcon />} onClick={handleSubmit}>
           Create Event
         </Button>
       </CardWithHeader>
