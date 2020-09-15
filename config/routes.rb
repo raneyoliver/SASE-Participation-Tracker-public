@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
   # API routes are in /api namespace
   namespace :api, defaults: { format: 'json' } do
+    # /api/events
+    resource :events do
+      get 'list'
+      post 'create'
+    end
   end
 
   # Use React to handle all routes outside of API
