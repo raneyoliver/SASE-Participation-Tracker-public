@@ -25,9 +25,6 @@ gem 'jbuilder', '~> 2.7'
 # RuboCop. Read more: https://github.com/rubocop-hq/rubocop
 gem 'rubocop', '~> 0.90.0', require: false
 
-# RSpec. Read more: https://github.com/rspec/rspec
-gem 'rspec'
-
 # SimpleCov. Read more: https://github.com/simplecov-ruby/simplecov
 gem 'simplecov', require: false, group: :test
 
@@ -56,6 +53,9 @@ group :test do
   gem 'selenium-webdriver'
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'
+  # Rspec
+  gem 'rails-controller-testing'
+  gem 'rspec-rails'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

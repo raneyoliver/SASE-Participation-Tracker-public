@@ -15,6 +15,11 @@ module ParticipationTracker
     # Webpack is used for compilation, disable compiling with sprockets
     config.assets.check_precompiled_asset = false
 
+    # Ruby makes test files (not spec files) by default, which we don't need
+    config.generators do |g|
+      g.test_framework = 'rspec'
+    end
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading
