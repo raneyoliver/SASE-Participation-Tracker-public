@@ -24,7 +24,7 @@ POSTGRES_PASSWORD=<your password here>
 This will set environment variables with the `dotenv` gem, which will be loaded in `config/database.yml`.
 
 ## Compiling frontend files
-If you have VS Code, create a `.vscode` folder (if not already present) in the root folder and put the following to set up linting/automatic compilation:
+If you have VS Code, create a `.vscode` folder (if not already present) in the root folder containing a file called `settings.json` with the following content to set up linting/automatic compilation:
 ```json
 {
     "eslint.run": "onSave",
