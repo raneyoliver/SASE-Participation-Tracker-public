@@ -11,9 +11,11 @@ const Homepage: React.SFC<RouteComponentProps> = () => {
 
   return (
     <>
-      <Typography variant="h6">
-        Events
-      </Typography>
+      <Box textAlign="center">
+        <Typography variant="h4">
+          Events
+        </Typography>
+      </Box>
       <EventCards />
       <Box position="fixed" bottom={8} right={8}>
         <Tooltip title="New Event" placement="left">
