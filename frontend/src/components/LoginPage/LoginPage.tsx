@@ -23,17 +23,19 @@ const LoginPage: React.FC<RouteComponentProps> = () => {
   // const startTimeValid = !Number.isNaN(startTime.valueOf());
   // const endTimeValid = !Number.isNaN(startTime.valueOf());
   // TODO: perform validation
-  const formValid = true;//name && startTimeValid && endTimeValid;
+  const formValid = true; //name && startTimeValid && endTimeValid;
 
   const handleLogin = (): void => {
     if (!formValid) return;
     // Form is valid, post
     const body = {
-      username,
-      password,
+      user: {
+        username,
+        password,
+      },
     };
 
-    fetch('/users/sign_in', {
+    fetch('/api/users/sign_in', {
       method: 'POST',
       headers: {
         'Content-type': 'application/json',
@@ -44,37 +46,38 @@ const LoginPage: React.FC<RouteComponentProps> = () => {
       // TODO: handle login logic
     });
 };
-    return (
-        <Box margin="auto" width="50%" minWidth={500}>
-          <CardWithHeader title="Log In">
-            <Box paddingBottom={1}>
-              <TextField id="username" 
-                required error={!name} 
-                label="Username" 
-                value={username} 
-                onChange={handleNameChange} 
-              />
-            </Box>
-    
-            <Box paddingBottom={1}>
-            <TextField 
-              id="standard-password-input" 
-              label="Password" 
-              type="password"
-              value={password} 
-              onChange={handlePasswordChange} autoComplete="current-password"/>
-            </Box>
-            <Button 
-              id="login" 
-              variant="contained" 
-              color="secondary" 
-              disabled={!formValid} 
-              onClick={handleLogin}>
-              Log In
-            </Button>
-          </CardWithHeader>
+
+return (
+    <Box margin="auto" width="50%" minWidth={500}>
+      <CardWithHeader title="Log In">
+        <Box paddingBottom={1}>
+          <TextField id="username" 
+            required error={!name} 
+            label="Username" 
+            value={username} 
+            onChange={handleNameChange} 
+          />
         </Box>
-    );
+
+        <Box paddingBottom={1}>
+        <TextField 
+          id="standard-password-input" 
+          label="Password" 
+          type="password"
+          value={password} 
+          onChange={handlePasswordChange} autoComplete="current-password"/>
+        </Box>
+        <Button 
+          id="login" 
+          variant="contained" 
+          color="secondary" 
+          disabled={!formValid} 
+          onClick={handleLogin}>
+          Log In
+        </Button>
+      </CardWithHeader>
+    </Box>
+  );
 };
 
 export default LoginPage;
