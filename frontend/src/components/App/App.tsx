@@ -6,6 +6,7 @@ import { Router } from '@reach/router';
 import theme from '../../theme';
 import Homepage from '../Homepage/Homepage';
 import NavBar from '../Navbar/Navbar';
+import LoginPage from '../LoginPage/LoginPage'
 import CreateEventPage from '../CreateEventPage/CreateEventPage';
 
 const App: React.SFC = () => (
@@ -16,6 +17,7 @@ const App: React.SFC = () => (
         <Router>
           <Homepage path="/" />
           <CreateEventPage path="/create_event" />
+          <LoginPage path="/Login" />
         </Router>
       </Box>
     </MuiPickersUtilsProvider>
