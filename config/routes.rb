@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, controllers: {
+    registrations: 'api/users/registrations',
+    sessions: 'api/users/sessions'
+  }
   # API routes are in /api namespace
   namespace :api, defaults: { format: 'json' } do
     # /api/events
