@@ -6,6 +6,10 @@ Rails.application.routes.draw do
       get 'list'
       post 'create'
     end
+    
+    resource :attendees do
+      post 'create_form_record_if_attendee_exists'
+    end
   end
 
   # Use React to handle all routes outside of API
