@@ -29,10 +29,8 @@ const LoginPage: React.FC<RouteComponentProps> = () => {
     if (!formValid) return;
     // Form is valid, post
     const body = {
-      user: {
-        username,
-        password,
-      },
+      username,
+      password,
     };
 
     fetch('/api/users/sign_in', {
