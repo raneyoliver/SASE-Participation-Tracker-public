@@ -7,9 +7,9 @@ Rails.application.routes.draw do
       post 'create'
     end
 
-    resource :attendees do
-      post 'create_form_record_if_attendee_exists'
-      post 'create_attendee_and_form_record'
+    resource :users do
+      post 'create_form_record_if_user_exists'
+      post 'create_user_and_form_record'
     end
   end
 

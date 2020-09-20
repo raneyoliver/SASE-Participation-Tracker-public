@@ -1,6 +1,6 @@
-class CreateAttendee < ActiveRecord::Migration[6.0]
+class CreateUser < ActiveRecord::Migration[6.0]
   def change
-    create_table :attendee, id: :string do |t|
+    create_table :user, id: :string do |t|
       t.string :first_name, null: false
       t.string :last_name, null: false
       t.string :major, null:false
@@ -10,7 +10,5 @@ class CreateAttendee < ActiveRecord::Migration[6.0]
 
       t.timestamps
     end
-
-    rename_column :attendee, :id, :UIN
   end
 end

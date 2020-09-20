@@ -15,22 +15,22 @@ ActiveRecord::Schema.define(version: 2020_09_18_190557) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "attendee", primary_key: "UIN", id: :string, force: :cascade do |t|
+  create_table "event", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.string "start_time"
+    t.string "end_time"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "user", id: :string, force: :cascade do |t|
     t.string "first_name", null: false
     t.string "last_name", null: false
     t.string "major", null: false
     t.integer "graduation_year", null: false
     t.string "email", null: false
     t.string "phone_number"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "event", force: :cascade do |t|
-    t.string "name"
-    t.text "description"
-    t.string "start_time"
-    t.string "end_time"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

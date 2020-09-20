@@ -17,7 +17,7 @@ const App: React.SFC = () => (
         <Router>
           <Homepage path="/" />
           <CreateEventPage path="/create_event" />
-          <FormPage path="/form/:id" />
+          <FormPage path="/form/:event_identifier" />
         </Router>
       </Box>
     </MuiPickersUtilsProvider>
