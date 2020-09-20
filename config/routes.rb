@@ -6,9 +6,10 @@ Rails.application.routes.draw do
       get 'list'
       post 'create'
     end
-    
+
     resource :attendees do
       post 'create_form_record_if_attendee_exists'
+      post 'create_attendee_and_form_record'
     end
   end
 
