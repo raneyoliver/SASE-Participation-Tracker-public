@@ -10,27 +10,26 @@ import getCSRFToken from '../../utils/getCSRFToken';
 const FormPage: React.FC<RouteComponentProps> = () => {
   const [UIN, setUIN] = React.useState('');
   const handleUINChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    const re = /^[0-9]+$/;
-    if (e.target.value === '' || re.test(e.target.value)) {
-        setUIN(e.target.value);
+    const re = /^[0-9]{0,9}$/;
+    if (re.test(e.target.value)) {
+      setUIN(e.target.value);
     }
   };
 
-  const { form_id } = useParams();
+  const { formId } = useParams();
 
-  const UINValid = UIN && (UIN.length == 9);
+  const UINValid = UIN.length === 9;
   const formValid = UINValid;
 
   const handleSubmit = (): void => {
-    console.log(form_id);
     if (!formValid) return;
 
     const body = {
       id: UIN,
-      form_id: form_id
+      form_id: formId,
     };
 
-    fetch('/api/users/create_form_record_if_user_exists', {
+    fetch('/api/users/handle_identification', {
       method: 'POST',
       headers: {
         'Content-type': 'application/json',
@@ -38,12 +37,10 @@ const FormPage: React.FC<RouteComponentProps> = () => {
       },
       body: JSON.stringify(body),
     }).then((response) => {
-      console.log(response.status);
-      if(response.status === 201) {
+      if (response.status === 201) {
         navigate('/form/confirm_submission');
-      }
-      else if(response.status===200) {
-        navigate('/form/' + form_id + '/new_user');
+      } else if (response.status === 200) {
+        navigate(`/form/${formId}/new_user/${UIN}`);
       }
     });
   };

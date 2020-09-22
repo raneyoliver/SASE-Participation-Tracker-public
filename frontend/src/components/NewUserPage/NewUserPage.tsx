@@ -8,53 +8,44 @@ import CardWithHeader from '../CardWithHeader/CardWithHeader';
 import { User } from '../../types/User';
 import getCSRFToken from '../../utils/getCSRFToken';
 
-const NewUserFormPage: React.FC<RouteComponentProps> = () => {
-  const [UIN, setUIN] = React.useState('');
-  const handleUINChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    const re = /^[0-9]+$/;
-    if (e.target.value === '' || re.test(e.target.value)) {
-        setUIN(e.target.value);
-    }
-  };
-
+const NewUserPage: React.FC<RouteComponentProps> = () => {
   const [firstName, setFirstName] = React.useState('');
   const handleFirstNameChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        setFirstName(e.target.value);
+    setFirstName(e.target.value);
   };
 
   const [lastName, setLastName] = React.useState('');
   const handleLastNameChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        setLastName(e.target.value);
+    setLastName(e.target.value);
   };
 
   const [major, setMajor] = React.useState('');
   const handleMajorChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        setMajor(e.target.value);
+    setMajor(e.target.value);
   };
 
   const [email, setEmail] = React.useState('');
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        setEmail(e.target.value);
+    setEmail(e.target.value);
   };
 
-  const [graduationYear, setgraduationYear] = React.useState('');
+  const [graduationYear, setGraduationYear] = React.useState('');
   const handleGraduationYearChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    const re = /^[0-9]+$/;
-    if (e.target.value === '' || re.test(e.target.value)) {
-        setgraduationYear(e.target.value);
+    const re = /^[0-9]{0,4}$/;
+    if (re.test(e.target.value)) {
+      setGraduationYear(e.target.value);
     }
   };
 
   const [phoneNumber, setPhoneNumber] = React.useState('');
   const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        setPhoneNumber(e.target.value);
+    setPhoneNumber(e.target.value);
   };
 
-  const { form_id } = useParams();
+  const { formId, UIN } = useParams();
 
-  const UINValid = UIN && (UIN.length == 9);
-  const graduationYearValid = graduationYear && (graduationYear.length == 4);
-  const formValid = UINValid && firstName && lastName && major && graduationYearValid && email;
+  const graduationYearValid = graduationYear.length === 4;
+  const formValid = firstName && lastName && major && graduationYearValid && email;
 
   const handleSubmit = (): void => {
     if (!formValid) return;
@@ -64,17 +55,17 @@ const NewUserFormPage: React.FC<RouteComponentProps> = () => {
       first_name: firstName,
       last_name: lastName,
       major,
-      graduation_year: parseInt(graduationYear),
+      graduation_year: parseInt(graduationYear, 10),
       email,
-      phone_number: phoneNumber
+      phone_number: phoneNumber,
     };
 
     const body = {
       user: userBody,
-      form_id: form_id
-    }
+      form_id: formId,
+    };
 
-    fetch('/api/users/create_user_and_form_record', {
+    fetch('/api/users/create', {
       method: 'POST',
       headers: {
         'Content-type': 'application/json',
@@ -82,8 +73,7 @@ const NewUserFormPage: React.FC<RouteComponentProps> = () => {
       },
       body: JSON.stringify(body),
     }).then((response) => {
-      console.log(response.status);
-      if(response.status === 201) {
+      if (response.status === 201) {
         navigate('/form/confirm_submission');
       }
     });
@@ -92,10 +82,6 @@ const NewUserFormPage: React.FC<RouteComponentProps> = () => {
   return (
     <Box margin="10% auto" width="50%" minWidth={500}>
       <CardWithHeader title="New User Sign-in Form">
-        <Box paddingBottom={1}>
-          <TextField id="new-user-UIN" required error={!UINValid} label="UIN" value={UIN} onChange={handleUINChange} />
-        </Box>
-
         <Box paddingBottom={1}>
           <TextField id="new-user-first-name" required error={!firstName} label="First Name" value={firstName} onChange={handleFirstNameChange} />
         </Box>
@@ -128,4 +114,4 @@ const NewUserFormPage: React.FC<RouteComponentProps> = () => {
   );
 };
 
-export default NewUserFormPage;
+export default NewUserPage;

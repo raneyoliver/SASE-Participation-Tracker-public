@@ -8,8 +8,8 @@ Rails.application.routes.draw do
     end
 
     resource :users do
-      post 'create_form_record_if_user_exists'
-      post 'create_user_and_form_record'
+      post 'handle_identification'
+      post 'create'
     end
   end
 

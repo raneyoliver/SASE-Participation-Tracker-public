@@ -8,7 +8,7 @@ import Homepage from '../Homepage/Homepage';
 import NavBar from '../Navbar/Navbar';
 import CreateEventPage from '../CreateEventPage/CreateEventPage';
 import FormPage from '../FormPage/FormPage';
-import NewUserFormPage from '../NewUserFormPage/NewUserFormPage';
+import NewUserPage from '../NewUserPage/NewUserPage';
 import ConfirmSubmissionPage from '../ConfirmSubmissionPage/ConfirmSubmissionPage';
 
 const App: React.SFC = () => (
@@ -19,8 +19,8 @@ const App: React.SFC = () => (
         <Router>
           <Homepage path="/" />
           <CreateEventPage path="/create_event" />
-          <FormPage path="/form/:form_id" />
-          <NewUserFormPage path="/form/:form_id/new_user" />
+          <FormPage path="/form/:formId" />
+          <NewUserPage path="/form/:formId/new_user/:UIN" />
           <ConfirmSubmissionPage path="/form/confirm_submission" />
         </Router>
       </Box>

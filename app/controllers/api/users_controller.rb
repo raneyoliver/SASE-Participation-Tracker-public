@@ -1,6 +1,6 @@
 # Controller for api functionality related to users
 class Api::UsersController < ApplicationController
-  def create_form_record_if_user_exists
+  def handle_identification
     head :bad_request and return if params[:id].nil?
 
     @user = User.find(params[:id])
@@ -9,9 +9,9 @@ class Api::UsersController < ApplicationController
     head :ok and return
   end
 
-  def create_user_and_form_record
+  def create
     @user = User.new(user_params)
-    head :created and return if @user.save
+    head :created and return if @user.save!
 
     head :bad_request and return
   rescue StandardError

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe Api::UsersController do
-  describe 'POST create_form_record_if_user_exists' do
+  describe 'POST handle_identification' do
     context 'when given a id that belongs to an existing user' do
       before :all do
         user_data = { id: '333333333', first_name: 'New', last_name: 'User', major: 'computer science',
@@ -10,7 +10,7 @@ describe Api::UsersController do
       end
       it 'responds with a created status code' do
         @id = '333333333'
-        post :create_form_record_if_user_exists, params: { id: @id }, format: :json
+        post :handle_identification, params: { id: @id }, format: :json
         expect(response).to have_http_status(:created)
       end
       after :all do
@@ -21,20 +21,20 @@ describe Api::UsersController do
     context 'when given a id that does not belong to an existing user' do
       it 'responds with an ok status code' do
         @id = '333333333'
-        post :create_form_record_if_user_exists, params: { id: @id }, format: :json
+        post :handle_identification, params: { id: @id }, format: :json
         expect(response).to have_http_status(:ok)
       end
     end
 
     context 'when not given a id' do
       it 'responds with a bad request status code' do
-        post :create_form_record_if_user_exists, params: {}, format: :json
+        post :handle_identification, params: {}, format: :json
         expect(response).to have_http_status(:bad_request)
       end
     end
   end
 
-  describe 'POST create_user_and_form_record' do
+  describe 'POST create' do
     before :each do
       @id = '333333333'
       @first_name = 'New'
@@ -55,7 +55,7 @@ describe Api::UsersController do
     end
     context 'when given valid user data' do
       it 'creates an event with all attributes' do
-        post :create_user_and_form_record, params: { user: @expected }, format: :json
+        post :create, params: { user: @expected }, format: :json
 
         expect(response).to have_http_status(:created)
         expect(User.count).to eq(1)
@@ -71,7 +71,7 @@ describe Api::UsersController do
       end
       it 'creates an event without a phone number' do
         @expected.delete(:phone_number)
-        post :create_user_and_form_record, params: { user: @expected }, format: :json
+        post :create, params: { user: @expected }, format: :json
 
         expect(response).to have_http_status(:created)
         expect(User.count).to eq(1)
@@ -90,49 +90,49 @@ describe Api::UsersController do
     context 'when given invalid user data' do
       it 'does not create an event because of a missing id' do
         @expected.delete(:id)
-        post :create_user_and_form_record, params: { user: @expected }, format: :json
+        post :create, params: { user: @expected }, format: :json
 
         expect(response).to have_http_status(:bad_request)
         expect(User.count).to eq(0)
       end
       it 'does not create an event because of a missing first_name' do
         @expected.delete(:first_name)
-        post :create_user_and_form_record, params: { user: @expected }, format: :json
+        post :create, params: { user: @expected }, format: :json
 
         expect(response).to have_http_status(:bad_request)
         expect(User.count).to eq(0)
       end
       it 'does not create an event because of a missing last_name' do
         @expected.delete(:last_name)
-        post :create_user_and_form_record, params: { user: @expected }, format: :json
+        post :create, params: { user: @expected }, format: :json
 
         expect(response).to have_http_status(:bad_request)
         expect(User.count).to eq(0)
       end
       it 'does not create an event because of a missing major' do
         @expected.delete(:major)
-        post :create_user_and_form_record, params: { user: @expected }, format: :json
+        post :create, params: { user: @expected }, format: :json
 
         expect(response).to have_http_status(:bad_request)
         expect(User.count).to eq(0)
       end
       it 'does not create an event because of a missing graduation_year' do
         @expected.delete(:graduation_year)
-        post :create_user_and_form_record, params: { user: @expected }, format: :json
+        post :create, params: { user: @expected }, format: :json
 
         expect(response).to have_http_status(:bad_request)
         expect(User.count).to eq(0)
       end
       it 'does not create an event because of a missing email' do
         @expected.delete(:email)
-        post :create_user_and_form_record, params: { user: @expected }, format: :json
+        post :create, params: { user: @expected }, format: :json
 
         expect(response).to have_http_status(:bad_request)
         expect(User.count).to eq(0)
       end
       it 'does not create an event because of missing the user block' do
         @expected.delete(:email)
-        post :create_user_and_form_record, params: {}, format: :json
+        post :create, params: {}, format: :json
 
         expect(response).to have_http_status(:bad_request)
         expect(User.count).to eq(0)

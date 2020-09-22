@@ -10,15 +10,19 @@ Then 'I enter a too short UIN on the form page' do
   fill_in('form-UIN', with: '33333333')
 end
 
-Then 'I enter a too long UIN on the form page' do
+Then 'I try to enter a too long UIN on the form page' do
   fill_in('form-UIN', with: '3333333333')
+end
+
+Then "the UIN field doesn't accept characters from the too long UIN after its maximum length" do
+  expect(page).to have_field('form-UIN', with: '333333333')
 end
 
 Then 'I try to enter non-numerical characters as a UIN on the form page' do
   fill_in('form-UIN', with: 'abcde!@#?')
 end
 
-Then "The UIN field doesn't accept the non-numerical characters on the form page" do
+Then "the UIN field doesn't accept the non-numerical characters on the form page" do
   expect(page).to have_field('form-UIN', with: '')
 end
 
