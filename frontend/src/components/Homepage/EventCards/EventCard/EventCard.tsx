@@ -14,7 +14,7 @@ const EventCard: React.FC<EventCardProps> = ({ event }) => {
   const endTime = formatDate(new Date(event.start_time));
 
   return (
-    <CardWithHeader title={event.name}>
+    <CardWithHeader id={`event-card-${event.id}`} title={event.name}>
       <div style={{ wordWrap: 'break-word' }}>
         <Box overflow="auto" maxHeight={120}>
           <Typography>

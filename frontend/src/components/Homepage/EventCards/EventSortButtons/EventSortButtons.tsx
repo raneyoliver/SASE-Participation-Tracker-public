@@ -41,7 +41,7 @@ const sortDirectionIcons = new Map<SortDirection, JSX.Element>([
 // If we decide to add other sorting methods, we can put them in this component
 const EventSortButtons: React.FC<EventSortButtonsProps> = ({ events, onSort }) => {
   // Keep initial order of events so that it can be reverted when not sorting
-  const [initialEvents, setInitialEvents] = React.useState(events);
+  const [initialEvents] = React.useState(events);
   const [dateSortDirection, setDateSortDirection] = React.useState(SortDirection.NotSorting);
 
   const dateSortIcon = sortDirectionIcons.get(dateSortDirection);
@@ -75,7 +75,7 @@ const EventSortButtons: React.FC<EventSortButtonsProps> = ({ events, onSort }) =
           Sort By:
         </Typography>
       </Box>
-      <Button variant="contained" color="secondary" onClick={handleDateSortClick} endIcon={dateSortIcon}>
+      <Button id="sort-by-date" variant="contained" color="secondary" onClick={handleDateSortClick} endIcon={dateSortIcon}>
         Date
       </Button>
     </Box>
