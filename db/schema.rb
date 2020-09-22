@@ -24,8 +24,12 @@ ActiveRecord::Schema.define(version: 2020_09_18_012625) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "form", force: :cascade do |t|
-    t.string "uin"
+  create_table "form", id: :string, force: :cascade do |t|
+    t.integer "event_id"
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.string "form_type"
+    t.string "data"
   end
 
 end

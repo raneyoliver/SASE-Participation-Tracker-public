@@ -1,9 +1,17 @@
 # Controller for api functionality related to events
+
 class Api::EventsController < ApplicationController
+
   def list
     @events = Event.all.select('id, name, description, start_time, end_time')
-    render json: @events
+
+    @response = @events.map{ |event| 
+      helpers.serialize_event(event)
+    }
+    render json: @response
+
   end
+
 
   def create
     begin
@@ -17,6 +25,25 @@ class Api::EventsController < ApplicationController
     @event = Event.new(event_params)
 
     @event.save
+
+    
+    # Create Form
+    @form = Form.new(
+      # hash datetime
+      id: helpers.makeUniqueID(),
+      event_id: @event.id,
+      start_time: @event.start_time,
+      end_time: @event.end_time,
+      form_type: "sign-in",
+      data: [].to_json
+    )
+
+    @form.save
+  end
+
+  def last
+    @id = Event.maximum('id')
+    render json: @id
   end
 
   private

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Typography, Box } from '@material-ui/core';
-import { EventWithID } from '../../../types/Event';
+import { SerializedEvent } from '../../../types/Event';
 import EventCard from './EventCard/EventCard';
 
 const EventCards: React.FC = () => {
@@ -8,9 +8,9 @@ const EventCards: React.FC = () => {
   const [loading, setLoading] = React.useState(true);
 
   // Fetch events on page load
-  const [events, setEvents] = React.useState<EventWithID[]>([]);
+  const [events, setEvents] = React.useState<SerializedEvent[]>([]);
   React.useEffect(() => {
-    fetch('/api/events/list').then((response) => response.json()).then((response: EventWithID[]) => {
+    fetch('/api/events/list').then((response) => response.json()).then((response: SerializedEvent[]) => {
       setEvents(response);
       setLoading(false);
     });
