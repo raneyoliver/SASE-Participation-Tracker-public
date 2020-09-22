@@ -7,10 +7,16 @@ export interface Event {
 }
 
 // Interface with fields equivalent to the rails model, use this when dealing with existing events
-export interface EventWithID {
+export interface SerializedEvent {
   id: number;
   name: string;
   description: string;
   start_time: string;
   end_time: string;
+  sign_in_link: string;
+  forms: SerializedForm[]
+}
+
+export interface SerializedForm {
+  id: string;
 }

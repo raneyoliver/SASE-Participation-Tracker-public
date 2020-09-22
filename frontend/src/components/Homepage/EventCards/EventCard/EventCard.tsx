@@ -1,16 +1,17 @@
 import * as React from 'react';
 import { Box, Typography } from '@material-ui/core';
-import { EventWithID } from '../../../../types/Event';
+import { SerializedEvent } from '../../../../types/Event';
 import formatDate from '../../../../utils/formatDate';
 import CardWithHeader from '../../../CardWithHeader/CardWithHeader';
 
 interface EventCardProps {
-  event: EventWithID;
+  event: SerializedEvent;
 }
 
 const EventCard: React.FC<EventCardProps> = ({ event }) => {
   const startTime = formatDate(new Date(event.start_time));
   const endTime = formatDate(new Date(event.start_time));
+  const sign_in_link = event.sign_in_link;
 
   return (
     <CardWithHeader title={event.name}>
@@ -24,6 +25,8 @@ const EventCard: React.FC<EventCardProps> = ({ event }) => {
           {`Starts at: ${startTime}`}
           <br />
           {`Ends at: ${endTime}`}
+          <br />
+          {`Sign in here: ${event.forms.map((form) => form.id).join(', ')}`}
         </Typography>
       </div>
     </CardWithHeader>

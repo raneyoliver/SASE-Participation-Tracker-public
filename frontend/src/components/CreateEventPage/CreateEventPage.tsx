@@ -7,6 +7,7 @@ import { DateTimePicker } from '@material-ui/pickers';
 import AddIcon from '@material-ui/icons/Add';
 import CardWithHeader from '../CardWithHeader/CardWithHeader';
 import { Event } from '../../types/Event';
+import { Form } from '../../types/Form';
 import getCSRFToken from '../../utils/getCSRFToken';
 
 // Format datetimes like the following: 12/31/2020 12:00 PM
@@ -14,6 +15,7 @@ const dateFormat = 'MM/dd/yyyy hh:mm a';
 
 const CreateEventPage: React.FC<RouteComponentProps> = () => {
   const [name, setName] = React.useState('');
+  const [id, setNumber] = React.useState<number>();
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setName(e.target.value);
   };
@@ -48,6 +50,7 @@ const CreateEventPage: React.FC<RouteComponentProps> = () => {
   const handleSubmit = (): void => {
     if (!formValid) return;
     // Form is valid, convert times to UTC format and post
+    // body for event creation request
     const body: Event = {
       name,
       description,
@@ -55,6 +58,7 @@ const CreateEventPage: React.FC<RouteComponentProps> = () => {
       end_time: endTime.toUTCString(),
     };
 
+    // call api to create event
     fetch('/api/events/create', {
       method: 'POST',
       headers: {
@@ -65,6 +69,7 @@ const CreateEventPage: React.FC<RouteComponentProps> = () => {
     }).then(() => { // Once request has been processed, go back to homepage
       navigate('/');
     });
+    
   };
 
   return (
