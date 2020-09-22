@@ -6,7 +6,7 @@ class Api::SessionsController < Devise::SessionsController
   
       if @admin.valid_password?(params[:password])
         sign_in :admin, @admin
-        render json: @admin
+        redirect_to '/'
       else
         invalid_login_attempt
       end
@@ -30,6 +30,10 @@ class Api::SessionsController < Devise::SessionsController
   
       def user_params
          params.require(:username).permit(:username, :password)
+      end
+
+      def after_sign_in_path_for(resource)
+        admins_path
       end
   
   end

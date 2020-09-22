@@ -7,6 +7,8 @@ import AddIcon from '@material-ui/icons/Add';
 import CardWithHeader from '../CardWithHeader/CardWithHeader';
 import getCSRFToken from '../../utils/getCSRFToken';
 
+var title= 'Log In'
+
 const LoginPage: React.FC<RouteComponentProps> = () => {
 
   const [username, setName] = React.useState('');
@@ -35,19 +37,24 @@ const LoginPage: React.FC<RouteComponentProps> = () => {
 
     fetch('/api/admins/sign_in', {
       method: 'POST',
+      redirect: 'follow',
       headers: {
         'Content-type': 'application/json',
         'X-CSRF-Token': getCSRFToken(),
       },
       body: JSON.stringify(body),
-    }).then(() => { 
-      // TODO: handle login logic
+    }).then(response => {
+      if (response.ok) {
+        navigate('/');
+      } else if (response.status == 424) { // something bad happened...
+        title = 'Error';
+      }
     });
-};
+  };
 
 return (
     <Box margin="auto" width="50%" minWidth={500}>
-      <CardWithHeader title="Log In">
+      <CardWithHeader title={title}>
         <Box paddingBottom={1}>
           <TextField id="username" 
             required error={!name} 
