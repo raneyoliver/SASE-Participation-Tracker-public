@@ -1,19 +1,19 @@
 class Api::SessionsController < Devise::SessionsController
 
     def create
-      @user = User.find_for_authentication(:username => params[:username])
-      return invalid_user unless @user
+      @admin = Admin.find_for_authentication(:username => params[:username])
+      return invalid_user unless @admin
   
-      if @user.valid_password?(params[:password])
-        sign_in :user, @user
-        render json: @user
+      if @admin.valid_password?(params[:password])
+        sign_in :admin, @admin
+        render json: @admin
       else
         invalid_login_attempt
       end
     end
   
     def destroy
-      sign_out(@user)
+      sign_out(@admin)
       render :json=> {:success=>true}
     end
 

@@ -33,7 +33,7 @@ const LoginPage: React.FC<RouteComponentProps> = () => {
       password,
     };
 
-    fetch('/api/users/sign_in', {
+    fetch('/api/admins/sign_in', {
       method: 'POST',
       headers: {
         'Content-type': 'application/json',

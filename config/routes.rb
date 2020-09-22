@@ -6,7 +6,7 @@ Rails.application.routes.draw do
       get 'list'
       post 'create'
     end
-    devise_for :users, controllers: {
+    devise_for :admins, controllers: {
       registrations: 'api/registrations',
       sessions: 'api/sessions'
     }
