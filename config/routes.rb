@@ -4,7 +4,6 @@ Rails.application.routes.draw do
     # /api/events
     resource :events do
       get 'list'
-      get 'last'
       post 'create'
     end
 
@@ -13,9 +12,8 @@ Rails.application.routes.draw do
       get 'list'
       post 'create'
     end
-
   end
-  
+
   # Use React to handle all routes outside of API
   root to: 'static#index'
   get '*path' => 'static#index'

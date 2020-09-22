@@ -13,8 +13,7 @@ export interface SerializedEvent {
   description: string;
   start_time: string;
   end_time: string;
-  sign_in_link: string;
-  forms: SerializedForm[]
+  forms: SerializedForm[];
 }
 
 export interface SerializedForm {
