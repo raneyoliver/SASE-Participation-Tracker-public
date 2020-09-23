@@ -1,19 +1,19 @@
 import * as React from 'react';
 import { Typography, Box } from '@material-ui/core';
-import { EventWithID } from '../../../types/Event';
+import { SerializedEvent } from '../../../types/Event';
 import EventCard from './EventCard/EventCard';
+import CardWithHeader from '../../CardWithHeader/CardWithHeader';
 
 const EventCards: React.FC = () => {
   // Loading is true until fetching events is done
   const [loading, setLoading] = React.useState(true);
 
   // Fetch events on page load
-  const [events, setEvents] = React.useState<EventWithID[]>([]);
+  const [events, setEvents] = React.useState<SerializedEvent[]>([]);
   React.useEffect(() => {
-    fetch('/api/events/list').then((response) => response.json()).then((response: EventWithID[]) => {
+    fetch('/api/events/list').then((response) => response.json()).then((response: SerializedEvent[]) => {
       setEvents(response);
-      setLoading(false);
-    });
+    }).finally(() => setLoading(false));
   }, []);
 
   // Let user know if cards are still loading
@@ -35,14 +35,18 @@ const EventCards: React.FC = () => {
     </Box>
   ));
 
-  return events ? (
+  return events?.length ? (
     <Box display="flex" flexWrap="wrap" width="100%">
       {eventCards}
     </Box>
   ) : (
-    <Typography>
-      No events have been created yet. Try clicking the plus icon in the bottom right!
-    </Typography>
+    <Box margin="auto" width="50%" minWidth={500}>
+      <CardWithHeader title="No Events">
+        <Typography>
+          No events have been created yet. Try clicking the plus icon in the bottom right!
+        </Typography>
+      </CardWithHeader>
+    </Box>
   );
 };
 
