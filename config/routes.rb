@@ -8,7 +8,7 @@ Rails.application.routes.draw do
     end
     devise_for :admins, controllers: {
       registrations: 'api/registrations',
-      sessions: 'api/sessions'
+      sessions: 'api/sessions',
     }
   end
 
