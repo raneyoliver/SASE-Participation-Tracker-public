@@ -42,18 +42,14 @@ const sortDirectionIcons = new Map<SortDirection, JSX.Element>([
 const EventSortButtons: React.FC<EventSortButtonsProps> = ({ events, onSort }) => {
   // Keep initial order of events so that it can be reverted when not sorting
   const [initialEvents] = React.useState(events);
-  const [dateSortDirection, setDateSortDirection] = React.useState(SortDirection.NotSorting);
 
-  const dateSortIcon = sortDirectionIcons.get(dateSortDirection);
+  // Default sort is by date chronologically
+  const [dateSortDirection, setDateSortDirection] = React.useState(SortDirection.Ascending);
 
-  const handleDateSortClick = (): void => {
-    // Determine new sort direction
-    const newSortDirection = getNextSortDirection(dateSortDirection);
-    setDateSortDirection(newSortDirection);
-
+  React.useEffect(() => {
     // Sort events based on new direction and use callback from parent component
     const newEvents = [...initialEvents];
-    switch (newSortDirection) {
+    switch (dateSortDirection) {
       case (SortDirection.Ascending): {
         sortEventsByTimeAscending(newEvents);
         break;
@@ -66,6 +62,12 @@ const EventSortButtons: React.FC<EventSortButtonsProps> = ({ events, onSort }) =
     }
 
     onSort(newEvents);
+  }, [dateSortDirection, initialEvents, onSort]);
+
+  const dateSortIcon = sortDirectionIcons.get(dateSortDirection);
+
+  const handleDateSortClick = (): void => {
+    setDateSortDirection(getNextSortDirection(dateSortDirection));
   };
 
   return (

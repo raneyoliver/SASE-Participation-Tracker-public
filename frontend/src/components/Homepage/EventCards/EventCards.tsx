@@ -18,9 +18,9 @@ const EventCards: React.FC = () => {
     }).finally(() => setLoading(false));
   }, []);
 
-  const handleEventSort = (newEvents: EventWithID[]): void => {
+  const handleEventSort = React.useCallback((newEvents: EventWithID[]): void => {
     setEvents(newEvents);
-  };
+  }, []);
 
   // Let user know if cards are still loading
   if (loading) {
