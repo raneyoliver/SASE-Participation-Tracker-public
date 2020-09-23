@@ -16,6 +16,11 @@ export interface SerializedEvent {
   forms: SerializedForm[];
 }
 
+export enum FormType {
+  'sign-in' = 'Sign-in Form',
+}
+
 export interface SerializedForm {
   id: string;
+  form_type: FormType;
 }
