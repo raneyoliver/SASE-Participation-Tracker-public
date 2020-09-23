@@ -1,8 +1,12 @@
+import FormType from '../Enums';
+
 // Interface with fields needed to create a form model in rails, use this when creating forms
-export interface Form {
+export interface SerializedForm {
     id: string;
     event_id: number;
-    start_time: string;
-    form_type: string;
+    form_type: FormType;
     questions: string;
+    event: {
+      name: string;
+    };
   }
