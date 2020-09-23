@@ -1,13 +1,31 @@
 import * as React from 'react';
+// import { useHistory } from 'react-router-dom';
 import { RouteComponentProps, navigate, useParams } from '@reach/router';
 import {
-  Box, TextField, Button,
+  Box, TextField, Button, Typography,
 } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import CardWithHeader from '../CardWithHeader/CardWithHeader';
 import getCSRFToken from '../../utils/getCSRFToken';
+import { SerializedForm } from '../../types/Form';
 
 const FormPage: React.FC<RouteComponentProps> = () => {
+  const { formId } = useParams();
+
+  const [loading, setLoading] = React.useState(true);
+
+  const [form, setForm] = React.useState<SerializedForm>();
+  React.useEffect(() => {
+    fetch(`/api/forms/${formId}`).then((response) => {
+      if (response.status === 404) {
+        window.location.href = '/form/error';
+      }
+      return response.json();
+    }).then((response: SerializedForm) => {
+      setForm(response);
+    }).finally(() => setLoading(false));
+  }, [formId]);
+
   const [UIN, setUIN] = React.useState('');
   const handleUINChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const re = /^[0-9]{0,9}$/;
@@ -15,8 +33,6 @@ const FormPage: React.FC<RouteComponentProps> = () => {
       setUIN(e.target.value);
     }
   };
-
-  const { formId } = useParams();
 
   const UINValid = UIN.length === 9;
   const formValid = UINValid;
@@ -45,9 +61,17 @@ const FormPage: React.FC<RouteComponentProps> = () => {
     });
   };
 
+  if (loading) {
+    return (
+      <Typography>
+        Loading...
+      </Typography>
+    );
+  }
+
   return (
     <Box margin="10% auto" width="50%" minWidth={500}>
-      <CardWithHeader title="Sign-in Form">
+      <CardWithHeader title={`Sign-in Form for ${form.event.name}`}>
         <Box paddingBottom={1}>
           <TextField id="form-UIN" required error={!UINValid} label="UIN" value={UIN} onChange={handleUINChange} />
         </Box>

@@ -1,4 +1,8 @@
 When 'I go to the form page' do
+  visit '/form/de12b1128f3'
+end
+
+When 'I go the the form page with an invalid form id' do
   visit '/form/1'
 end
 
@@ -32,4 +36,8 @@ end
 
 Then "I can't click the form submit button on the form page" do
   expect(page).to have_button('submit', disabled: true)
+end
+
+Then 'I am redirected to an error page from the form page' do
+  expect(page).to have_current_path('/form/error')
 end
