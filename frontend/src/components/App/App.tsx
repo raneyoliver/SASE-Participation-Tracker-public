@@ -6,7 +6,7 @@ import { Router } from '@reach/router';
 import theme from '../../theme';
 import Homepage from '../Homepage/Homepage';
 import NavBar from '../Navbar/Navbar';
-import LoginPage from '../LoginPage/LoginPage'
+import LoginPage from '../LoginPage/LoginPage';
 import CreateEventPage from '../CreateEventPage/CreateEventPage';
 
 const App: React.SFC = () => (

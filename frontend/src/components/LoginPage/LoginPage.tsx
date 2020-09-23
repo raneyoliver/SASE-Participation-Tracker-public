@@ -3,15 +3,11 @@ import { RouteComponentProps, navigate } from '@reach/router';
 import {
   Box, TextField, Button,
 } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
 import * as Cookies from 'js-cookie';
 import CardWithHeader from '../CardWithHeader/CardWithHeader';
 import getCSRFToken from '../../utils/getCSRFToken';
 
-var title = 'Log In'
-
 const LoginPage: React.FC<RouteComponentProps> = () => {
-
   const [username, setName] = React.useState('');
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setName(e.target.value);
@@ -49,19 +45,20 @@ const LoginPage: React.FC<RouteComponentProps> = () => {
       if (response.ok) {
         navigate('/');
       } else { // something bad happened...
-        title = 'Error';
+        // eslint-disable-next-line no-console
+        console.log('error');
       }
     });
   };
 
   return (
     <Box margin="auto" width="50%" minWidth={500}>
-      <CardWithHeader title={title}>
+      <CardWithHeader title="Log In">
         <Box paddingBottom={1}>
           <TextField
             id="username"
             required
-            error={!name}
+            error={!username}
             label="Username"
             value={username}
             onChange={handleNameChange}
@@ -71,10 +68,12 @@ const LoginPage: React.FC<RouteComponentProps> = () => {
         <Box paddingBottom={1}>
           <TextField
             id="standard-password-input"
-            label="Password" 
+            label="Password"
             type="password"
-            value={password} 
-            onChange={handlePasswordChange} autoComplete="current-password"/>
+            value={password}
+            onChange={handlePasswordChange}
+            autoComplete="current-password"
+          />
         </Box>
         <Button
           id="login"
