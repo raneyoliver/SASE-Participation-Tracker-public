@@ -6,6 +6,12 @@ Rails.application.routes.draw do
       get 'list'
       post 'create'
     end
+
+    # /api/form
+    resource :forms do
+      get 'list'
+      post 'create'
+    end
   end
 
   # Use React to handle all routes outside of API
