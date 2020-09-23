@@ -38,7 +38,6 @@ const LoginPage: React.FC<RouteComponentProps> = () => {
         'X-CSRF-Token': getCSRFToken(),
       },
       body: JSON.stringify(body),
-      credentials: 'same-origin',
     }).then((response) => {
       if (response.ok) {
         navigate('/');
