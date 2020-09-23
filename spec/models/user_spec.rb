@@ -66,28 +66,28 @@ RSpec.describe User, type: :model do
       @user_data[:id] = '3333333333'
       expect(User.new(@user_data)).to_not be_valid
     end
-    it 'is not valid with a graduation_year less than 2000' do
-      @user_data[:graduation_year] = 1999
+    it 'is not valid with a graduation_year less than 0' do
+      @user_data[:graduation_year] = -1
       expect(User.new(@user_data)).to_not be_valid
     end
-    it 'is valid with a graduation_year equal to 2000' do
-      @user_data[:graduation_year] = 2000
+    it 'is valid with a graduation_year equal to 0' do
+      @user_data[:graduation_year] = 0
       expect(User.new(@user_data)).to be_valid
     end
-    it 'is valid with a graduation_year just greater than 2000' do
-      @user_data[:graduation_year] = 2001
+    it 'is valid with a graduation_year just greater than 0' do
+      @user_data[:graduation_year] = 1
       expect(User.new(@user_data)).to be_valid
     end
-    it 'is not valid with a graduation_year greater than 2050' do
-      @user_data[:graduation_year] = 2051
+    it 'is not valid with a graduation_year greater than 9999' do
+      @user_data[:graduation_year] = 10_000
       expect(User.new(@user_data)).to_not be_valid
     end
-    it 'is valid with a graduation_year equal to 2050' do
-      @user_data[:graduation_year] = 2050
+    it 'is valid with a graduation_year equal to 9999' do
+      @user_data[:graduation_year] = 9999
       expect(User.new(@user_data)).to be_valid
     end
-    it 'is valid with a graduation_year just less than 2050' do
-      @user_data[:graduation_year] = 2049
+    it 'is valid with a graduation_year just less than 9999' do
+      @user_data[:graduation_year] = 9998
       expect(User.new(@user_data)).to be_valid
     end
   end
