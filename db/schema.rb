@@ -18,10 +18,18 @@ ActiveRecord::Schema.define(version: 2020_09_22_205344) do
   create_table "event", force: :cascade do |t|
     t.string "name"
     t.text "description"
-    t.string "start_time"
-    t.string "end_time"
+    t.datetime "start_time"
+    t.datetime "end_time"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "form", id: :string, force: :cascade do |t|
+    t.integer "event_id"
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.string "form_type"
+    t.string "questions"
   end
 
   create_table "user", id: :string, force: :cascade do |t|
@@ -33,14 +41,6 @@ ActiveRecord::Schema.define(version: 2020_09_22_205344) do
     t.string "phone_number"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "form", id: :string, force: :cascade do |t|
-    t.integer "event_id"
-    t.datetime "start_time"
-    t.datetime "end_time"
-    t.string "form_type"
-    t.string "questions"
   end
 
 end
