@@ -14,5 +14,6 @@ Rails.application.routes.draw do
 
   # Use React to handle all routes outside of API
   root to: 'static#index'
+  get 'create_event' => 'static#authorized_index'
   get '*path' => 'static#index'
 end

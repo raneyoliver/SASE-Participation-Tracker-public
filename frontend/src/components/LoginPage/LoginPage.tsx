@@ -4,10 +4,11 @@ import {
   Box, TextField, Button,
 } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
+import * as Cookies from 'js-cookie';
 import CardWithHeader from '../CardWithHeader/CardWithHeader';
 import getCSRFToken from '../../utils/getCSRFToken';
 
-var title= 'Log In'
+var title = 'Log In'
 
 const LoginPage: React.FC<RouteComponentProps> = () => {
 
@@ -25,7 +26,7 @@ const LoginPage: React.FC<RouteComponentProps> = () => {
   // const startTimeValid = !Number.isNaN(startTime.valueOf());
   // const endTimeValid = !Number.isNaN(startTime.valueOf());
   // TODO: perform validation
-  const formValid = true; //name && startTimeValid && endTimeValid;
+  const formValid = true; // name && startTimeValid && endTimeValid;
 
   const handleLogin = (): void => {
     if (!formValid) return;
@@ -41,43 +42,47 @@ const LoginPage: React.FC<RouteComponentProps> = () => {
       headers: {
         'Content-type': 'application/json',
         'X-CSRF-Token': getCSRFToken(),
+        _participation_tracker_session: Cookies.get('_participation_tracker_session'),
       },
       body: JSON.stringify(body),
-    }).then(response => {
+    }).then((response) => {
       if (response.ok) {
         navigate('/');
-      } else if (response.status == 424) { // something bad happened...
+      } else { // something bad happened...
         title = 'Error';
       }
     });
   };
 
-return (
+  return (
     <Box margin="auto" width="50%" minWidth={500}>
       <CardWithHeader title={title}>
         <Box paddingBottom={1}>
-          <TextField id="username" 
-            required error={!name} 
-            label="Username" 
-            value={username} 
-            onChange={handleNameChange} 
+          <TextField
+            id="username"
+            required
+            error={!name}
+            label="Username"
+            value={username}
+            onChange={handleNameChange}
           />
         </Box>
 
         <Box paddingBottom={1}>
-        <TextField 
-          id="standard-password-input" 
-          label="Password" 
-          type="password"
-          value={password} 
-          onChange={handlePasswordChange} autoComplete="current-password"/>
+          <TextField
+            id="standard-password-input"
+            label="Password" 
+            type="password"
+            value={password} 
+            onChange={handlePasswordChange} autoComplete="current-password"/>
         </Box>
-        <Button 
-          id="login" 
-          variant="contained" 
-          color="secondary" 
-          disabled={!formValid} 
-          onClick={handleLogin}>
+        <Button
+          id="login"
+          variant="contained"
+          color="secondary"
+          disabled={!formValid}
+          onClick={handleLogin}
+        >
           Log In
         </Button>
       </CardWithHeader>
@@ -86,4 +91,3 @@ return (
 };
 
 export default LoginPage;
-
