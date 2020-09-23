@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { RouteComponentProps, navigate, useParams } from '@reach/router';
 import {
-  Box, TextField, Button,
+  Box, TextField, Button, Typography,
 } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import CardWithHeader from '../CardWithHeader/CardWithHeader';
@@ -9,6 +9,22 @@ import { User } from '../../types/User';
 import getCSRFToken from '../../utils/getCSRFToken';
 
 const NewUserPage: React.FC<RouteComponentProps> = () => {
+  const { formId, UIN } = useParams();
+
+  const [loading, setLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    const re = /^[0-9]{9}$/;
+    if (!re.test(UIN)) {
+      window.location.href = '/form/error';
+    }
+    fetch(`/api/forms/${formId}`).then((response) => {
+      if (response.status === 404) {
+        window.location.href = '/form/error';
+      }
+    }).finally(() => setLoading(false));
+  }, [UIN, formId]);
+
   const [firstName, setFirstName] = React.useState('');
   const handleFirstNameChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setFirstName(e.target.value);
@@ -41,8 +57,6 @@ const NewUserPage: React.FC<RouteComponentProps> = () => {
   const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setPhoneNumber(e.target.value);
   };
-
-  const { formId, UIN } = useParams();
 
   const graduationYearValid = graduationYear.length === 4;
   const formValid = firstName && lastName && major && graduationYearValid && email;
@@ -79,8 +93,16 @@ const NewUserPage: React.FC<RouteComponentProps> = () => {
     });
   };
 
+  if (loading) {
+    return (
+      <Typography>
+        Loading...
+      </Typography>
+    );
+  }
+
   return (
-    <Box margin="10% auto" width="50%" minWidth={500}>
+    <Box margin="5% auto" width="50%" minWidth={500}>
       <CardWithHeader title="New User Sign-in Form">
         <Box paddingBottom={1}>
           <TextField id="new-user-first-name" required error={!firstName} label="First Name" value={firstName} onChange={handleFirstNameChange} />

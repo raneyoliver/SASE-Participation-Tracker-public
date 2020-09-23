@@ -1,5 +1,21 @@
 When 'I go to the new user page' do
+  visit '/form/de12b1128f3/new_user/333333333'
+end
+
+When 'I go the the new user page with an invalid form id' do
   visit '/form/1/new_user/333333333'
+end
+
+When 'I go the the new user page with a too short UIN' do
+  visit '/form/1/new_user/33333333'
+end
+
+When 'I go the the new user page with a too long UIN' do
+  visit '/form/1/new_user/3333333333'
+end
+
+When 'I go the the new user page with a non-numerical UIN' do
+  visit '/form/1/new_user/afcde!@#$'
 end
 
 Then 'I enter my first name on the new user page' do
@@ -52,4 +68,8 @@ end
 
 Then "I can't click the form submit button on the new user page" do
   expect(page).to have_button('submit', disabled: true)
+end
+
+Then 'I am redirected to an error page from the new user page' do
+  expect(page).to have_current_path('/form/error')
 end
