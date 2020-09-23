@@ -3,14 +3,13 @@ import { RouteComponentProps, navigate } from '@reach/router';
 import {
   Box, TextField, Button,
 } from '@material-ui/core';
-import * as Cookies from 'js-cookie';
 import CardWithHeader from '../CardWithHeader/CardWithHeader';
 import getCSRFToken from '../../utils/getCSRFToken';
 
 const LoginPage: React.FC<RouteComponentProps> = () => {
-  const [username, setName] = React.useState('');
+  const [username, setUsername] = React.useState('');
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setName(e.target.value);
+    setUsername(e.target.value);
   };
 
   const [password, setPassword] = React.useState('');
@@ -34,13 +33,12 @@ const LoginPage: React.FC<RouteComponentProps> = () => {
 
     fetch('/api/admins/sign_in', {
       method: 'POST',
-      redirect: 'follow',
       headers: {
         'Content-type': 'application/json',
         'X-CSRF-Token': getCSRFToken(),
-        _participation_tracker_session: Cookies.get('_participation_tracker_session'),
       },
       body: JSON.stringify(body),
+      credentials: 'same-origin',
     }).then((response) => {
       if (response.ok) {
         navigate('/');
@@ -68,6 +66,8 @@ const LoginPage: React.FC<RouteComponentProps> = () => {
         <Box paddingBottom={1}>
           <TextField
             id="standard-password-input"
+            required
+            error={!username}
             label="Password"
             type="password"
             value={password}
