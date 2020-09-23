@@ -37,7 +37,7 @@ ActionController::Base.allow_rescue = false
 
 # NOTE: Changed to truncation in order to allow cucumber to see test data
 begin
-  DatabaseCleaner.strategy = :truncation
+  DatabaseCleaner.strategy = :transaction
 rescue NameError
   raise 'You need to add database_cleaner to your Gemfile (in the :test group) if you wish to use it.'
 end

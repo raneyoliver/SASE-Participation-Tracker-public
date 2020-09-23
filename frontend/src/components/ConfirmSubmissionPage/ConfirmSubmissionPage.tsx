@@ -8,7 +8,7 @@ import CardWithHeader from '../CardWithHeader/CardWithHeader';
 const ConfirmSubmissionPage: React.FC<RouteComponentProps> = () => (
   <Box margin="10% auto" width="50%" minWidth={500} textAlign="center">
     <CardWithHeader title="Thank You!">
-      <Typography variant="body1">
+      <Typography>
         Your submission has been recorded. You may safely close this page.
       </Typography>
     </CardWithHeader>
