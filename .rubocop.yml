@@ -1,6 +1,7 @@
 AllCops:
   NewCops: enable
   Exclude:
+    - config/initializers/devise.rb
     - bin/**
     - db/schema.rb
     - db/migrate/**
