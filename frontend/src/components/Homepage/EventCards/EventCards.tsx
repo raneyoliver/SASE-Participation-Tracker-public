@@ -19,6 +19,7 @@ const EventCards: React.FC = () => {
         return response;
       }
       navigate('/login');
+      return response;
     }).then((response) => response.json()).then((response: SerializedEvent[]) => {
       setEvents(response);
     })
