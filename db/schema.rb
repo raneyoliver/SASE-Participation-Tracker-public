@@ -30,8 +30,27 @@ ActiveRecord::Schema.define(version: 2020_09_17_004825) do
   create_table "event", force: :cascade do |t|
     t.string "name"
     t.text "description"
-    t.string "start_time"
-    t.string "end_time"
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "form", id: :string, force: :cascade do |t|
+    t.integer "event_id"
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.string "form_type"
+    t.string "questions"
+  end
+
+  create_table "user", id: :string, force: :cascade do |t|
+    t.string "first_name", null: false
+    t.string "last_name", null: false
+    t.string "major", null: false
+    t.integer "graduation_year", null: false
+    t.string "email", null: false
+    t.string "phone_number"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

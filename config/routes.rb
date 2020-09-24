@@ -10,6 +10,17 @@ Rails.application.routes.draw do
       registrations: 'api/registrations',
       sessions: 'api/sessions',
     }
+
+    # /api/users
+    resource :users do
+      post 'handle_identification'
+      post 'create'
+    end
+
+    # /api/forms
+    resource :forms do
+      get ':id', to: 'forms#show'
+    end
   end
 
   # Use React to handle all routes outside of API

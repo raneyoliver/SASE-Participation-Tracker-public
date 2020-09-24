@@ -8,6 +8,10 @@ import Homepage from '../Homepage/Homepage';
 import NavBar from '../Navbar/Navbar';
 import LoginPage from '../LoginPage/LoginPage';
 import CreateEventPage from '../CreateEventPage/CreateEventPage';
+import FormPage from '../FormPage/FormPage';
+import NewUserPage from '../NewUserPage/NewUserPage';
+import ConfirmSubmissionPage from '../ConfirmSubmissionPage/ConfirmSubmissionPage';
+import FormErrorPage from '../FormErrorPage/FormErrorPage';
 
 const App: React.SFC = () => (
   <ThemeProvider theme={theme}>
@@ -18,6 +22,10 @@ const App: React.SFC = () => (
           <Homepage path="/" />
           <CreateEventPage path="/create_event" />
           <LoginPage path="/login" />
+          <FormPage path="/form/:formId" />
+          <NewUserPage path="/form/:formId/new_user/:UIN" />
+          <ConfirmSubmissionPage path="/form/confirm_submission" />
+          <FormErrorPage path="/form/error" />
         </Router>
       </Box>
     </MuiPickersUtilsProvider>
