@@ -18,7 +18,7 @@ const EventCards: React.FC = () => {
     }).finally(() => setLoading(false));
   }, []);
 
-  const handleEventSort = React.useCallback((newEvents: EventWithID[]): void => {
+  const handleEventSort = React.useCallback((newEvents: SerializedEvent[]): void => {
     setEvents(newEvents);
   }, []);
 

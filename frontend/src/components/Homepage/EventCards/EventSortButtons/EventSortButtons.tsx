@@ -3,14 +3,14 @@ import {
   Box, Button, SvgIcon, Typography,
 } from '@material-ui/core';
 import { ArrowDownward, ArrowUpward } from '@material-ui/icons';
-import { EventWithID } from '../../../../types/Event';
+import { SerializedEvent } from '../../../../types/Event';
 import {
   sortEventsByTimeAscending, sortEventsByTimeDescending,
 } from '../../../../utils/sortEvents';
 
 interface EventSortButtonsProps {
-  events: EventWithID[];
-  onSort: (events: EventWithID[]) => any;
+  events: SerializedEvent[];
+  onSort: (events: SerializedEvent[]) => any;
 }
 
 enum SortDirection {
