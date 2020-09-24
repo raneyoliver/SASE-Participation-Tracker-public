@@ -3,11 +3,12 @@ import {
   Fab, Box, Tooltip, Typography,
 } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
-import { RouteComponentProps, navigate } from '@reach/router';
+import { RouteComponentProps } from '@reach/router';
 import EventCards from './EventCards/EventCards';
 
 const Homepage: React.SFC<RouteComponentProps> = () => {
-  const handleFabClick = (): void => { navigate('/create_event'); };
+  // Need to re-render the page, navigate doesn't do that
+  const handleFabClick = (): void => { window.location.href = '/create_event'; };
 
   return (
     <>

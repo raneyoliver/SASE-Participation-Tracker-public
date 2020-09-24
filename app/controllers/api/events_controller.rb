@@ -11,10 +11,8 @@ class Api::EventsController < ApplicationController
   end
 
   def create
-    unless helpers.check_auth
-      render json: { success: false }
-      return
-    end
+    head :bad_request and return unless helpers.check_auth
+
     begin
       # Attempt to parse start and end date and respond with 400 if invalid
       # Ruby doesn't actually make sure dates are valid before you make a model with them

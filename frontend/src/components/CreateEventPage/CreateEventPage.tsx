@@ -62,8 +62,12 @@ const CreateEventPage: React.FC<RouteComponentProps> = () => {
         'X-CSRF-Token': getCSRFToken(),
       },
       body: JSON.stringify(body),
-    }).then(() => { // Once request has been processed, go back to homepage
-      navigate('/');
+    }).then((response) => { // Once request has been processed, go back to homepage
+      if (response.ok) {
+        navigate('/');
+      } else { // something bad happened...
+        navigate('/login');
+      }
     });
   };
 

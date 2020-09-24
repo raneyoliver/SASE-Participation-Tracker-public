@@ -42,8 +42,7 @@ const LoginPage: React.FC<RouteComponentProps> = () => {
       if (response.ok) {
         navigate('/');
       } else { // something bad happened...
-        // eslint-disable-next-line no-console
-        console.log('error');
+        navigate('/login');
       }
     });
   };
@@ -59,6 +58,7 @@ const LoginPage: React.FC<RouteComponentProps> = () => {
             label="Username"
             value={username}
             onChange={handleNameChange}
+            autoComplete="username"
           />
         </Box>
 
