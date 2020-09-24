@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 describe StaticController do
   describe 'GET index' do
     it 'renders an HTML document' do

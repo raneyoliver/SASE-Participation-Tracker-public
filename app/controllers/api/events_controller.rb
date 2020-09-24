@@ -13,8 +13,8 @@ class Api::EventsController < ApplicationController
     begin
       # Attempt to parse start and end date and respond with 400 if invalid
       # Ruby doesn't actually make sure dates are valid before you make a model with them
-      # DateTime.parse(params[:event][:start_time])
-      # DateTime.parse(params[:event][:end_time])
+      DateTime.parse(params[:event][:start_time])
+      DateTime.parse(params[:event][:end_time])
     rescue ArgumentError, NoMethodError
       head :bad_request and return
     end

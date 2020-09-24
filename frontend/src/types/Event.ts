@@ -1,3 +1,5 @@
+import FormType from '../Enums';
+
 // Interface with fields needed to create an event model in rails, use this when creating events
 export interface Event {
   name: string;
@@ -13,14 +15,10 @@ export interface SerializedEvent {
   description: string;
   start_time: string;
   end_time: string;
-  forms: SerializedForm[];
+  forms: SerializedFormData[];
 }
 
-export enum FormType {
-  'sign-in' = 'Sign-in Form',
-}
-
-export interface SerializedForm {
+export interface SerializedFormData {
   id: string;
   form_type: FormType;
 }

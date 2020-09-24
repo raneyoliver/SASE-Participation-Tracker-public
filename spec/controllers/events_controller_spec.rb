@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 describe Api::EventsController do
   describe 'GET list' do
     context 'when no events are created' do

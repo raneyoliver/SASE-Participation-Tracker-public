@@ -4,7 +4,7 @@ module EventsHelper
   def serialize_event(event)
     {
       **event.attributes.symbolize_keys,
-      forms: Form.where({ event_id: event.id }).select('id, form_type')
+      forms: event.forms.select('id, form_type'),
     }
   end
 

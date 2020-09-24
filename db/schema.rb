@@ -32,4 +32,15 @@ ActiveRecord::Schema.define(version: 2020_09_22_205344) do
     t.string "questions"
   end
 
+  create_table "user", id: :string, force: :cascade do |t|
+    t.string "first_name", null: false
+    t.string "last_name", null: false
+    t.string "major", null: false
+    t.integer "graduation_year", null: false
+    t.string "email", null: false
+    t.string "phone_number"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
 end

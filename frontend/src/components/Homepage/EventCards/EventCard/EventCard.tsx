@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Box, Typography } from '@material-ui/core';
+import { Link } from '@reach/router';
 import { SerializedEvent } from '../../../../types/Event';
 import formatDate from '../../../../utils/formatDate';
 import CardWithHeader from '../../../CardWithHeader/CardWithHeader';
@@ -25,7 +26,9 @@ const EventCard: React.FC<EventCardProps> = ({ event }) => {
           <br />
           {`Ends at: ${endTime}`}
           <br />
-          {`Sign in here: ${event.forms.map((form) => form.id).join(', ')}`}
+          {'Sign in here: '}
+          {' '}
+          {event.forms.map((form) => <Link key={form.id} to={`/form/${form.id}`}>{`${form.id}`}</Link>)}
         </Typography>
       </div>
     </CardWithHeader>

@@ -7,10 +7,15 @@ Rails.application.routes.draw do
       post 'create'
     end
 
-    # /api/form
-    resource :forms do
-      get 'list'
+    # /api/users
+    resource :users do
+      post 'handle_identification'
       post 'create'
+    end
+
+    # /api/forms
+    resource :forms do
+      get ':id', to: 'forms#show'
     end
   end
 
