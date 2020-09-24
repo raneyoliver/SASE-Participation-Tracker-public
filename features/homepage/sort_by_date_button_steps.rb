@@ -1,5 +1,5 @@
 # Create event models so that event cards render
-Before do
+Before '@event-sorting' do
   Event.new(
     name: 'Second chronological event',
     start_time: 'Thu, 1 Jan 1970 01:00:00 +0000',
