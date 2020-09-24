@@ -12,8 +12,7 @@ class Api::EventsController < ApplicationController
 
   def create
     unless helpers.check_auth
-      render json: { success: false }
-      return
+      head: :unauthorized and return
     end
     begin
       # Attempt to parse start and end date and respond with 400 if invalid
