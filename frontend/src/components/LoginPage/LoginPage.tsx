@@ -64,7 +64,7 @@ const LoginPage: React.FC<RouteComponentProps> = () => {
 
         <Box paddingBottom={1}>
           <TextField
-            id="standard-password-input"
+            id="password"
             required
             error={!username}
             label="Password"

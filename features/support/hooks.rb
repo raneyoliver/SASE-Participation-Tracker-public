@@ -8,5 +8,6 @@ Before('@formRequired') do
 end
 
 Before('@authRequired') do
-  auth_data = { username: 'Admin', password: 'U4xBFhCzDnmYq4bG' }
+  @admin = Admin.new(username: 'testAdmin', password: '1234')
+  @admin.save
 end

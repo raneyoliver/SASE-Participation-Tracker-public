@@ -2,6 +2,12 @@ When 'I go to the homepage to view the form link' do
   visit '/'
 end
 
+Then 'I log in' do
+  fill_in('username', with: 'testAdmin')
+  fill_in('password', with: '1234')
+  click_on 'login'
+end
+
 Then 'I see the form id on the homepage' do
   expect(page).to have_content('de12b1128f3')
 end

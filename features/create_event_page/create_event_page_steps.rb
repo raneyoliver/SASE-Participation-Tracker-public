@@ -2,6 +2,10 @@ When 'I go to the create event page' do
   visit '/create_event'
 end
 
+Then 'I go back to the create event page' do
+  visit '/create_event'
+end
+
 Then 'I fill out the form' do
   fill_in('event-name', with: 'My cool event')
   fill_in('event-description', with: 'Event Description')
