@@ -10,19 +10,11 @@ class Api::EventsController < ApplicationController
   end
 
   def create
-    begin
-      # Attempt to parse start and end date and respond with 400 if invalid
-      # Ruby doesn't actually make sure dates are valid before you make a model with them
-      DateTime.parse(params[:event][:start_time])
-      DateTime.parse(params[:event][:end_time])
-    rescue ArgumentError, NoMethodError
-      head :bad_request and return
-    end
     @event = Event.new(event_params)
 
-    @event.save
+    head :bad_request and return unless @event.save
 
-    # Create Form
+    # Create sign-in form
     @form = Form.new(
       # hash datetime
       id: helpers.make_unique_id,
