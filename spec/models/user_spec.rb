@@ -3,8 +3,9 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   context 'when a new User is created' do
     before :each do
-      @user_data = { id: '333333333', first_name: 'New', last_name: 'User', major: 'computer science',
-                     graduation_year: 2021, email: 'email@address.com', phone_number: '333-333-3333' }
+      @user_data = { id: '3333333333333333333333333333333333333333', first_name: 'New', last_name: 'User',
+                     major: 'computer science', graduation_year: 2021, email: 'email@address.com',
+                     phone_number: '333-333-3333' }
     end
     it 'is valid with all attributes' do
       expect(User.new(@user_data)).to be_valid
@@ -58,12 +59,12 @@ RSpec.describe User, type: :model do
       @user_data[:phone_number] = 'a' * 256
       expect(User.new(@user_data)).to_not be_valid
     end
-    it 'is not valid with an id shorter than 9 characters' do
-      @user_data[:id] = '33333333'
+    it 'is not valid with an id shorter than 40 characters' do
+      @user_data[:id] = '3' * 39
       expect(User.new(@user_data)).to_not be_valid
     end
-    it 'is not valid with an id longer than 9 characters' do
-      @user_data[:id] = '3333333333'
+    it 'is not valid with an id longer than 40 characters' do
+      @user_data[:id] = '3' * 41
       expect(User.new(@user_data)).to_not be_valid
     end
     it 'is not valid with a graduation_year less than 0' do
@@ -99,8 +100,9 @@ RSpec.describe User, type: :model do
   end
   context 'when Users exist in the database' do
     before :all do
-      user_data = { id: '333333333', first_name: 'New', last_name: 'User', major: 'computer science',
-                    graduation_year: 2021, email: 'email@address.com', phone_number: '333-333-3333' }
+      user_data = { id: '3333333333333333333333333333333333333333', first_name: 'New', last_name: 'User',
+                    major: 'computer science', graduation_year: 2021, email: 'email@address.com',
+                    phone_number: '333-333-3333' }
       @users = [User.create(user_data)]
     end
     it 'returns all to users.all' do

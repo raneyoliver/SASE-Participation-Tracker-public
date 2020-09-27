@@ -7,6 +7,11 @@ Rails.application.routes.draw do
       post 'create'
     end
 
+    # /api/form_users
+    resource :form_users do
+      post 'create'
+    end
+
     # /api/users
     resource :users do
       post 'handle_identification'

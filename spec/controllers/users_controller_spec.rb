@@ -4,8 +4,9 @@ describe Api::UsersController do
   describe 'POST handle_identification' do
     context 'when given a id that belongs to an existing user' do
       before :all do
-        user_data = { id: '333333333', first_name: 'New', last_name: 'User', major: 'computer science',
-                      graduation_year: 2021, email: 'email@address.com', phone_number: '333-333-3333' }
+        user_data = { id: '95e229d8aca716874c8feca1501379e06f239d03', first_name: 'New', last_name: 'User',
+                      major: 'computer science', graduation_year: 2021, email: 'email@address.com',
+                      phone_number: '333-333-3333' }
         @user = User.create(user_data)
       end
       it 'responds with a created status code' do
@@ -37,6 +38,7 @@ describe Api::UsersController do
   describe 'POST create' do
     before :each do
       @id = '333333333'
+      @hashed_id = '95e229d8aca716874c8feca1501379e06f239d03'
       @first_name = 'New'
       @last_name = 'User'
       @major = 'computer science'
@@ -61,7 +63,7 @@ describe Api::UsersController do
         expect(User.count).to eq(1)
 
         @created = User.first
-        expect(@created.id).to eq(@id)
+        expect(@created.id).to eq(@hashed_id)
         expect(@created.first_name).to eq(@first_name)
         expect(@created.last_name).to eq(@last_name)
         expect(@created.major).to eq(@major)
@@ -77,7 +79,7 @@ describe Api::UsersController do
         expect(User.count).to eq(1)
 
         @created = User.first
-        expect(@created.id).to eq(@id)
+        expect(@created.id).to eq(@hashed_id)
         expect(@created.first_name).to eq(@first_name)
         expect(@created.last_name).to eq(@last_name)
         expect(@created.major).to eq(@major)

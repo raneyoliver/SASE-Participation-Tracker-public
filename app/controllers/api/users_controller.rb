@@ -3,14 +3,14 @@ class Api::UsersController < ApplicationController
   def handle_identification
     head :bad_request and return if params[:id].nil?
 
-    @user = User.find(params[:id])
+    @user = User.find(helpers.hash_user_uin(params[:id]))
+
     head :created and return
   rescue ActiveRecord::RecordNotFound
     head :ok and return
   end
 
   def create
-    # Evelio, perform a check here and make sure that the UIN isn't already in the system
     @user = User.new(user_params)
     head :created and return if @user.save
 
@@ -22,6 +22,7 @@ class Api::UsersController < ApplicationController
   private
 
   def user_params
+    params[:user][:id] = helpers.hash_user_uin(params[:user][:id])
     params.require(:user).permit(:id, :first_name, :last_name, :major, :graduation_year, :email, :phone_number)
   end
 end

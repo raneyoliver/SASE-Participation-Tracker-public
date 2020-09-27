@@ -12,20 +12,46 @@ describe Api::EventsController do
     end
 
     context 'when one event is created' do
-      it 'returns an array with the created event' do
-        @expected = {
+      it 'returns an array with the created event and forms it contains' do
+        @expected_event = {
+          id: 1,
           name: 'Test Event',
           description: 'description goes here',
           start_time: '2020-09-15T01:00:00.000Z',
           end_time: '2020-09-15T00:00:00.000Z',
         }
-        Event.new(**@expected).save
+        Event.new(**@expected_event).save
+
+        @expected_form = {
+          id: '8888888888',
+          event_id: 1,
+          start_time: '2020-09-15T01:00:00.000Z',
+          end_time: '2020-09-15T00:00:00.000Z',
+          form_type: 'sign-in',
+          questions: '[]',
+        }
+        Form.new(**@expected_form).save
+
+        @expected_response = {
+          id: 1,
+          name: 'Test Event',
+          description: 'description goes here',
+          start_time: '2020-09-15T01:00:00.000Z',
+          end_time: '2020-09-15T00:00:00.000Z',
+          forms: [{
+            id: '8888888888',
+            form_type: 'sign-in',
+            user_count: 0,
+          }],
+        }
 
         get :list
 
+        @expected_response = @expected_response.stringify_keys
+        @expected_response['forms'][0] = @expected_response['forms'][0].stringify_keys
         @json_response = JSON.parse response.body
         expect(@json_response.length).to eq(1)
-        expect(@json_response[0]).to match(hash_including(@expected.stringify_keys))
+        expect(@json_response[0]).to match(@expected_response)
       end
     end
   end

@@ -6,6 +6,7 @@ class Api::EventsController < ApplicationController
     @response = @events.map do |event|
       helpers.serialize_event(event)
     end
+
     render json: @response
   end
 

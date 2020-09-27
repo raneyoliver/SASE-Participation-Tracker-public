@@ -8,6 +8,7 @@ import AddIcon from '@material-ui/icons/Add';
 import CardWithHeader from '../CardWithHeader/CardWithHeader';
 import getCSRFToken from '../../utils/getCSRFToken';
 import { SerializedForm } from '../../types/Form';
+import { FormUser } from '../../types/FormUser';
 
 const FormPage: React.FC<RouteComponentProps> = () => {
   const { formId } = useParams();
@@ -45,6 +46,11 @@ const FormPage: React.FC<RouteComponentProps> = () => {
       form_id: formId,
     };
 
+    const formUserBody: FormUser = {
+      form_id: formId,
+      user_id: UIN,
+    };
+
     fetch('/api/users/handle_identification', {
       method: 'POST',
       headers: {
@@ -54,7 +60,18 @@ const FormPage: React.FC<RouteComponentProps> = () => {
       body: JSON.stringify(body),
     }).then((response) => {
       if (response.status === 201) {
-        navigate('/form/confirm_submission');
+        fetch('/api/form_users/create', {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json',
+            'X-CSRF-Token': getCSRFToken(),
+          },
+          body: JSON.stringify(formUserBody),
+        }).then((response2) => {
+          if (response2.status === 201) {
+            navigate('/form/confirm_submission');
+          }
+        });
       } else if (response.status === 200) {
         navigate(`/form/${formId}/new_user/${UIN}`);
       }
