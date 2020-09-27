@@ -1,6 +1,12 @@
 require 'rails_helper'
 
 describe Api::EventsController do
+  before(:each) do
+    @admin = Admin.new(username: 'testAdmin', password: '1234')
+    @admin.save
+    session[:current_user_id] = @admin.id
+  end
+
   describe 'GET list' do
     context 'when no events are created' do
       it 'returns empty array' do

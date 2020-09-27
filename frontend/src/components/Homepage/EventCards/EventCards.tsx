@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Typography, Box } from '@material-ui/core';
+import { navigate } from '@reach/router';
 import { SerializedEvent } from '../../../types/Event';
 import EventCard from './EventCard/EventCard';
 import CardWithHeader from '../../CardWithHeader/CardWithHeader';
@@ -13,9 +14,16 @@ const EventCards: React.FC = () => {
   const [events, setEvents] = React.useState<SerializedEvent[]>([]);
 
   React.useEffect(() => {
-    fetch('/api/events/list').then((response) => response.json()).then((response: SerializedEvent[]) => {
+    fetch('/api/events/list').then((response) => {
+      if (response.ok) {
+        return response;
+      }
+      navigate('/login');
+      return response;
+    }).then((response) => response.json()).then((response: SerializedEvent[]) => {
       setEvents(response);
-    }).finally(() => setLoading(false));
+    })
+      .finally(() => setLoading(false));
   }, []);
 
   const handleEventSort = React.useCallback((newEvents: SerializedEvent[]): void => {

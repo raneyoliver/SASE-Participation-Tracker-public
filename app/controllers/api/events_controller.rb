@@ -1,6 +1,8 @@
 # Controller for api functionality related to events
 class Api::EventsController < ApplicationController
   def list
+    head :bad_request and return unless helpers.check_auth
+
     @events = Event.all.select('id, name, description, start_time, end_time')
 
     @response = @events.map do |event|
@@ -11,6 +13,8 @@ class Api::EventsController < ApplicationController
   end
 
   def create
+    head :bad_request and return unless helpers.check_auth
+
     @event = Event.new(event_params)
     head :bad_request and return unless @event.save
 

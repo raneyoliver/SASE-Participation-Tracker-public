@@ -6,6 +6,7 @@ import { Router } from '@reach/router';
 import theme from '../../theme';
 import Homepage from '../Homepage/Homepage';
 import NavBar from '../Navbar/Navbar';
+import LoginPage from '../LoginPage/LoginPage';
 import CreateEventPage from '../CreateEventPage/CreateEventPage';
 import FormPage from '../FormPage/FormPage';
 import NewUserPage from '../NewUserPage/NewUserPage';
@@ -20,6 +21,7 @@ const App: React.SFC = () => (
         <Router>
           <Homepage path="/" />
           <CreateEventPage path="/create_event" />
+          <LoginPage path="/login" />
           <FormPage path="/form/:formId" />
           <NewUserPage path="/form/:formId/new_user/:UIN" />
           <ConfirmSubmissionPage path="/form/confirm_submission" />
