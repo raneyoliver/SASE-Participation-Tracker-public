@@ -29,3 +29,9 @@ end
 Then 'I get redirected to the homepage' do
   expect(page).to have_current_path('/')
 end
+
+Then 'I enter the wrong password' do
+  fill_in('username', with: 'testAdmin')
+  fill_in('password', with: 'notThePassword')
+  click_button 'login'
+end

@@ -33,3 +33,10 @@ Scenario: I cannot log in with incorrect credentials
   When I go to the log in page
   Then I enter the wrong credentials
   Then I am unable to log in
+
+@javascript
+@authRequired
+Scenario: I cannot log in with incorrect password
+  When I go to the log in page
+  Then I enter the wrong password
+  Then I am unable to log in

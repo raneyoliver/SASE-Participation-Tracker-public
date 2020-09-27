@@ -2,7 +2,7 @@
 class Api::SessionsController < Devise::SessionsController
   def create
     @admin = Admin.find_for_authentication(username: params[:username])
-    return invalid_user unless @admin
+    return invalid_login_attempt unless @admin
 
     if @admin.valid_password?(params[:password])
       session[:current_user_id] = @admin.id
@@ -20,17 +20,8 @@ class Api::SessionsController < Devise::SessionsController
 
   private
 
-  def invalid_user
-    warden.custom_failure!
-    render json: { error: 'invalid user' }, status: :unprocessable_entity
-  end
-
   def invalid_login_attempt
     warden.custom_failure!
     render json: { error: 'invalid login attempt' }, status: :unprocessable_entity
-  end
-
-  def user_params
-    params.require(:username).permit(:username, :password)
   end
 end
