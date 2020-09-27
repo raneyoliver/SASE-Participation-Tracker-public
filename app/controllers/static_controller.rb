@@ -7,4 +7,8 @@ class StaticController < ApplicationController
 
     render 'index'
   end
+
+  def index_js
+    render file: 'index.js'
+  end
 end
