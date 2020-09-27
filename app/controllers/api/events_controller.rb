@@ -12,7 +12,6 @@ class Api::EventsController < ApplicationController
   end
 
   def create
-<<<<<<< HEAD
     head :bad_request and return unless helpers.check_auth
 
     begin
@@ -23,8 +22,6 @@ class Api::EventsController < ApplicationController
     rescue ArgumentError, NoMethodError
       head :bad_request and return
     end
-=======
->>>>>>> origin/master
     @event = Event.new(event_params)
 
     head :bad_request and return unless @event.save
