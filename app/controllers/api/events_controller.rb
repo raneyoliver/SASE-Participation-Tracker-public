@@ -14,7 +14,7 @@ class Api::EventsController < ApplicationController
 
   def create
     head :bad_request and return unless helpers.check_auth
-    
+
     @event = Event.new(event_params)
     head :bad_request and return unless @event.save
 
