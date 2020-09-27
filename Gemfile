@@ -64,5 +64,9 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # Use dotenv to manage secrets
 gem 'dotenv-rails'
 
+<<<<<<< HEAD
 # Devise, for authentication
 gem 'devise'
+=======
+gem 'date_validator', '~> 0.10.0'
+>>>>>>> origin/master

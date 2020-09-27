@@ -11,7 +11,7 @@ interface EventCardProps {
 
 const EventCard: React.FC<EventCardProps> = ({ event }) => {
   const startTime = formatDate(new Date(event.start_time));
-  const endTime = formatDate(new Date(event.start_time));
+  const endTime = formatDate(new Date(event.end_time));
 
   return (
     <CardWithHeader id={`event-card-${event.id}`} title={event.name}>
