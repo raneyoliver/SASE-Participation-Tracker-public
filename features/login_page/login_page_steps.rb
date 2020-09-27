@@ -8,7 +8,6 @@ end
 
 Then 'I only enter a password' do
   fill_in('password', with: 'test')
-  click_button 'login'
 end
 
 Then 'I am unable to log in' do
@@ -17,7 +16,6 @@ end
 
 Then 'I only enter a username' do
   fill_in('username', with: 'test')
-  click_button 'login'
 end
 
 Then 'I enter the wrong credentials' do
@@ -34,4 +32,8 @@ Then 'I enter the wrong password' do
   fill_in('username', with: 'testAdmin')
   fill_in('password', with: 'notThePassword')
   click_button 'login'
+end
+
+Then 'I am unable to click the log in button' do
+  expect(page).to have_button('login', disabled: true)
 end

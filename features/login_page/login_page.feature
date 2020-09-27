@@ -20,13 +20,13 @@ Scenario: Entering valid credentials takes me to the homepage
 Scenario: I cannot log in without a username
   When I go to the log in page
   Then I only enter a password
-  Then I am unable to log in  
+  Then I am unable to click the log in button
 
 @javascript
 Scenario: I cannot log in without a password
   When I go to the log in page
   Then I only enter a username
-  Then I am unable to log in
+  Then I am unable to click the log in button
 
 @javascript
 Scenario: I cannot log in with incorrect credentials

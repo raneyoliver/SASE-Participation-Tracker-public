@@ -18,10 +18,7 @@ const LoginPage: React.FC<RouteComponentProps> = () => {
   };
 
   // Validate form info to show errors and determine whether to allow submit
-  // const startTimeValid = !Number.isNaN(startTime.valueOf());
-  // const endTimeValid = !Number.isNaN(startTime.valueOf());
-  // TODO: perform validation
-  const formValid = true; // name && startTimeValid && endTimeValid;
+  const formValid = username && password;
 
   const handleLogin = (): void => {
     if (!formValid) return;
@@ -41,8 +38,6 @@ const LoginPage: React.FC<RouteComponentProps> = () => {
     }).then((response) => {
       if (response.ok) {
         navigate('/');
-      } else { // something bad happened...
-        navigate('/login');
       }
     });
   };

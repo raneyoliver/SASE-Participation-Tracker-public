@@ -14,15 +14,7 @@ class Api::EventsController < ApplicationController
 
   def create
     head :bad_request and return unless helpers.check_auth
-
-    begin
-      # Attempt to parse start and end date and respond with 400 if invalid
-      # Ruby doesn't actually make sure dates are valid before you make a model with them
-      DateTime.parse(params[:event][:start_time])
-      DateTime.parse(params[:event][:end_time])
-    rescue ArgumentError, NoMethodError
-      head :bad_request and return
-    end
+    
     @event = Event.new(event_params)
     head :bad_request and return unless @event.save
 
