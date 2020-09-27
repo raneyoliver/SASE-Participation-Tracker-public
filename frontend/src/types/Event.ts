@@ -21,4 +21,5 @@ export interface SerializedEvent {
 export interface SerializedFormData {
   id: string;
   form_type: FormType;
+  user_count: number;
 }

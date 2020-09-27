@@ -18,20 +18,46 @@ describe Api::EventsController do
     end
 
     context 'when one event is created' do
-      it 'returns an array with the created event' do
-        @expected = {
+      it 'returns an array with the created event and forms it contains' do
+        @expected_event = {
+          id: 1,
           name: 'Test Event',
           description: 'description goes here',
           start_time: '2020-09-15T01:00:00.000Z',
           end_time: '2020-09-15T00:00:00.000Z',
         }
-        Event.new(**@expected).save
+        Event.new(**@expected_event).save
+
+        @expected_form = {
+          id: '8888888888',
+          event_id: 1,
+          start_time: '2020-09-15T01:00:00.000Z',
+          end_time: '2020-09-15T00:00:00.000Z',
+          form_type: 'sign-in',
+          questions: '[]',
+        }
+        Form.new(**@expected_form).save
+
+        @expected_response = {
+          id: 1,
+          name: 'Test Event',
+          description: 'description goes here',
+          start_time: '2020-09-15T01:00:00.000Z',
+          end_time: '2020-09-15T00:00:00.000Z',
+          forms: [{
+            id: '8888888888',
+            form_type: 'sign-in',
+            user_count: 0,
+          }],
+        }
 
         get :list
 
+        @expected_response = @expected_response.stringify_keys
+        @expected_response['forms'][0] = @expected_response['forms'][0].stringify_keys
         @json_response = JSON.parse response.body
         expect(@json_response.length).to eq(1)
-        expect(@json_response[0]).to match(hash_including(@expected.stringify_keys))
+        expect(@json_response[0]).to match(@expected_response)
       end
     end
   end
@@ -61,6 +87,45 @@ describe Api::EventsController do
         expect(@created.description).to eq(@description)
         expect(@created.start_time.to_i).to eq(DateTime.parse(@start_time).to_i)
         expect(@created.end_time.to_i).to eq(DateTime.parse(@end_time).to_i)
+      end
+
+      it 'saves the form' do
+        @name = 'cool event (cool kids only)'
+        @description = 'what is a description'
+        @start_time = 'Wed, 16 Sep 2020 05:27:32 GMT'
+        @end_time = 'Wed, 16 Sep 2020 06:27:32 GMT'
+        @form_type = 'sign-in'
+        @questions = '[]'
+        @event_expected = {
+          name: @name,
+          description: @description,
+          start_time: @start_time,
+          end_time: @end_time,
+        }
+
+        @form_expected = {
+          event_id: Event.primary_key,
+          start_time: @start_time,
+          end_time: @end_time,
+          form_type: @form_type,
+          questions: @questions,
+        }
+
+        post :create, params: { event: @event_expected, form: @form_expected }, format: :json
+
+        expect(response).to have_http_status(:no_content)
+        expect(Form.count).to eq(1)
+        @created = Form.first
+        expect(@created.start_time.to_i).to eq(DateTime.parse(@start_time).to_i)
+        expect(@created.end_time.to_i).to eq(DateTime.parse(@end_time).to_i)
+        expect(@created.form_type).to eq(@form_type)
+        expect(@created.questions).to eq(@questions)
+
+        # Check if the form is linked to the event created
+        expect(@created.event_id).to eq(Event.first.id)
+
+        # Check if the form has a unique id (link)
+        expect(@created.id)
       end
     end
 

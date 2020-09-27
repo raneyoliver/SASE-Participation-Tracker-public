@@ -8,6 +8,7 @@ class Api::EventsController < ApplicationController
     @response = @events.map do |event|
       helpers.serialize_event(event)
     end
+
     render json: @response
   end
 
@@ -23,12 +24,10 @@ class Api::EventsController < ApplicationController
       head :bad_request and return
     end
     @event = Event.new(event_params)
-
     head :bad_request and return unless @event.save
 
     # Create sign-in form
     @form = Form.new(
-      # hash datetime
       id: helpers.make_unique_id,
       event_id: @event.id,
       start_time: @event.start_time,
@@ -36,7 +35,6 @@ class Api::EventsController < ApplicationController
       form_type: 'sign-in',
       questions: [].to_json
     )
-
     @form.save
   end
 

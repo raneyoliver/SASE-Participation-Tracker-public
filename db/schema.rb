@@ -11,6 +11,7 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema.define(version: 2020_09_22_205344) do
+ActiveRecord::Schema.define(version: 2020_09_24_125928) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,6 +43,11 @@ ActiveRecord::Schema.define(version: 2020_09_22_205344) do
     t.datetime "end_time"
     t.string "form_type"
     t.string "questions"
+  end
+
+  create_table "form_user", force: :cascade do |t|
+    t.string "form_id", null: false
+    t.string "user_id", null: false
   end
 
   create_table "user", id: :string, force: :cascade do |t|

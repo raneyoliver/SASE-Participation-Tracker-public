@@ -4,7 +4,16 @@ module EventsHelper
   def serialize_event(event)
     {
       **event.attributes.symbolize_keys,
-      forms: event.forms.select('id, form_type'),
+      forms: event.forms.select('id, form_type').map do |form|
+        serialize_form(form)
+      end,
+    }
+  end
+
+  def serialize_form(form)
+    {
+      **form.attributes.symbolize_keys,
+      user_count: form.form_users.count,
     }
   end
 

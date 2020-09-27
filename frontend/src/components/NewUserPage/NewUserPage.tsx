@@ -6,6 +6,7 @@ import {
 import AddIcon from '@material-ui/icons/Add';
 import CardWithHeader from '../CardWithHeader/CardWithHeader';
 import { User } from '../../types/User';
+import { FormUser } from '../../types/FormUser';
 import getCSRFToken from '../../utils/getCSRFToken';
 
 const NewUserPage: React.FC<RouteComponentProps> = () => {
@@ -74,6 +75,11 @@ const NewUserPage: React.FC<RouteComponentProps> = () => {
       phone_number: phoneNumber,
     };
 
+    const formUserBody: FormUser = {
+      form_id: formId,
+      user_id: UIN,
+    };
+
     const body = {
       user: userBody,
       form_id: formId,
@@ -88,7 +94,18 @@ const NewUserPage: React.FC<RouteComponentProps> = () => {
       body: JSON.stringify(body),
     }).then((response) => {
       if (response.status === 201) {
-        navigate('/form/confirm_submission');
+        fetch('/api/form_users/create', {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json',
+            'X-CSRF-Token': getCSRFToken(),
+          },
+          body: JSON.stringify(formUserBody),
+        }).then((response2) => {
+          if (response2.status === 201) {
+            navigate('/form/confirm_submission');
+          }
+        });
       }
     });
   };
