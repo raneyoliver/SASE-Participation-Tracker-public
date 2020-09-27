@@ -13,10 +13,10 @@ class Api::SessionsController < Devise::SessionsController
     end
   end
 
-  def destroy
-    sign_out(@admin)
-    render json: { success: true }
-  end
+  # def destroy
+  #   sign_out(@admin)
+  #   render json: { success: true }
+  # end
 
   private
 
