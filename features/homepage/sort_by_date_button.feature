@@ -3,6 +3,11 @@ Feature: Sort By Date Button
   I want a "Sort By Date" button on the page for events
   So I can see what events are coming up soon
 
+@javascript
+Scenario: Unauthenticated requests are redirected to the login page
+When I go to the homepage
+Then I get redirected to the log in page
+
 @event-sorting
 @javascript
 @authRequired

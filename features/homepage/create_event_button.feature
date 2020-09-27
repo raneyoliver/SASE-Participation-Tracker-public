@@ -4,6 +4,11 @@ Feature: Create Event Button
   So I can create events easily
 
 @javascript
+Scenario: Unauthenticated requests are redirected to the login page
+When I go to the create event page
+Then I get redirected to the log in page
+
+@javascript
 @authRequired
 Scenario: User is taken to the create event page
   When I go to the homepage
