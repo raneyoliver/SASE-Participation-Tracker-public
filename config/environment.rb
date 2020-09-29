@@ -18,7 +18,6 @@ Rails.application.initialize!
 # Ruby makes table names plural by default, which goes against convention
 ActiveRecord::Base.pluralize_table_names = false
 
-
 # Uncomment this to see the page after cucumber finishes running
 # (eg. to test the page state after tests fail)
 #

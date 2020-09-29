@@ -9,6 +9,6 @@ class StaticController < ApplicationController
   end
 
   def index_js
-    render file: 'index.js'
+    render file: "#{Rails.root}/public/index.js"
   end
 end
