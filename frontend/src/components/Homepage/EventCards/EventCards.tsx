@@ -53,7 +53,7 @@ const EventCards: React.FC = () => {
   return events?.length ? (
     <>
       <EventSortButtons events={events} onSort={handleEventSort} />
-      <LogoutButtons id="logoutButton" />
+      <LogoutButtons id="logout" />
       <Box display="flex" flexWrap="wrap" width="100%">
         {eventCards}
       </Box>
