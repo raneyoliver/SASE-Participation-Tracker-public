@@ -13,6 +13,7 @@ module ParticipationTracker
     config.load_defaults 6.0
 
     # Webpack is used for compilation, disable compiling with sprockets
+    config.assets.precompile = []
     config.assets.check_precompiled_asset = false
 
     # Ruby makes test files (not spec files) by default, which we don't need

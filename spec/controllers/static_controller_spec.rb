@@ -20,4 +20,11 @@ describe StaticController do
       expect(response).to render_template('index')
     end
   end
+
+  describe 'GET index.js' do
+    it 'renders javascript' do
+      get :index_js, xhr: true, format: :js
+      expect(response.content_type).to start_with('text/javascript')
+    end
+  end
 end

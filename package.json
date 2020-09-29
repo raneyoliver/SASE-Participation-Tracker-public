@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "webpack --mode development --watch ./index.tsx --output ../../app/assets/javascripts/index.js",
-    "build": "webpack --mode production ./index.tsx --output ../../app/assets/javascripts/index.js",
-    "lint": "eslint --ext .js,.jsx,.ts,.tsx ."
+    "dev": "webpack --mode development --watch frontend/src/index.tsx --output public/index.js",
+    "build": "webpack --mode production frontend/src/index.tsx --output public/index.js",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx .",
+    "heroku-postbuild": "webpack --mode production frontend/src/index.tsx --output public/index.js"
   },
   "author": "431 8 AM lab, team 3",
   "license": "ISC",
