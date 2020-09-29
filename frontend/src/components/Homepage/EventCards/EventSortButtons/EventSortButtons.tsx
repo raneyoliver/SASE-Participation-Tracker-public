@@ -121,7 +121,14 @@ const EventSortButtons: React.FC<EventSortButtonsProps> = ({ events, onSort }) =
             Sort By:
           </Typography>
         </Box>
-        <Button id="sort-by-date" variant="contained" color="secondary" onClick={handleDateSortClick} endIcon={dateSortIcon}>
+        <Button
+          id="sort-by-date"
+          variant="contained"
+          color="secondary"
+          size="small"
+          onClick={handleDateSortClick}
+          endIcon={dateSortIcon}
+        >
           Date
         </Button>
       </Box>
@@ -131,7 +138,7 @@ const EventSortButtons: React.FC<EventSortButtonsProps> = ({ events, onSort }) =
             Date Filter:
           </Typography>
         </Box>
-        <ButtonGroup color="primary" size="small">
+        <ButtonGroup color="secondary" size="small">
           {dateFilterButtons}
         </ButtonGroup>
       </Box>
