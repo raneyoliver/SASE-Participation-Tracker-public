@@ -13,10 +13,11 @@ class Api::SessionsController < Devise::SessionsController
     end
   end
 
-  # def destroy
-  #   sign_out(@admin)
-  #   render json: { success: true }
-  # end
+  skip_before_action :verify_signed_out_user
+  def destroy
+    session[:current_user_id] = nil
+    render json: { success: true }
+  end
 
   private
 

@@ -5,6 +5,7 @@ import { SerializedEvent } from '../../../types/Event';
 import EventCard from './EventCard/EventCard';
 import CardWithHeader from '../../CardWithHeader/CardWithHeader';
 import EventSortButtons from './EventSortButtons/EventSortButtons';
+import LogoutButtons from '../LogoutButtons/LogoutButtons';
 
 const EventCards: React.FC = () => {
   // Loading is true until fetching events is done
@@ -52,6 +53,7 @@ const EventCards: React.FC = () => {
   return events?.length ? (
     <>
       <EventSortButtons events={events} onSort={handleEventSort} />
+      <LogoutButtons id="logoutButton" />
       <Box display="flex" flexWrap="wrap" width="100%">
         {eventCards}
       </Box>
