@@ -1,14 +1,15 @@
 # Helper functions for events controller
 module EventsHelper
-
   # returns an array of form ids
   def serialize_event(event)
-    event.as_json(include: {
-      forms: {
-        only: [:id, :form_type],
-        methods: :user_count
+    event.as_json(
+      include: {
+        forms: {
+          only: [:id, :form_type],
+          methods: :user_count,
+        },
       }
-    })
+    )
   end
 
   def make_unique_id

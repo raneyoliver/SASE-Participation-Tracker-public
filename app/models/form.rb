@@ -4,6 +4,6 @@ class Form < ApplicationRecord
   has_many :form_users
 
   def user_count
-    self.form_users.length
+    form_users.length
   end
 end
