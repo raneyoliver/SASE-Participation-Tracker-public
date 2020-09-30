@@ -4,6 +4,7 @@ import {
   Box, TextField, Button, Typography,
 } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
+import MenuItem from '@material-ui/core/MenuItem';
 import CardWithHeader from '../CardWithHeader/CardWithHeader';
 import { User } from '../../types/User';
 import { FormUser } from '../../types/FormUser';
@@ -46,12 +47,37 @@ const NewUserPage: React.FC<RouteComponentProps> = () => {
     setEmail(e.target.value);
   };
 
+  const thisYear = new Date().getFullYear();
+  const years = [
+    {
+      value: '2016',
+    },
+    {
+      value: '2017',
+    },
+    {
+      value: '2018',
+    },
+    {
+      value: '2019',
+    },
+    {
+      value: thisYear,
+    },
+    {
+      value: '2021',
+    },
+    {
+      value: '2022',
+    },
+    {
+      value: '2023',
+    },
+  ];
+
   const [graduationYear, setGraduationYear] = React.useState('');
   const handleGraduationYearChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    const re = /^[0-9]{0,4}$/;
-    if (re.test(e.target.value)) {
-      setGraduationYear(e.target.value);
-    }
+    setGraduationYear(e.target.value);
   };
 
   const [phoneNumber, setPhoneNumber] = React.useState('');
@@ -134,7 +160,22 @@ const NewUserPage: React.FC<RouteComponentProps> = () => {
         </Box>
 
         <Box paddingBottom={1}>
-          <TextField id="new-user-graduation-year" required error={!graduationYearValid} label="Graduation Year" value={graduationYear} onChange={handleGraduationYearChange} />
+          <TextField
+            id="new-user-graduation-year"
+            select
+            required
+            error={!graduationYear}
+            label="Graduation Year"
+            value={graduationYear}
+            onChange={handleGraduationYearChange}
+            helperText="Please select your graduation year"
+          >
+            {years.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.value}
+              </MenuItem>
+            ))}
+          </TextField>
         </Box>
 
         <Box paddingBottom={1}>
