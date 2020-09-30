@@ -50,28 +50,25 @@ const NewUserPage: React.FC<RouteComponentProps> = () => {
   const thisYear = new Date().getFullYear();
   const years = [
     {
-      value: '2016',
-    },
-    {
-      value: '2017',
-    },
-    {
-      value: '2018',
-    },
-    {
-      value: '2019',
-    },
-    {
       value: thisYear,
     },
     {
-      value: '2021',
+      value: thisYear + 1,
     },
     {
-      value: '2022',
+      value: thisYear + 2,
     },
     {
-      value: '2023',
+      value: thisYear + 3,
+    },
+    {
+      value: thisYear + 4,
+    },
+    {
+      value: thisYear + 5,
+    },
+    {
+      value: thisYear + 6,
     },
   ];
 
@@ -85,8 +82,7 @@ const NewUserPage: React.FC<RouteComponentProps> = () => {
     setPhoneNumber(e.target.value);
   };
 
-  const graduationYearValid = graduationYear.length === 4;
-  const formValid = firstName && lastName && major && graduationYearValid && email;
+  const formValid = firstName && lastName && major && email;
 
   const handleSubmit = (): void => {
     if (!formValid) return;
