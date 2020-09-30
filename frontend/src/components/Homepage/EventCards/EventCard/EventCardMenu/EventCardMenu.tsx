@@ -13,7 +13,7 @@ interface EventCardMenuProps {
 const EventCardMenu: React.FC<EventCardMenuProps> = ({ event }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
-  const menuOptions: = {
+  const menuOptions = {
     'Edit Event': 'put edit url here',
     'Delete Event': 'put delete url here',
   };
