@@ -15,10 +15,10 @@ const EventCard: React.FC<EventCardProps> = ({ event }) => {
   const startTime = formatDate(new Date(event.start_time));
   const endTime = formatDate(new Date(event.end_time));
 
-  const [doesRSVPFormExist, setDoesRSVPFormExist] = React.useState(false);
+  const menu = <EventCardMenu event={event} />
 
   return (
-    <CardWithHeader id={`event-card-${event.id}`} title={event.name} icon={<EventCardMenu eventId={event.id} doesRSVPFormExist={doesRSVPFormExist} />}>
+    <CardWithHeader id={`event-card-${event.id}`} title={event.name} icon={menu}>
       <div style={{ wordWrap: 'break-word' }}>
         <Box overflow="auto" maxHeight={120}>
           <Typography>
