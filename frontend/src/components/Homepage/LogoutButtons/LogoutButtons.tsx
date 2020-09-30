@@ -26,11 +26,9 @@ const LogoutButtons: React.FC<LogoutButtonsProps> = () => {
   };
 
   return (
-    <Box display="flex" alignItems="center">
-      <Button id="logout" variant="contained" color="secondary" onClick={handleLogoutClick}>
-        Log Out
-      </Button>
-    </Box>
+    <Button id="logout" variant="contained" color="secondary" onClick={handleLogoutClick}>
+      Log Out
+    </Button>
   );
 };
 
