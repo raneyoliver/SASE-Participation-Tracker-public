@@ -9,7 +9,7 @@ interface LogoutButtonsProps {
   id: string;
 }
 
-const LogoutButtons: React.FC<LogoutButtonsProps> = () => {
+const LogoutButton: React.FC<LogoutButtonsProps> = () => {
   const handleLogoutClick = (): void => {
     fetch('/api/admins/sign_out', {
       method: 'DELETE',
@@ -31,4 +31,4 @@ const LogoutButtons: React.FC<LogoutButtonsProps> = () => {
   );
 };
 
-export default LogoutButtons;
+export default LogoutButton;
