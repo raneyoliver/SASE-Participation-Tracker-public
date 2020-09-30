@@ -10,7 +10,6 @@ interface LogoutButtonsProps {
 }
 
 const LogoutButtons: React.FC<LogoutButtonsProps> = () => {
-
   const handleLogoutClick = (): void => {
     fetch('/api/admins/sign_out', {
       method: 'DELETE',
