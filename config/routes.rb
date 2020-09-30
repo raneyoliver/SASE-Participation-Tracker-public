@@ -7,11 +7,6 @@ Rails.application.routes.draw do
       post 'create'
     end
 
-    # devise_scope :admins do
-    #   post 'sign_in' => 'devise/sessions#create'
-    #   delete 'sign_out' => 'devise/sessions#destroy'
-    # end
-
     devise_for :admins, controllers: {
       registrations: 'api/registrations',
       sessions: 'api/sessions',
