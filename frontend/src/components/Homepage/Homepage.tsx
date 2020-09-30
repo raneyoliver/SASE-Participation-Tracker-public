@@ -18,7 +18,7 @@ const Homepage: React.SFC<RouteComponentProps> = () => {
           Events
         </Typography>
         <Box display="flex" justifyContent="flex-end">
-          <LogoutButtons id="logout" />
+          <LogoutButton id="logout" />
         </Box>
       </Box>
       <EventCards />
