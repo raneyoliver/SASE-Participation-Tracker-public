@@ -13,28 +13,41 @@ interface EventCardMenuProps {
 const EventCardMenu: React.FC<EventCardMenuProps> = ({ event }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
-  const menuOptions = {
-    'Edit Event': 'put edit url here',
-    'Delete Event': 'put delete url here',
-  };
-  const hasRSVPForm = event.forms.some((form) => form.form_type === FormType.RSVP)
-  if (!hasRSVPForm) {
-    Object.assign(menuOptions, { 'Create RSVP Form': 'put create rsvp url here' });
-  }
-
-  const handleClick = (event: React.MouseEvent): void => {
-    setAnchorEl(event.currentTarget);
+  const handleClick = (mouseEvent: React.MouseEvent): void => {
+    setAnchorEl(mouseEvent.currentTarget);
   };
 
   const handleClose = (): void => {
     setAnchorEl(null);
   };
 
+  const handleEdit = (): void => {
+    handleClose();
+  };
+
+  const handleDelete = (): void => {
+    handleClose();
+  };
+
+  const handleCreateRSVP = (): void => {
+    handleClose();
+  };
+
+  const menuOptions: Record<string, () => any> = {
+    'Edit Event': handleEdit,
+    'Delete Event': handleDelete
+  };
+
+  const hasRSVPForm = event.forms.some((form) => form.form_type === FormType.RSVP);
+  if (!hasRSVPForm) {
+    menuOptions['Create RSVP Form'] = handleCreateRSVP;
+  }
+
   const menuItems = Object.entries(menuOptions).map(([key, value]) => (
-    <MenuItem key={key} onClick={handleClose}>
+    <MenuItem key={key} onClick={value}>
       {key}
     </MenuItem>
-  ))
+  ));
 
   return (
     <div>
@@ -55,7 +68,7 @@ const EventCardMenu: React.FC<EventCardMenuProps> = ({ event }) => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-      {menuItems}
+        {menuItems}
       </Menu>
     </div>
   );
