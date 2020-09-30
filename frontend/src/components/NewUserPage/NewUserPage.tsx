@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { RouteComponentProps, navigate, useParams } from '@reach/router';
+import { makeStyles } from '@material-ui/core/styles';
 import {
-  Box, TextField, Button, Typography,
+  Box, TextField, Button, Typography, FormControl, NativeSelect, InputLabel,
 } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
-import MenuItem from '@material-ui/core/MenuItem';
 import CardWithHeader from '../CardWithHeader/CardWithHeader';
 import { User } from '../../types/User';
 import { FormUser } from '../../types/FormUser';
@@ -47,33 +47,20 @@ const NewUserPage: React.FC<RouteComponentProps> = () => {
     setEmail(e.target.value);
   };
 
+  // had to style the dropdown manually
+  const useStyles = makeStyles((theme) => ({
+    formControl: {
+      margin: theme.spacing(1),
+      minWidth: 180,
+    },
+    selectEmpty: {
+      marginTop: theme.spacing(2),
+    },
+  }));
+  const classes = useStyles();
   const thisYear = new Date().getFullYear();
-  const years = [
-    {
-      value: thisYear,
-    },
-    {
-      value: thisYear + 1,
-    },
-    {
-      value: thisYear + 2,
-    },
-    {
-      value: thisYear + 3,
-    },
-    {
-      value: thisYear + 4,
-    },
-    {
-      value: thisYear + 5,
-    },
-    {
-      value: thisYear + 6,
-    },
-  ];
-
   const [graduationYear, setGraduationYear] = React.useState('');
-  const handleGraduationYearChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleGraduationYearChange = (e: React.ChangeEvent<HTMLSelectElement>): void => {
     setGraduationYear(e.target.value);
   };
 
@@ -82,7 +69,7 @@ const NewUserPage: React.FC<RouteComponentProps> = () => {
     setPhoneNumber(e.target.value);
   };
 
-  const formValid = firstName && lastName && major && email;
+  const formValid = firstName && lastName && graduationYear && major && email;
 
   const handleSubmit = (): void => {
     if (!formValid) return;
@@ -156,22 +143,28 @@ const NewUserPage: React.FC<RouteComponentProps> = () => {
         </Box>
 
         <Box paddingBottom={1}>
-          <TextField
-            id="new-user-graduation-year"
-            select
-            required
-            error={!graduationYear}
-            label="Graduation Year"
-            value={graduationYear}
-            onChange={handleGraduationYearChange}
-            helperText="Please select your graduation year"
-          >
-            {years.map((option) => (
-              <MenuItem key={option.value} value={option.value}>
-                {option.value}
-              </MenuItem>
-            ))}
-          </TextField>
+          <FormControl required className={classes.formControl} error={!graduationYear}>
+            <InputLabel htmlFor="new-user-graduation-year">Graduation Year</InputLabel>
+            <NativeSelect
+              value={graduationYear}
+              onChange={handleGraduationYearChange}
+              name="Graduation Year"
+              inputProps={{
+                name: 'graduation-year',
+                id: 'new-user-graduation-year',
+              }}
+            >
+              <option aria-label="None" value="" />
+              <option value={thisYear - 1}>{thisYear - 1}</option>
+              <option value={thisYear}>{thisYear}</option>
+              <option value={thisYear + 1}>{thisYear + 1}</option>
+              <option value={thisYear + 2}>{thisYear + 2}</option>
+              <option value={thisYear + 3}>{thisYear + 3}</option>
+              <option value={thisYear + 4}>{thisYear + 4}</option>
+              <option value={thisYear + 5}>{thisYear + 5}</option>
+              <option value={thisYear + 6}>{thisYear + 6}</option>
+            </NativeSelect>
+          </FormControl>
         </Box>
 
         <Box paddingBottom={1}>
