@@ -5,6 +5,7 @@ import {
 import AddIcon from '@material-ui/icons/Add';
 import { RouteComponentProps } from '@reach/router';
 import EventCards from './EventCards/EventCards';
+import LogoutButtons from './LogoutButtons/LogoutButtons';
 
 const Homepage: React.SFC<RouteComponentProps> = () => {
   // Need to re-render the page, navigate doesn't do that
@@ -16,6 +17,9 @@ const Homepage: React.SFC<RouteComponentProps> = () => {
         <Typography variant="h4">
           Events
         </Typography>
+        <Box display="flex" justifyContent="flex-end">
+          <LogoutButtons id="logout" />
+        </Box>
       </Box>
       <EventCards />
       <Box position="fixed" bottom={8} right={8}>
