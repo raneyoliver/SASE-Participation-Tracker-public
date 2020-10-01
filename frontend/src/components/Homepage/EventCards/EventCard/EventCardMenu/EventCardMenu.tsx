@@ -35,7 +35,7 @@ const EventCardMenu: React.FC<EventCardMenuProps> = ({ event }) => {
 
   const menuOptions: Record<string, () => any> = {
     'Edit Event': handleEdit,
-    'Delete Event': handleDelete
+    'Delete Event': handleDelete,
   };
 
   const hasRSVPForm = event.forms.some((form) => form.form_type === FormType.RSVP);
