@@ -31,7 +31,7 @@ Then 'I enter my major on the new user page' do
 end
 
 Then 'I select my graduation year on the new user page' do
-  select('2021', from: 'new-user-graduation-year')
+  select(Time.now.year, from: 'new-user-graduation-year')
 end
 
 Then 'I enter my email on the new user page' do
