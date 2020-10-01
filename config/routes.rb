@@ -5,6 +5,9 @@ Rails.application.routes.draw do
     resource :events do
       get 'list'
       post 'create'
+      get ':id', to: 'events#find'
+      post 'update'
+      post 'delete'
     end
 
     devise_scope :admin do

@@ -30,6 +30,28 @@ class Api::EventsController < ApplicationController
     @form.save
   end
 
+  def find
+    @event = Event.find(params[:id])
+    render json: @event
+  rescue ActiveRecord::RecordNotFound
+    head :not_found and return
+  end
+
+  def update
+    @event = Event.find(params[:event][:id])
+    @event.update(event_params)
+    head :bad_request and return unless @event.save
+  rescue ActiveRecord::RecordNotFound
+    head :not_found and return
+  end
+
+  def delete
+    @event = Event.find(params[:id])
+    @event.destroy
+  rescue ActiveRecord::RecordNotFound
+    head :not_found and return
+  end
+
   private
 
   def event_params
