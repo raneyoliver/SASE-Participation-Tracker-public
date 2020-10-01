@@ -8,6 +8,7 @@ import AddIcon from '@material-ui/icons/Add';
 import CardWithHeader from '../CardWithHeader/CardWithHeader';
 import { Event } from '../../types/Event';
 import getCSRFToken from '../../utils/getCSRFToken';
+import { EventType } from '../../Enums';
 
 // Format datetimes like the following: 12/31/2020 12:00 PM
 const dateFormat = 'MM/dd/yyyy hh:mm a';
@@ -53,6 +54,7 @@ const CreateEventPage: React.FC<RouteComponentProps> = () => {
       description,
       start_time: startTime.toUTCString(),
       end_time: endTime.toUTCString(),
+      type: EventType.gbm,
     };
 
     fetch('/api/events/create', {

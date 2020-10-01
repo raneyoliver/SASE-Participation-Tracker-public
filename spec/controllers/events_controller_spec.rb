@@ -69,11 +69,13 @@ describe Api::EventsController do
         @description = 'what is a description'
         @start_time = 'Wed, 16 Sep 2020 05:27:32 GMT'
         @end_time = 'Wed, 16 Sep 2020 06:27:32 GMT'
+        @type = 'GBM'
         @expected = {
           name: @name,
           description: @description,
           start_time: @start_time,
           end_time: @end_time,
+          type: @type,
         }
 
         post :create, params: { event: @expected }, format: :json
@@ -87,6 +89,7 @@ describe Api::EventsController do
         expect(@created.description).to eq(@description)
         expect(@created.start_time.to_i).to eq(DateTime.parse(@start_time).to_i)
         expect(@created.end_time.to_i).to eq(DateTime.parse(@end_time).to_i)
+        expect(@created.type).to eq(nil)
       end
 
       it 'saves the form' do
