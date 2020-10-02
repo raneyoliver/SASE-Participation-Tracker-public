@@ -5,7 +5,7 @@ Rails.application.routes.draw do
     resource :events do
       get 'list'
       post 'create'
-      get ':id', to: 'events#find'
+      get ':id', to: 'events#edit'
       post 'update'
       post 'delete'
     end
@@ -38,6 +38,7 @@ Rails.application.routes.draw do
 
   # These routes should not be accessible without authenticating through the login page
   get 'create_event' => 'static#authorized_index'
+  #get 'edit_event' => 'static#authorized_index'
 
   # Use React to handle all routes outside of API
   root to: 'static#index'

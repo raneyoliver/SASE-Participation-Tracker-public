@@ -30,7 +30,7 @@ class Api::EventsController < ApplicationController
     @form.save
   end
 
-  def find
+  def edit
     @event = Event.find(params[:id])
     render json: @event
   rescue ActiveRecord::RecordNotFound

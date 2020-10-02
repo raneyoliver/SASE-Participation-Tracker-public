@@ -8,6 +8,7 @@ import Homepage from '../Homepage/Homepage';
 import NavBar from '../Navbar/Navbar';
 import LoginPage from '../LoginPage/LoginPage';
 import CreateEventPage from '../CreateEventPage/CreateEventPage';
+import EditEventPage from '../EditEventPage/EditEventPage';
 import FormPage from '../FormPage/FormPage';
 import NewUserPage from '../NewUserPage/NewUserPage';
 import ConfirmSubmissionPage from '../ConfirmSubmissionPage/ConfirmSubmissionPage';
@@ -21,6 +22,7 @@ const App: React.SFC = () => (
         <Router>
           <Homepage path="/" />
           <CreateEventPage path="/create_event" />
+          <EditEventPage path="/edit_event/:eventId" />
           <LoginPage path="/login" />
           <FormPage path="/form/:formId" />
           <NewUserPage path="/form/:formId/new_user/:UIN" />

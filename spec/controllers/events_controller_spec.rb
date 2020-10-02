@@ -145,13 +145,13 @@ describe Api::EventsController do
     end
   end
 
-  describe 'GET find' do
+  describe 'GET edit' do
     before(:each) do
       @expected = {
-        name: 'dummy find event name',
-        description: 'dummy find event discription',
-        start_time:  'Wed, 16 Sep 2020 05:27:32 GMT',
-        end_time: 'Wed, 16 Sep 2020 06:27:32 GMT'
+        name: 'dummy edit event name',
+        description: 'dummy edit event discription',
+        start_time: 'Wed, 16 Sep 2020 05:27:32 GMT',
+        end_time: 'Wed, 16 Sep 2020 06:27:32 GMT',
       }
       Event.new(**@expected).save
       expect(Event.count).to eq(1)
@@ -159,8 +159,8 @@ describe Api::EventsController do
 
     context 'when given valid event' do
       it 'returns event data' do
-        @name = 'dummy find event name'
-        @description = 'dummy find event discription'
+        @name = 'dummy edit event name'
+        @description = 'dummy edit event discription'
         @start_time = 'Wed, 16 Sep 2020 05:27:32 GMT'
         @end_time = 'Wed, 16 Sep 2020 06:27:32 GMT'
 
@@ -169,7 +169,7 @@ describe Api::EventsController do
         @created = Event.first
 
         # delete event
-        get :find, params: { id: @created.id }, format: :json
+        get :edit, params: { id: @created.id }, format: :json
 
         expect(response).to have_http_status(:ok)
 
@@ -177,10 +177,10 @@ describe Api::EventsController do
 
         # Created event start_time/end_timeare DateTime objects that can't be compared
         # to the originals, so manually compare attributes
-        expect(@json_response["name"]).to eq(@name)
-        expect(@json_response["description"]).to eq(@description)
-        expect(DateTime.parse(@json_response["start_time"]).to_i).to eq(DateTime.parse(@start_time).to_i)
-        expect(DateTime.parse(@json_response["end_time"]).to_i).to eq(DateTime.parse(@end_time).to_i)
+        expect(@json_response['name']).to eq(@name)
+        expect(@json_response['description']).to eq(@description)
+        expect(DateTime.parse(@json_response['start_time']).to_i).to eq(DateTime.parse(@start_time).to_i)
+        expect(DateTime.parse(@json_response['end_time']).to_i).to eq(DateTime.parse(@end_time).to_i)
 
         Event.delete_all
       end
@@ -192,7 +192,7 @@ describe Api::EventsController do
         expect(Event.count).to eq(1)
 
         # delete non-existing event
-        get :find, params: { id: 34234234 }, format: :json
+        get :edit, params: { id: 34_234_234 }, format: :json
 
         expect(response).to have_http_status(:not_found)
 
@@ -209,13 +209,13 @@ describe Api::EventsController do
       @expected = {
         name: 'dummy event name',
         description: 'dummy event discription',
-        start_time:  'Wed, 16 Sep 2020 05:27:32 GMT',
+        start_time: 'Wed, 16 Sep 2020 05:27:32 GMT',
         end_time: 'Wed, 16 Sep 2020 06:27:32 GMT',
       }
       Event.new(**@expected).save
       expect(Event.count).to eq(1)
     end
-    
+
     context 'when given valid event and event data' do
       it 'updates the event' do
         # get event
@@ -278,8 +278,8 @@ describe Api::EventsController do
     context 'when given non existing event' do
       it 'responds with not found' do
         @updated_event = {
-          id: 213124324,
-          name: "dummy event name",
+          id: 213_124_324,
+          name: 'dummy event name',
           description: 'dummy event discription',
           start_time: 'Wed, 16 Sep 2020 05:27:32 GMT',
           end_time: 'Wed, 16 Sep 2020 06:27:32 GMT',
@@ -299,7 +299,7 @@ describe Api::EventsController do
       @expected = {
         name: 'dummy delete event name',
         description: 'dummy delete event discription',
-        start_time:  'Wed, 16 Sep 2020 05:27:32 GMT',
+        start_time: 'Wed, 16 Sep 2020 05:27:32 GMT',
         end_time: 'Wed, 16 Sep 2020 06:27:32 GMT',
       }
       Event.new(**@expected).save
@@ -330,7 +330,7 @@ describe Api::EventsController do
         expect(Event.count).to eq(1)
 
         # delete non-existing event
-        post :delete, params: { id: 34234234 }, format: :json
+        post :delete, params: { id: 34_234_234 }, format: :json
 
         expect(response).to have_http_status(:not_found)
 
