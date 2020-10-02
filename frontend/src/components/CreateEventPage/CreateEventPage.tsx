@@ -66,7 +66,7 @@ const CreateEventPage: React.FC<RouteComponentProps> = () => {
       description,
       start_time: startTime.toUTCString(),
       end_time: endTime.toUTCString(),
-      type: eventType.toString(),
+      event_type: eventType.toString(),
     };
 
     fetch('/api/events/create', {

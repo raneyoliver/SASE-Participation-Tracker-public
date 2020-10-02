@@ -6,7 +6,7 @@ export interface Event {
   description: string;
   start_time: string;
   end_time: string;
-  type: string;
+  event_type: string;
 }
 
 // Interface with fields equivalent to the rails model, use this when dealing with existing events
@@ -17,7 +17,7 @@ export interface SerializedEvent {
   start_time: string;
   end_time: string;
   forms: SerializedFormData[];
-  type: string;
+  event_type: string;
 }
 
 export interface SerializedFormData {
