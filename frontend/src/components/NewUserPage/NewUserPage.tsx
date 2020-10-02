@@ -57,8 +57,14 @@ const NewUserPage: React.FC<RouteComponentProps> = () => {
       marginTop: theme.spacing(2),
     },
   }));
+
   const classes = useStyles();
-  const thisYear = new Date().getFullYear();
+  // eslint-disable-next-line jsx-a11y/control-has-associated-label
+  const gradYearOptions = [<option value="" key={null} />];
+  const currentYear = new Date().getFullYear();
+  for (let year = currentYear - 1; year <= currentYear + 6; year++) {
+    gradYearOptions.push(<option value={year} key={year}>{year}</option>);
+  }
   const [graduationYear, setGraduationYear] = React.useState('');
   const handleGraduationYearChange = (e: React.ChangeEvent<HTMLSelectElement>): void => {
     setGraduationYear(e.target.value);
@@ -154,15 +160,7 @@ const NewUserPage: React.FC<RouteComponentProps> = () => {
                 id: 'new-user-graduation-year',
               }}
             >
-              <option aria-label="None" value="" />
-              <option value={thisYear - 1}>{thisYear - 1}</option>
-              <option value={thisYear}>{thisYear}</option>
-              <option value={thisYear + 1}>{thisYear + 1}</option>
-              <option value={thisYear + 2}>{thisYear + 2}</option>
-              <option value={thisYear + 3}>{thisYear + 3}</option>
-              <option value={thisYear + 4}>{thisYear + 4}</option>
-              <option value={thisYear + 5}>{thisYear + 5}</option>
-              <option value={thisYear + 6}>{thisYear + 6}</option>
+              {gradYearOptions}
             </NativeSelect>
           </FormControl>
         </Box>
