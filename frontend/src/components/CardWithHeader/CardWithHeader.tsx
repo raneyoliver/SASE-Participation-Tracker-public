@@ -8,14 +8,16 @@ interface CardWithHeaderProps {
   title: string;
   action?: JSX.Element;
   id?: string;
+  icon?: JSX.Element;
 }
 
 const CardWithHeader: React.FC<CardWithHeaderProps> = ({
-  title, action, id, children,
+  title, action, id, icon, children,
 }) => (
   <Card id={id}>
-    <Box bgcolor={SASEBlue} color="white">
+    <Box display="flex" justifyContent="space-between" alignItems="center" bgcolor={SASEBlue} color="white">
       <CardHeader title={title} action={action} />
+      {icon}
     </Box>
     <CardContent>
       {children}

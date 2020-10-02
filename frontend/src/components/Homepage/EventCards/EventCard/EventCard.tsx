@@ -5,6 +5,7 @@ import { SerializedEvent, SerializedFormData } from '../../../../types/Event';
 import FormType from '../../../../Enums';
 import formatDate from '../../../../utils/formatDate';
 import CardWithHeader from '../../../CardWithHeader/CardWithHeader';
+import EventCardMenu from './EventCardMenu/EventCardMenu';
 
 interface EventCardProps {
   event: SerializedEvent;
@@ -14,8 +15,10 @@ const EventCard: React.FC<EventCardProps> = ({ event }) => {
   const startTime = formatDate(new Date(event.start_time));
   const endTime = formatDate(new Date(event.end_time));
 
+  const menu = <EventCardMenu event={event} />
+
   return (
-    <CardWithHeader id={`event-card-${event.id}`} title={event.name}>
+    <CardWithHeader id={`event-card-${event.id}`} title={event.name} icon={menu}>
       <div style={{ wordWrap: 'break-word' }}>
         <Box overflow="auto" maxHeight={120}>
           <Typography>

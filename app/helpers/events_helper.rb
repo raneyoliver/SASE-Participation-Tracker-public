@@ -2,19 +2,14 @@
 module EventsHelper
   # returns an array of form ids
   def serialize_event(event)
-    {
-      **event.attributes.symbolize_keys,
-      forms: event.forms.select('id, form_type').map do |form|
-        serialize_form(form)
-      end,
-    }
-  end
-
-  def serialize_form(form)
-    {
-      **form.attributes.symbolize_keys,
-      user_count: form.form_users.count,
-    }
+    event.as_json(
+      include: {
+        forms: {
+          only: [:id, :form_type],
+          methods: :user_count,
+        },
+      }
+    )
   end
 
   def make_unique_id
