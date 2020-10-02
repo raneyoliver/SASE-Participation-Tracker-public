@@ -3,6 +3,12 @@ import { RouteComponentProps, navigate } from '@reach/router';
 import {
   Box, TextField, Button,
 } from '@material-ui/core';
+
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+
 import { DateTimePicker } from '@material-ui/pickers';
 import AddIcon from '@material-ui/icons/Add';
 import CardWithHeader from '../CardWithHeader/CardWithHeader';
@@ -22,6 +28,12 @@ const CreateEventPage: React.FC<RouteComponentProps> = () => {
   const [description, setDescription] = React.useState('');
   const handleDescriptionChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setDescription(e.target.value);
+  };
+
+  // Event Type
+  const [eventType, setType] = React.useState<EventType>(EventType.gbm);
+  const handleTypeChange = (e: React.ChangeEvent<{ value: EventType }>): void => {
+    setType(e.target.value);
   };
 
   // Initialize startTime to current time
@@ -54,7 +66,7 @@ const CreateEventPage: React.FC<RouteComponentProps> = () => {
       description,
       start_time: startTime.toUTCString(),
       end_time: endTime.toUTCString(),
-      type: EventType.gbm,
+      type: eventType.toString(),
     };
 
     fetch('/api/events/create', {
@@ -82,6 +94,19 @@ const CreateEventPage: React.FC<RouteComponentProps> = () => {
 
         <Box paddingBottom={1}>
           <TextField id="event-description" multiline fullWidth label="Description" value={description} onChange={handleDescriptionChange} />
+        </Box>
+
+        <Box paddingBottom={1}>
+          <FormControl>
+            <InputLabel>Type</InputLabel>
+            <Select value={eventType} onChange={handleTypeChange}>
+              <MenuItem value={EventType.gbm}>GBM</MenuItem>
+              <MenuItem value={EventType.socials}>Socials</MenuItem>
+              <MenuItem value={EventType.mentor}>Mentor/Mentee</MenuItem>
+              <MenuItem value={EventType.volunteer}>Volunteer</MenuItem>
+              <MenuItem value={EventType.profitshare}>Profit Share</MenuItem>
+            </Select>
+          </FormControl>
         </Box>
 
         <Box paddingBottom={1}>
