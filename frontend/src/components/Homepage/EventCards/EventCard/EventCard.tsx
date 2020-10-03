@@ -15,7 +15,7 @@ const EventCard: React.FC<EventCardProps> = ({ event }) => {
   const startTime = formatDate(new Date(event.start_time));
   const endTime = formatDate(new Date(event.end_time));
 
-  const menu = <EventCardMenu event={event} />
+  const menu = <EventCardMenu event={event} />;
 
   return (
     <CardWithHeader id={`event-card-${event.id}`} title={event.name} icon={menu}>
