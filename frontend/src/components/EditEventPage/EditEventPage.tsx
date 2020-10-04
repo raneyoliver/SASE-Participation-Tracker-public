@@ -102,7 +102,7 @@ const EditEventPage: React.FC<RouteComponentProps> = () => {
 
   return (
     <Box margin="auto" width="50%" minWidth={500}>
-      <CardWithHeader title="Create New Event">
+      <CardWithHeader title="Edit Event">
         <Box paddingBottom={1}>
           <TextField id="event-name" required error={!name} label="Name" value={name} onChange={handleNameChange} />
         </Box>

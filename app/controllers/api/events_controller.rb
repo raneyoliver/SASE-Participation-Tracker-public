@@ -38,7 +38,6 @@ class Api::EventsController < ApplicationController
   end
 
   def update
-    puts params
     @event = Event.find(params[:id])
     @event.update(event_params)
     head :bad_request and return unless @event.save
