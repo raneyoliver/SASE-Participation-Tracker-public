@@ -12,6 +12,7 @@ import FormPage from '../FormPage/FormPage';
 import NewUserPage from '../NewUserPage/NewUserPage';
 import ConfirmSubmissionPage from '../ConfirmSubmissionPage/ConfirmSubmissionPage';
 import FormErrorPage from '../FormErrorPage/FormErrorPage';
+import ConfirmUpdatePage from '../ConfirmUpdatePage/ConfirmUpdatePage';
 
 const App: React.SFC = () => (
   <ThemeProvider theme={theme}>
@@ -25,6 +26,7 @@ const App: React.SFC = () => (
           <FormPage path="/form/:formId" />
           <NewUserPage path="/form/:formId/new_user/:UIN" />
           <ConfirmSubmissionPage path="/form/confirm_submission" />
+          <ConfirmUpdatePage path="/form/confirm_update" />
           <FormErrorPage path="/form/error" />
         </Router>
       </Box>

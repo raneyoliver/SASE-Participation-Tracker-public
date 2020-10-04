@@ -15,6 +15,8 @@ class Api::UsersController < ApplicationController
     head :created and return if @user.save
 
     head :bad_request and return
+  rescue ActiveRecord::RecordNotUnique
+    head :conflict and return
   rescue StandardError
     head :bad_request and return
   end

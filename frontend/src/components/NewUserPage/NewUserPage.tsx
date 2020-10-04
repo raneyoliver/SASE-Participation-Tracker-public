@@ -9,6 +9,7 @@ import CardWithHeader from '../CardWithHeader/CardWithHeader';
 import { User } from '../../types/User';
 import { FormUser } from '../../types/FormUser';
 import getCSRFToken from '../../utils/getCSRFToken';
+import UserAlreadyExistsDialog from './UserAlreadyExistsDialog/UserAlreadyExistsDialog';
 
 const NewUserPage: React.FC<RouteComponentProps> = () => {
   const { formId, UIN } = useParams();
@@ -71,6 +72,11 @@ const NewUserPage: React.FC<RouteComponentProps> = () => {
     setPhoneNumber(e.target.value);
   };
 
+  const [dialogOpen, setDialogOpen] = React.useState(false);
+  const handleDialogClose = (): void => {
+    setDialogOpen(false);
+  };
+
   const formValid = firstName && lastName && graduationYear && major && email;
 
   const handleSubmit = (): void => {
@@ -117,6 +123,8 @@ const NewUserPage: React.FC<RouteComponentProps> = () => {
             navigate('/form/confirm_submission');
           }
         });
+      } else if (response.status === 409) {
+        setDialogOpen(true);
       }
     });
   };
@@ -173,6 +181,7 @@ const NewUserPage: React.FC<RouteComponentProps> = () => {
           Submit
         </Button>
       </CardWithHeader>
+      <UserAlreadyExistsDialog open={dialogOpen} handleClose={handleDialogClose} />
     </Box>
   );
 };

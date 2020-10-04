@@ -55,7 +55,7 @@ describe Api::UsersController do
         phone_number: @phone_number,
       }
     end
-    context 'when given valid user data' do
+    context 'when given valid user data for a nonexistent user' do
       it 'creates an event with all attributes' do
         post :create, params: { user: @expected }, format: :json
 
@@ -86,6 +86,19 @@ describe Api::UsersController do
         expect(@created.graduation_year).to eq(@graduation_year)
         expect(@created.email).to eq(@email)
         expect(@created.phone_number).to eq(nil)
+      end
+    end
+
+    context 'when given valid user data for an existing user' do
+      it 'does not create a user' do
+        user_data = { id: '95e229d8aca716874c8feca1501379e06f239d03', first_name: 'New', last_name: 'User',
+                      major: 'computer science', graduation_year: 2021, email: 'email@address.com',
+                      phone_number: '333-333-3333' }
+        @user = User.create(user_data)
+        post :create, params: { user: @expected }, format: :json
+
+        expect(response).to have_http_status(:conflict)
+        expect(User.count).to eq(1)
       end
     end
 
