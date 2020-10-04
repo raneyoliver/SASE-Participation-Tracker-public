@@ -8,7 +8,7 @@ describe Api::FormUsersController do
                       major: 'computer science', graduation_year: 2021, email: 'email@address.com',
                       phone_number: '333-333-3333' }
         @user = User.create(user_data)
-        @event_data = { id: 1, name: 'Test Event', description: 'description',
+        @event_data = { id: 1, name: 'Test Event', description: 'description', event_type: 'GBM',
                         start_time: '2020-09-15T01:00:00.000Z', end_time: '2020-09-15T00:00:00.000Z' }
         Event.create(@event_data)
         form_data = { id: '8888888888', event_id: 1, start_time: '2020-09-15T01:00:00.000Z',

@@ -2,7 +2,7 @@ import * as React from 'react';
 // import { useHistory } from 'react-router-dom';
 import { RouteComponentProps, navigate, useParams } from '@reach/router';
 import {
-  Box, TextField, Button, Typography,
+  Box, TextField, Button, Typography, Card,
 } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import CardWithHeader from '../CardWithHeader/CardWithHeader';
@@ -86,9 +86,22 @@ const FormPage: React.FC<RouteComponentProps> = () => {
     );
   }
 
+  const descriptionBlock = (
+    <Card>
+      <Box padding={1}>
+        <Typography variant="body2">
+          {form.event.description}
+        </Typography>
+      </Box>
+    </Card>
+  );
+
   return (
     <Box margin="10% auto" width="50%" minWidth={500}>
-      <CardWithHeader title={`Sign-in Form for ${form.event.name}`}>
+      <CardWithHeader title={`Sign-in Form for ${form.event.name} (${form.event.event_type} Event)`}>
+
+        {form.event.description !== '' && descriptionBlock}
+
         <Box paddingBottom={1}>
           <TextField id="form-UIN" required error={!UINValid} label="UIN" value={UIN} onChange={handleUINChange} />
         </Box>
