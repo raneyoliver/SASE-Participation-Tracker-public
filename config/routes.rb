@@ -10,10 +10,6 @@ Rails.application.routes.draw do
       post 'delete'
     end
 
-    devise_scope :admin do
-      post 'api/admins/sign_in' => 'devise/sessions#create'
-    end
-
     devise_for :admins, controllers: {
       registrations: 'api/registrations',
       sessions: 'api/sessions',
@@ -36,11 +32,15 @@ Rails.application.routes.draw do
     end
   end
 
+  # Use React to handle all routes outside of API
+
+  # Route that allows heroku to properly find index.js
+  get 'index.js' => 'static#index_js'
+
   # These routes should not be accessible without authenticating through the login page
   get 'create_event' => 'static#authorized_index'
   get 'edit_event' => 'static#authorized_index'
 
-  # Use React to handle all routes outside of API
   root to: 'static#index'
   get '*path' => 'static#index'
 end

@@ -30,28 +30,8 @@ Then 'I enter my major on the new user page' do
   fill_in('new-user-major', with: 'computer science')
 end
 
-Then 'I enter my graduation year on the new user page' do
-  fill_in('new-user-graduation-year', with: 2021)
-end
-
-Then 'I enter a too short graduation year on the new user page' do
-  fill_in('new-user-graduation-year', with: 202)
-end
-
-Then 'I try to enter a too long graduation year on the new user page' do
-  fill_in('new-user-graduation-year', with: 20_211)
-end
-
-Then "the graduation field doesn't accept characters from the too long graduation year after its maximum length" do
-  expect(page).to have_field('new-user-graduation-year', with: 2021)
-end
-
-Then 'I try to enter non-numerical characters as a graduation year on the new user page' do
-  fill_in('new-user-graduation-year', with: 'abcde!@#?')
-end
-
-Then "the graduation year field doesn't accept the non-numerical characters on the new user page" do
-  expect(page).to have_field('new-user-graduation-year', with: '')
+Then 'I select my graduation year on the new user page' do
+  select(Time.now.year, from: 'new-user-graduation-year')
 end
 
 Then 'I enter my email on the new user page' do

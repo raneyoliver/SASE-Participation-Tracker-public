@@ -5,14 +5,18 @@ import {
 import AddIcon from '@material-ui/icons/Add';
 import { RouteComponentProps } from '@reach/router';
 import EventCards from './EventCards/EventCards';
+import LogoutButton from './LogoutButton/LogoutButton';
 
-const Homepage: React.SFC<RouteComponentProps> = () => {
+const Homepage: React.FC<RouteComponentProps> = () => {
   // Need to re-render the page, navigate doesn't do that
   const handleFabClick = (): void => { window.location.href = '/create_event'; };
 
   return (
     <>
       <Box textAlign="center">
+        <Box display="flex" justifyContent="flex-end">
+          <LogoutButton id="logout" />
+        </Box>
         <Typography variant="h4">
           Events
         </Typography>
