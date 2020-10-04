@@ -228,7 +228,6 @@ describe Api::EventsController do
         @updated_start_time = 'Wed, 16 Sep 2020 05:27:20 GMT'
         @updated_end_time = 'Wed, 16 Sep 2020 06:27:10 GMT'
         @updated_event = {
-          id: @created.id,
           name: @updated_name,
           description: @updated_description,
           start_time: @updated_start_time,
@@ -236,7 +235,7 @@ describe Api::EventsController do
         }
 
         # update event
-        post :update, params: { event: @updated_event }, format: :json
+        post :update, params: { event: @updated_event, id: @created.id }, format: :json
 
         expect(response).to have_http_status(:no_content)
         expect(Event.count).to eq(1)
@@ -261,13 +260,12 @@ describe Api::EventsController do
         @created = Event.first
 
         @updated_event = {
-          id: @created.id,
           description: 'dummy event discription',
           start_time: 'dummy invalid event start time',
           end_time: 'dummy invalid event end time',
         }
 
-        post :update, params: { event: @updated_event }, format: :json
+        post :update, params: { event: @updated_event, id: @created.id }, format: :json
 
         expect(response).to have_http_status(:bad_request)
 

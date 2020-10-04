@@ -62,13 +62,20 @@ const EditEventPage: React.FC<RouteComponentProps> = () => {
 
   const handleSubmit = (): void => {
     if (!formValid) return;
+
     // Form is valid, convert times to UTC format and post
-    const body: Event = {
+    const eventBody: Event = {
       name,
       description,
       start_time: startTime.toUTCString(),
       end_time: endTime.toUTCString(),
     };
+
+    const body = {
+      id: eventId,
+      event: eventBody,
+    };
+
     fetch('/api/events/update', {
       method: 'POST',
       headers: {
