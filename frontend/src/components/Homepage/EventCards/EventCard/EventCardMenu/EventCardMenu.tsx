@@ -34,6 +34,26 @@ const EventCardMenu: React.FC<EventCardMenuProps> = ({ event }) => {
   };
 
   const handleCreateRSVP = (): void => {
+    const body = {
+      id: event.id,
+      form_type: 'RSVP',
+    };
+
+    fetch('/api/events/add_form', {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+        'X-CSRF-Token': getCSRFToken(),
+      },
+      body: JSON.stringify(body),
+    }).then((response) => {
+      if (response.ok) {
+        window.location.reload(false);
+      } else {
+        navigate('/login');
+      }
+    });
+
     handleClose();
   };
 
@@ -64,6 +84,8 @@ const EventCardMenu: React.FC<EventCardMenuProps> = ({ event }) => {
     }).then((response) => {
       if (response.status === 204) {
         window.location.reload(false);
+      } else {
+        navigate('/login');
       }
     });
   };
@@ -73,7 +95,8 @@ const EventCardMenu: React.FC<EventCardMenuProps> = ({ event }) => {
     'Delete Event': handleDeleteClickOpen,
   };
 
-  const hasRSVPForm = event.forms.some((form) => form.form_type === FormType.RSVP);
+  const hasRSVPForm = event.forms.some((form) => form.form_type.toString() === 'RSVP');
+
   if (!hasRSVPForm) {
     menuOptions['Create RSVP Form'] = handleCreateRSVP;
   }

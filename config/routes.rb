@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     resource :events do
       get 'list'
       post 'create'
+      post 'add_form'
       get ':id', to: 'events#edit'
       post 'update'
       post 'delete'

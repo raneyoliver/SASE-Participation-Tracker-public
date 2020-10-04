@@ -16,17 +16,6 @@ const EditEventPage: React.FC<RouteComponentProps> = () => {
   const { eventId } = useParams();
 
   const [loading, setLoading] = React.useState(true);
-  const [event, setEvent] = React.useState<Event>();
-  React.useEffect(() => {
-    fetch(`/api/events/${eventId}`).then((response) => {
-      if (response.status === 404) {
-        window.location.href = '/event/error';
-      }
-      return response.json();
-    }).then((response: Event) => {
-      setEvent(response);
-    }).finally(() => setLoading(false));
-  }, [eventId]);
 
   const [name, setName] = React.useState('');
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -59,6 +48,20 @@ const EditEventPage: React.FC<RouteComponentProps> = () => {
   const startTimeValid = !Number.isNaN(startTime.valueOf());
   const endTimeValid = !Number.isNaN(startTime.valueOf());
   const formValid = name && startTimeValid && endTimeValid;
+
+  React.useEffect(() => {
+    fetch(`/api/events/${eventId}`).then((response) => {
+      if (response.status === 404) {
+        window.location.href = '/event/error';
+      }
+      return response.json();
+    }).then((response: Event) => {
+      setName(response.name);
+      setDescription(response.description);
+      setStartTime(new Date(response.start_time));
+      setEndTime(new Date(response.end_time));
+    }).finally(() => setLoading(false));
+  }, [eventId]);
 
   const handleSubmit = (): void => {
     if (!formValid) return;
