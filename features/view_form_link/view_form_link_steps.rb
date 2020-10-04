@@ -3,8 +3,8 @@ When 'I go to the homepage to view the form link' do
 end
 
 Then 'I log in' do
-  fill_in('username', with: 'testAdmin')
-  fill_in('password', with: '1234')
+  fill_in('username', with: 'Admin')
+  fill_in('password', with: 'password')
   click_on 'login'
 end
 
