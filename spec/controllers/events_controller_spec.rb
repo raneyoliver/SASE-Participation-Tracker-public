@@ -145,6 +145,75 @@ describe Api::EventsController do
     end
   end
 
+  describe 'POST add_form' do
+    before(:each) do
+      @expected = {
+        name: 'dummy edit event name',
+        description: 'dummy edit event discription',
+        start_time: 'Wed, 16 Sep 2020 05:27:32 GMT',
+        end_time: 'Wed, 16 Sep 2020 06:27:32 GMT',
+      }
+      Event.new(**@expected).save
+      expect(Event.count).to eq(1)
+    end
+
+    context 'when given valid event id' do
+      it 'creates new form for event' do
+        @start_time = 'Wed, 16 Sep 2020 05:27:32 GMT'
+        @end_time = 'Wed, 16 Sep 2020 06:27:32 GMT'
+        @form_type = 'RSPV'
+        @questions = '[]'
+
+        # get event
+        expect(Event.count).to eq(1)
+        expect(Form.count).to eq(0)
+        @created = Event.first
+
+        post :add_form, params: { id: @created.id, form_type: @form_type }, format: :json
+
+        expect(response).to have_http_status(:no_content)
+
+        # check to see that there were no added events
+        expect(Event.count).to eq(1)
+        @created = Event.first
+
+        # check to see if forms was added
+        expect(Form.count).to eq(1)
+        @created_form = Form.first
+
+        expect(@created_form.start_time.to_i).to eq(DateTime.parse(@start_time).to_i)
+        expect(@created_form.end_time.to_i).to eq(DateTime.parse(@end_time).to_i)
+        expect(@created_form.form_type).to eq(@form_type)
+        expect(@created_form.questions).to eq(@questions)
+
+        # remove any objects created
+        Form.delete_all
+        Event.delete_all
+      end
+    end
+
+    context 'when given invalid event id' do
+      it 'does not save form' do
+        # get event
+        expect(Event.count).to eq(1)
+        expect(Form.count).to eq(0)
+        @created = Event.first
+
+        post :add_form, params: { id: 144_131_564, form_type: @form_type }, format: :json
+
+        expect(response).to have_http_status(:not_found)
+
+        # no changes should be made
+        expect(Event.count).to eq(1)
+        expect(Form.count).to eq(0)
+
+        # remove any objects created
+        Event.delete_all
+        Form.delete_all
+      end
+    end
+  end
+
   describe 'GET edit' do
     before(:each) do
       @expected = {
@@ -182,6 +251,7 @@ describe Api::EventsController do
         expect(DateTime.parse(@json_response['start_time']).to_i).to eq(DateTime.parse(@start_time).to_i)
         expect(DateTime.parse(@json_response['end_time']).to_i).to eq(DateTime.parse(@end_time).to_i)
 
+        # remove any objects created
         Event.delete_all
       end
     end
@@ -199,6 +269,7 @@ describe Api::EventsController do
         # check to make sure event it still in database
         expect(Event.count).to eq(1)
 
+        # remove any objects created
         Event.delete_all
       end
     end
@@ -249,6 +320,7 @@ describe Api::EventsController do
         expect(@updated.start_time.to_i).to eq(DateTime.parse(@updated_start_time).to_i)
         expect(@updated.end_time.to_i).to eq(DateTime.parse(@updated_end_time).to_i)
 
+        # remove any objects created
         Event.delete_all
       end
     end
@@ -269,6 +341,7 @@ describe Api::EventsController do
 
         expect(response).to have_http_status(:bad_request)
 
+        # remove any objects created
         Event.delete_all
       end
     end
@@ -287,6 +360,7 @@ describe Api::EventsController do
 
         expect(response).to have_http_status(:not_found)
 
+        # remove any objects created
         Event.delete_all
       end
     end
@@ -318,6 +392,7 @@ describe Api::EventsController do
         # event is no longer in database
         expect(Event.count).to eq(0)
 
+        # remove any objects created
         Event.delete_all
       end
     end
@@ -335,6 +410,7 @@ describe Api::EventsController do
         # check to make sure event it still in database
         expect(Event.count).to eq(1)
 
+        # remove any objects created
         Event.delete_all
       end
     end

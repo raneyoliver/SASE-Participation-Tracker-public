@@ -32,7 +32,6 @@ class Api::EventsController < ApplicationController
 
   def add_form
     @event = Event.find(params[:id])
-
     @form = Form.new(
       id: helpers.make_unique_id,
       event_id: @event.id,
@@ -42,6 +41,8 @@ class Api::EventsController < ApplicationController
       questions: [].to_json
     )
     @form.save
+  rescue ActiveRecord::RecordNotFound
+    head :not_found and return
   end
 
   def edit
