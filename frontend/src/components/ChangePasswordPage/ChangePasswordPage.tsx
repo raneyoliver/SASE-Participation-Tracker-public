@@ -18,7 +18,7 @@ const ChangePasswordPage: React.FC<RouteComponentProps> = () => {
   };
 
   // Validate form info to show errors and determine whether to allow submit
-  const formValid = password_confirmation === password;
+  const formValid = (password_confirmation === password) && password_confirmation;
 
   const handleSubmission = (): void => {
     if (!formValid) return;
