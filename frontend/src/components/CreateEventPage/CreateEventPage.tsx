@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { RouteComponentProps, navigate } from '@reach/router';
 import {
-  Box, TextField, Button,
+  Box, TextField, Button, FormControlLabel, Checkbox,
 } from '@material-ui/core';
 import { DateTimePicker } from '@material-ui/pickers';
 import AddIcon from '@material-ui/icons/Add';
@@ -40,6 +40,11 @@ const CreateEventPage: React.FC<RouteComponentProps> = () => {
     if (date < startTime) setStartTime(new Date(date.valueOf() - 60 * 60 * 1000));
   };
 
+  const [createRSVPForm, setCreateRSVPForm] = React.useState(false);
+  const handleCreateRSVPFormChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    setCreateRSVPForm(e.target.checked);
+  };
+
   // Validate form info to show errors and determine whether to allow submit
   const startTimeValid = !Number.isNaN(startTime.valueOf());
   const endTimeValid = !Number.isNaN(startTime.valueOf());
@@ -48,11 +53,16 @@ const CreateEventPage: React.FC<RouteComponentProps> = () => {
   const handleSubmit = (): void => {
     if (!formValid) return;
     // Form is valid, convert times to UTC format and post
-    const body: Event = {
+    const eventBody: Event = {
       name,
       description,
       start_time: startTime.toUTCString(),
       end_time: endTime.toUTCString(),
+    };
+
+    const body = {
+      event: eventBody,
+      create_rsvp_form: createRSVPForm,
     };
 
     fetch('/api/events/create', {
@@ -71,6 +81,8 @@ const CreateEventPage: React.FC<RouteComponentProps> = () => {
     });
   };
 
+  const RSVPCheckbox = <Checkbox id="event-create-RSVP-form" name="RSVPCheck" color="primary" checked={createRSVPForm} onChange={handleCreateRSVPFormChange} />;
+
   return (
     <Box margin="auto" width="50%" minWidth={500}>
       <CardWithHeader title="Create New Event">
@@ -88,6 +100,10 @@ const CreateEventPage: React.FC<RouteComponentProps> = () => {
 
         <Box paddingBottom={1}>
           <DateTimePicker disablePast label="End Time" format={dateFormat} value={endTime} onChange={handleEndTimeChange} />
+        </Box>
+
+        <Box paddingBottom={1}>
+          <FormControlLabel id="event-create-RSVP" label="Create an RSVP Form for this event?" labelPlacement="start" style={{ marginLeft: 0 }} control={RSVPCheckbox} />
         </Box>
 
         <Button id="submit" variant="contained" color="secondary" disabled={!formValid} startIcon={<AddIcon />} onClick={handleSubmit}>
