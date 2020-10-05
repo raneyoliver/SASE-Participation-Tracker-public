@@ -25,9 +25,9 @@ const CreateEventPage: React.FC<RouteComponentProps> = () => {
   };
 
   // Event Type
-  const [eventType, setType] = React.useState<EventType>(EventType.gbm);
+  const [eventType, setEventType] = React.useState<EventType>(EventType.gbm);
   const handleTypeChange = (e: React.ChangeEvent<{ value: EventType }>): void => {
-    setType(e.target.value);
+    setEventType(e.target.value);
   };
 
   const eventTypeMap = new Map<string, EventType>();
@@ -73,7 +73,7 @@ const CreateEventPage: React.FC<RouteComponentProps> = () => {
       description,
       start_time: startTime.toUTCString(),
       end_time: endTime.toUTCString(),
-      event_type: eventType.toString(),
+      event_type: eventType,
     };
 
     const body = {
