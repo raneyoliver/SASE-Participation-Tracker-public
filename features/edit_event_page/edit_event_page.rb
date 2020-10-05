@@ -2,16 +2,12 @@ Before '@event' do
   Event.new(
     id: 1,
     name: 'test event name',
-    description: 'test event description'
+    description: 'test event description',
     start_time: 'Thu, 1 Jan 1970 01:00:00 +0000',
     end_time: 'Thu, 1 Jan 1970 02:00:00 +0000'
   ).save
 end
 
-When 'I go to the edit event page' do
-  visit '/edit_event/1'
-end
-  
 Then 'I go back to the edit event page' do
   visit '/edit_event/1'
 end

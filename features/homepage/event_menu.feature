@@ -31,6 +31,8 @@ Scenario: Event menu button button expands to reveal an edit event button
   Then I log in
   Then I click on the event menu button
   Then there is an edit event button
+  Then I click the edit event button
+  Then I should be taken to the edit event page
 
 @event-menu
 @javascript
@@ -40,3 +42,14 @@ Scenario: Event menu button button expands to reveal a delete event button
   Then I log in
   Then I click on the event menu button
   Then there is a delete event button
+  Then I click the delete event button
+  Then a dialog confirmation box will appear with options yes or no
+
+@event-menu
+@javascript
+@authRequired
+Scenario: Event menu button button expands to reveal a create RSVP form button
+  When I go to the homepage
+  Then I log in
+  Then I click on the event menu button
+  Then there is a create RSVP form button
