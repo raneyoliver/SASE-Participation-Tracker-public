@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { RouteComponentProps, navigate, useParams } from '@reach/router';
-import {
-  Box, TextField, Button, Typography,
-} from '@material-ui/core';
+import { Box, TextField, Button, Typography } from '@material-ui/core';
 import { DateTimePicker } from '@material-ui/pickers';
 import AddIcon from '@material-ui/icons/Add';
 import CardWithHeader from '../CardWithHeader/CardWithHeader';
@@ -49,10 +47,11 @@ const EditEventPage: React.FC<RouteComponentProps> = () => {
   const endTimeValid = !Number.isNaN(startTime.valueOf());
   const formValid = name && startTimeValid && endTimeValid;
 
+  // Get event data based on its id, return error page if not found
   React.useEffect(() => {
     fetch(`/api/events/${eventId}`).then((response) => {
       if (response.status === 404) {
-        window.location.href = '/event/error';
+        window.location.href = '/edit_event/error';
       }
       return response.json();
     }).then((response: Event) => {
@@ -66,7 +65,6 @@ const EditEventPage: React.FC<RouteComponentProps> = () => {
   const handleSubmit = (): void => {
     if (!formValid) return;
 
-    // Form is valid, convert times to UTC format and post
     const eventBody: Event = {
       name,
       description,
@@ -86,10 +84,10 @@ const EditEventPage: React.FC<RouteComponentProps> = () => {
         'X-CSRF-Token': getCSRFToken(),
       },
       body: JSON.stringify(body),
-    }).then((response) => { // Once request has been processed, go back to homepage
+    }).then((response) => {
       if (response.status === 204) {
         navigate('/');
-      } else { // something bad happened...
+      } else {
         navigate(`/edit_event/${eventId}`);
       }
     });

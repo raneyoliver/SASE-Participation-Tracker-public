@@ -11,12 +11,11 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { SerializedEvent } from '../../../../../types/Event';
-import FormType from '../../../../../Enums';
 import getCSRFToken from '../../../../../utils/getCSRFToken';
 
 interface EventCardMenuProps {
-    event: SerializedEvent;
-  }
+  event: SerializedEvent;
+}
 
 const EventCardMenu: React.FC<EventCardMenuProps> = ({ event }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
