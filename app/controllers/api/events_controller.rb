@@ -18,16 +18,11 @@ class Api::EventsController < ApplicationController
     @event = Event.new(event_params)
     head :bad_request and return unless @event.save
 
-    # Create sign-in form
-    @form = Form.new(
-      id: helpers.make_unique_id,
-      event_id: @event.id,
-      start_time: @event.start_time,
-      end_time: @event.end_time,
-      form_type: 'sign-in',
-      questions: [].to_json
-    )
-    @form.save
+    helpers.create_form_for_event(@event, 'sign-in')
+
+    return unless params[:create_rsvp_form]
+
+    helpers.create_form_for_event(@event, 'RSVP')
   end
 
   private

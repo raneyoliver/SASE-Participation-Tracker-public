@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { RouteComponentProps, navigate, useParams } from '@reach/router';
+import { makeStyles } from '@material-ui/core/styles';
 import {
-  Box, TextField, Button, Typography,
+  Box, TextField, Button, Typography, FormControl, NativeSelect, InputLabel,
 } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import CardWithHeader from '../CardWithHeader/CardWithHeader';
@@ -46,12 +47,23 @@ const NewUserPage: React.FC<RouteComponentProps> = () => {
     setEmail(e.target.value);
   };
 
+  // had to style the dropdown manually
+  const useStyles = makeStyles(() => ({
+    formControl: {
+      minWidth: 180,
+    },
+  }));
+
+  const classes = useStyles();
+  // eslint-disable-next-line jsx-a11y/control-has-associated-label
+  const gradYearOptions = [<option value="" key={null} />];
+  const currentYear = new Date().getFullYear();
+  for (let year = currentYear - 1; year <= currentYear + 6; year++) {
+    gradYearOptions.push(<option value={year} key={year}>{year}</option>);
+  }
   const [graduationYear, setGraduationYear] = React.useState('');
-  const handleGraduationYearChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    const re = /^[0-9]{0,4}$/;
-    if (re.test(e.target.value)) {
-      setGraduationYear(e.target.value);
-    }
+  const handleGraduationYearChange = (e: React.ChangeEvent<HTMLSelectElement>): void => {
+    setGraduationYear(e.target.value);
   };
 
   const [phoneNumber, setPhoneNumber] = React.useState('');
@@ -59,8 +71,7 @@ const NewUserPage: React.FC<RouteComponentProps> = () => {
     setPhoneNumber(e.target.value);
   };
 
-  const graduationYearValid = graduationYear.length === 4;
-  const formValid = firstName && lastName && major && graduationYearValid && email;
+  const formValid = firstName && lastName && graduationYear && major && email;
 
   const handleSubmit = (): void => {
     if (!formValid) return;
@@ -134,7 +145,20 @@ const NewUserPage: React.FC<RouteComponentProps> = () => {
         </Box>
 
         <Box paddingBottom={1}>
-          <TextField id="new-user-graduation-year" required error={!graduationYearValid} label="Graduation Year" value={graduationYear} onChange={handleGraduationYearChange} />
+          <FormControl required className={classes.formControl} error={!graduationYear}>
+            <InputLabel htmlFor="new-user-graduation-year">Graduation Year</InputLabel>
+            <NativeSelect
+              value={graduationYear}
+              onChange={handleGraduationYearChange}
+              name="Graduation Year"
+              inputProps={{
+                name: 'graduation-year',
+                id: 'new-user-graduation-year',
+              }}
+            >
+              {gradYearOptions}
+            </NativeSelect>
+          </FormControl>
         </Box>
 
         <Box paddingBottom={1}>

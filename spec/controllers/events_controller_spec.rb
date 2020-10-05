@@ -69,6 +69,7 @@ describe Api::EventsController do
         @description = 'what is a description'
         @start_time = 'Wed, 16 Sep 2020 05:27:32 GMT'
         @end_time = 'Wed, 16 Sep 2020 06:27:32 GMT'
+        @create_rsvp_form = false
         @event_type = 'GBM'
         @expected = {
           name: @name,
@@ -78,7 +79,7 @@ describe Api::EventsController do
           event_type: @event_type,
         }
 
-        post :create, params: { event: @expected }, format: :json
+        post :create, params: { event: @expected, create_rsvp_form: @create_rsvp_form }, as: :json
 
         expect(response).to have_http_status(:no_content)
         expect(Event.count).to eq(1)
@@ -92,12 +93,56 @@ describe Api::EventsController do
         expect(@created.event_type).to eq(@event_type)
       end
 
-      it 'saves the form' do
+      it 'only creates a sign-in form when not told to create an RSVP form' do
         @name = 'cool event (cool kids only)'
         @description = 'what is a description'
         @start_time = 'Wed, 16 Sep 2020 05:27:32 GMT'
         @end_time = 'Wed, 16 Sep 2020 06:27:32 GMT'
+        @create_rsvp_form = false
         @form_type = 'sign-in'
+        @questions = '[]'
+
+        @event_expected = {
+          name: @name,
+          description: @description,
+          start_time: @start_time,
+          end_time: @end_time,
+        }
+
+        @form_expected = {
+          event_id: Event.primary_key,
+          start_time: @start_time,
+          end_time: @end_time,
+          form_type: @form_type,
+          questions: @questions,
+        }
+
+        post :create, params: { event: @event_expected,
+                                form: @form_expected,
+                                create_rsvp_form: @create_rsvp_form }, as: :json
+
+        expect(response).to have_http_status(:no_content)
+        expect(Form.count).to eq(1)
+        @created = Form.first
+        expect(@created.start_time.to_i).to eq(DateTime.parse(@start_time).to_i)
+        expect(@created.end_time.to_i).to eq(DateTime.parse(@end_time).to_i)
+        expect(@created.form_type).to eq(@form_type)
+        expect(@created.questions).to eq(@questions)
+
+        # Check if the form is linked to the event created
+        expect(@created.event_id).to eq(Event.first.id)
+
+        # Check if the form has a unique id (link)
+        expect(@created.id)
+      end
+
+      it 'creates an RSVP form when told to' do
+        @name = 'cool event (cool kids only)'
+        @description = 'what is a description'
+        @start_time = 'Wed, 16 Sep 2020 05:27:32 GMT'
+        @end_time = 'Wed, 16 Sep 2020 06:27:32 GMT'
+        @create_rsvp_form = true
+        @form_type = 'RSVP'
         @questions = '[]'
         @event_expected = {
           name: @name,
@@ -114,11 +159,13 @@ describe Api::EventsController do
           questions: @questions,
         }
 
-        post :create, params: { event: @event_expected, form: @form_expected }, format: :json
+        post :create, params: { event: @event_expected,
+                                form: @form_expected,
+                                create_rsvp_form: @create_rsvp_form }, as: :json
 
         expect(response).to have_http_status(:no_content)
-        expect(Form.count).to eq(1)
-        @created = Form.first
+        expect(Form.count).to eq(2)
+        @created = Form.where(form_type: 'RSVP').first
         expect(@created.start_time.to_i).to eq(DateTime.parse(@start_time).to_i)
         expect(@created.end_time.to_i).to eq(DateTime.parse(@end_time).to_i)
         expect(@created.form_type).to eq(@form_type)
@@ -141,7 +188,7 @@ describe Api::EventsController do
           end_time: 'eggplant',
         }
 
-        post :create, params: { event: @expected }, format: :json
+        post :create, params: { event: @expected }, as: :json
 
         expect(response).to have_http_status(:bad_request)
       end
