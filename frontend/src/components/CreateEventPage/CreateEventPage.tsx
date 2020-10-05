@@ -30,6 +30,14 @@ const CreateEventPage: React.FC<RouteComponentProps> = () => {
     setType(e.target.value);
   };
 
+  const eventTypeMap = new Map<string, EventType>();
+
+  const option = Object.keys(EventType).map((key) => (
+    <MenuItem key={key} value={key}>
+      {eventTypeMap.get(key)}
+    </MenuItem>
+  ));
+
   // Initialize startTime to current time
   const [startTime, setStartTime] = React.useState(new Date());
   // Initialize endTime to current time + 1 hour
@@ -94,11 +102,7 @@ const CreateEventPage: React.FC<RouteComponentProps> = () => {
           <FormControl>
             <InputLabel>Type</InputLabel>
             <Select value={eventType} onChange={handleTypeChange}>
-              <MenuItem value={EventType.gbm}>GBM</MenuItem>
-              <MenuItem value={EventType.socials}>Socials</MenuItem>
-              <MenuItem value={EventType.mentor}>Mentor/Mentee</MenuItem>
-              <MenuItem value={EventType.volunteer}>Volunteer</MenuItem>
-              <MenuItem value={EventType.profitshare}>Profit Share</MenuItem>
+              {option}
             </Select>
           </FormControl>
         </Box>
