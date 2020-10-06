@@ -25,6 +25,7 @@ describe Api::EventsController do
           description: 'description goes here',
           start_time: '2020-09-15T01:00:00.000Z',
           end_time: '2020-09-15T00:00:00.000Z',
+          event_type: 'Socials',
         }
         Event.new(**@expected_event).save
 
@@ -44,6 +45,7 @@ describe Api::EventsController do
           description: 'description goes here',
           start_time: '2020-09-15T01:00:00.000Z',
           end_time: '2020-09-15T00:00:00.000Z',
+          event_type: 'Socials',
           forms: [{
             id: '8888888888',
             form_type: 'sign-in',
