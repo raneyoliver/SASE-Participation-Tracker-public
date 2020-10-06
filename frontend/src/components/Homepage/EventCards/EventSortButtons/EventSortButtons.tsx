@@ -62,8 +62,8 @@ const EventSortButtons: React.FC<EventSortButtonsProps> = ({ events, onSort }) =
   // Default date filter is to show all events
   const [dateFilter, setDateFilter] = React.useState(DateFilter.All);
 
-  // Default event type filter is to show all events
-  const [selectedEventTypes, setSelectedEventTypes] = React.useState(new Set(eventTypes));
+  // Default event type filter is to show all events (when no types are selected, all will show up)
+  const [selectedEventTypes, setSelectedEventTypes] = React.useState(new Set());
 
   // When sort button is clicked or filters are changed, resort events
   React.useEffect(() => {
@@ -137,7 +137,9 @@ const EventSortButtons: React.FC<EventSortButtonsProps> = ({ events, onSort }) =
     }
 
     // Apply event type filter
-    newEvents = newEvents.filter((event) => selectedEventTypes.has(event.event_type));
+    if (selectedEventTypes.size) {
+      newEvents = newEvents.filter((event) => selectedEventTypes.has(event.event_type));
+    }
 
     setFilteredEvents(newEvents);
   }, [initialEvents, dateFilter, selectedEventTypes]);
