@@ -1,17 +1,12 @@
 import * as React from 'react';
 import { navigate } from '@reach/router';
 import IconButton from '@material-ui/core/IconButton';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { SerializedEvent } from '../../../../../types/Event';
 import getCSRFToken from '../../../../../utils/getCSRFToken';
+import DeleteConfirmationDialog from './DeleteConfirmationDialog/DeleteConfirmationDialog';
 
 interface EventCardMenuProps {
   event: SerializedEvent;
@@ -29,7 +24,7 @@ const EventCardMenu: React.FC<EventCardMenuProps> = ({ event }) => {
   };
 
   const handleEdit = (): void => {
-    navigate(`/edit_event/${event.id}`);
+    window.location.href = `/edit_event/${event.id}`;
   };
 
   const handleCreateRSVP = (): void => {
@@ -47,7 +42,7 @@ const EventCardMenu: React.FC<EventCardMenuProps> = ({ event }) => {
       body: JSON.stringify(body),
     }).then((response) => {
       if (response.ok) {
-        window.location.reload(false);
+        window.location.reload();
       } else {
         navigate('/login');
       }
@@ -82,7 +77,7 @@ const EventCardMenu: React.FC<EventCardMenuProps> = ({ event }) => {
       body: JSON.stringify(body),
     }).then((response) => {
       if (response.status === 204) {
-        window.location.reload(false);
+        window.location.reload();
       } else {
         navigate('/login');
       }
@@ -127,27 +122,7 @@ const EventCardMenu: React.FC<EventCardMenuProps> = ({ event }) => {
       >
         {menuItems}
       </Menu>
-      <Dialog
-        open={deleteOpen}
-        onClose={handleDeleteClickClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">Delete Event</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Are you sure you want to delete this event?
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleDeleteClickClose} color="primary">
-            No
-          </Button>
-          <Button onClick={handleDelete} color="primary" autoFocus>
-            Yes
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <DeleteConfirmationDialog deleteOpen={deleteOpen} handleDeleteClickClose={handleDeleteClickClose} handleDelete={handleDelete} />
     </div>
   );
 };
