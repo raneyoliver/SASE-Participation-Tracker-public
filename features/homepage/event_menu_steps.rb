@@ -3,7 +3,8 @@ Before '@event-menu' do
   Event.new(
     name: 'Test Event',
     start_time: 'Thu, 1 Jan 1970 01:00:00 +0000',
-    end_time: 'Thu, 1 Jan 1970 02:00:00 +0000'
+    end_time: 'Thu, 1 Jan 1970 02:00:00 +0000',
+    event_type: 'Socials'
   ).save
 end
 
