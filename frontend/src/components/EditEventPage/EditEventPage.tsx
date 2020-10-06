@@ -74,6 +74,7 @@ const EditEventPage: React.FC<RouteComponentProps> = () => {
       setDescription(response.description);
       setStartTime(new Date(response.start_time));
       setEndTime(new Date(response.end_time));
+      setEventType(response.event_type);
     }).finally(() => setLoading(false));
   }, [eventId]);
 
