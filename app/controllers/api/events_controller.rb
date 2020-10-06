@@ -3,7 +3,8 @@ class Api::EventsController < ApplicationController
   def list
     head :bad_request and return unless helpers.check_auth
 
-    @events = Event.includes(forms: [:form_users]).select(:id, :name, :description, :start_time, :end_time)
+    @events = Event.includes(forms: [:form_users])
+                   .select(:id, :name, :description, :start_time, :end_time, :event_type)
 
     @response = @events.map do |event|
       helpers.serialize_event event
