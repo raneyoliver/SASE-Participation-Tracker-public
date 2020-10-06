@@ -26,6 +26,8 @@ const EventCard: React.FC<EventCardProps> = ({ event }) => {
           </Typography>
         </Box>
         <Typography variant="body2">
+          {`Type: ${event.event_type || 'None'}`}
+          <br />
           {`Starts at: ${startTime}`}
           <br />
           {`Ends at: ${endTime}`}
