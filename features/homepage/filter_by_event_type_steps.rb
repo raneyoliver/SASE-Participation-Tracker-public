@@ -23,13 +23,13 @@ Then 'I click the GBM filter' do
 end
 
 Then 'I can only see social events' do
-  @event_cards = page.all('[id^="event-card-"]');
+  @event_cards = page.all('[id^="event-card-"]')
   expect(@event_cards.length).to be(1)
   expect(@event_cards[0]).to have_text('Socials')
 end
 
 Then 'I can only see GBM events' do
-  @event_cards = page.all('[id^="event-card-"]');
+  @event_cards = page.all('[id^="event-card-"]')
   expect(@event_cards.length).to be(1)
   expect(@event_cards[0]).to have_text('GBM')
 end
