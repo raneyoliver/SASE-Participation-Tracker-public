@@ -28,15 +28,7 @@ class Api::EventsController < ApplicationController
 
   def add_form
     @event = Event.find(params[:id])
-    @form = Form.new(
-      id: helpers.make_unique_id,
-      event_id: @event.id,
-      start_time: @event.start_time,
-      end_time: @event.end_time,
-      form_type: params[:form_type],
-      questions: [].to_json
-    )
-    @form.save
+    helpers.create_form_for_event(@event, params[:form_type])
   rescue ActiveRecord::RecordNotFound
     head :not_found and return
   end

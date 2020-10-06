@@ -1,13 +1,14 @@
 import * as React from 'react';
 import { RouteComponentProps, navigate, useParams } from '@reach/router';
 import {
-  Box, TextField, Button, Typography,
+  Box, TextField, Button, InputLabel, MenuItem, FormControl, Select, Typography,
 } from '@material-ui/core';
 import { DateTimePicker } from '@material-ui/pickers';
 import AddIcon from '@material-ui/icons/Add';
 import CardWithHeader from '../CardWithHeader/CardWithHeader';
 import { Event } from '../../types/Event';
 import getCSRFToken from '../../utils/getCSRFToken';
+import { EventType } from '../../Enums';
 
 // Format datetimes like the following: 12/31/2020 12:00 PM
 const dateFormat = 'MM/dd/yyyy hh:mm a';
@@ -44,6 +45,18 @@ const EditEventPage: React.FC<RouteComponentProps> = () => {
     if (date < startTime) setStartTime(new Date(date.valueOf() - 60 * 60 * 1000));
   };
 
+  // Event Type
+  const [eventType, setEventType] = React.useState<EventType>(EventType.gbm);
+  const handleTypeChange = (e: React.ChangeEvent<{ value: EventType }>): void => {
+    setEventType(e.target.value);
+  };
+
+  const option = Object.values(EventType).map((value) => (
+    <MenuItem key={value} value={value}>
+      {value}
+    </MenuItem>
+  ));
+
   // Validate form info to show errors and determine whether to allow submit
   const startTimeValid = !Number.isNaN(startTime.valueOf());
   const endTimeValid = !Number.isNaN(startTime.valueOf());
@@ -72,6 +85,7 @@ const EditEventPage: React.FC<RouteComponentProps> = () => {
       description,
       start_time: startTime.toUTCString(),
       end_time: endTime.toUTCString(),
+      event_type: eventType,
     };
 
     const body = {
@@ -120,6 +134,15 @@ const EditEventPage: React.FC<RouteComponentProps> = () => {
 
         <Box paddingBottom={1}>
           <DateTimePicker disablePast label="End Time" format={dateFormat} value={endTime} onChange={handleEndTimeChange} />
+        </Box>
+
+        <Box paddingBottom={1}>
+          <FormControl>
+            <InputLabel>Type</InputLabel>
+            <Select value={eventType} onChange={handleTypeChange}>
+              {option}
+            </Select>
+          </FormControl>
         </Box>
 
         <Button id="submit" variant="contained" color="secondary" disabled={!formValid} startIcon={<AddIcon />} onClick={handleSubmit}>
