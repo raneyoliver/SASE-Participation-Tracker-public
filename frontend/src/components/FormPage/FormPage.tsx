@@ -99,7 +99,7 @@ const FormPage: React.FC<RouteComponentProps> = () => {
 
   return (
     <Box margin="10% auto" width="50%" minWidth={500}>
-      <CardWithHeader title={`${FormType[form.form_type as unknown as keyof typeof FormType]} for ${form.event.name} (${form.event.event_type || "No Type Provided for"} Event)`}>
+      <CardWithHeader title={`${FormType[form.form_type as unknown as keyof typeof FormType]} for ${form.event.name} (${form.event.event_type || 'No Type Provided for'} Event)`}>
 
         {form.event.description !== '' && descriptionBlock}
 
