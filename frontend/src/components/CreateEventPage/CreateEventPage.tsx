@@ -30,11 +30,9 @@ const CreateEventPage: React.FC<RouteComponentProps> = () => {
     setEventType(e.target.value);
   };
 
-  const eventTypeMap = new Map<string, EventType>();
-
-  const option = Object.keys(EventType).map((key) => (
-    <MenuItem key={key} value={key}>
-      {eventTypeMap.get(key)}
+  const option = Object.values(EventType).map((value) => (
+    <MenuItem key={value} value={value}>
+      {value}
     </MenuItem>
   ));
 

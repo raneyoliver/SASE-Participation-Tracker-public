@@ -9,7 +9,7 @@ import CardWithHeader from '../CardWithHeader/CardWithHeader';
 import getCSRFToken from '../../utils/getCSRFToken';
 import { SerializedForm } from '../../types/Form';
 import { FormUser } from '../../types/FormUser';
-import FormType from '../../Enums';
+import { FormType } from '../../Enums';
 
 const FormPage: React.FC<RouteComponentProps> = () => {
   const { formId } = useParams();
