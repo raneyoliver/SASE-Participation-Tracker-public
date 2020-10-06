@@ -9,6 +9,7 @@ import CardWithHeader from '../CardWithHeader/CardWithHeader';
 import getCSRFToken from '../../utils/getCSRFToken';
 import { SerializedForm } from '../../types/Form';
 import { FormUser } from '../../types/FormUser';
+import { FormType } from '../../Enums';
 
 const FormPage: React.FC<RouteComponentProps> = () => {
   const { formId } = useParams();
@@ -88,7 +89,7 @@ const FormPage: React.FC<RouteComponentProps> = () => {
 
   return (
     <Box margin="10% auto" width="50%" minWidth={500}>
-      <CardWithHeader title={`Sign-in Form for ${form.event.name}`}>
+      <CardWithHeader title={`${FormType[form.form_type as unknown as keyof typeof FormType]} for ${form.event.name}`}>
         <Box paddingBottom={1}>
           <TextField id="form-UIN" required error={!UINValid} label="UIN" value={UIN} onChange={handleUINChange} />
         </Box>

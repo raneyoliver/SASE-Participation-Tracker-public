@@ -4,4 +4,16 @@ enum FormType {
     'RSVP' = 'RSVP Form'
   }
 
-export default FormType;
+// A Enum to restrict the value of event_type
+enum EventType {
+  gbm = 'GBM',
+  socials = 'Socials',
+  mentor = 'Mentor/Mentee',
+  volunteer = 'Volunteer',
+  profitshare = 'Profit Share',
+}
+
+export {
+  FormType,
+  EventType,
+};
