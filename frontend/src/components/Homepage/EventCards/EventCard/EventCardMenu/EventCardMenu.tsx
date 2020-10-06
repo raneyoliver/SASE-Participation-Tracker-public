@@ -4,7 +4,7 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { SerializedEvent } from '../../../../../types/Event';
-import FormType from '../../../../../Enums';
+import { FormType } from '../../../../../Enums';
 
 interface EventCardMenuProps {
     event: SerializedEvent;

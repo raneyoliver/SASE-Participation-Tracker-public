@@ -1,13 +1,14 @@
 import * as React from 'react';
 import { RouteComponentProps, navigate } from '@reach/router';
 import {
-  Box, TextField, Button, FormControlLabel, Checkbox,
+  Box, TextField, Button, FormControlLabel, Checkbox, InputLabel, MenuItem, FormControl, Select,
 } from '@material-ui/core';
 import { DateTimePicker } from '@material-ui/pickers';
 import AddIcon from '@material-ui/icons/Add';
 import CardWithHeader from '../CardWithHeader/CardWithHeader';
 import { Event } from '../../types/Event';
 import getCSRFToken from '../../utils/getCSRFToken';
+import { EventType } from '../../Enums';
 
 // Format datetimes like the following: 12/31/2020 12:00 PM
 const dateFormat = 'MM/dd/yyyy hh:mm a';
@@ -22,6 +23,18 @@ const CreateEventPage: React.FC<RouteComponentProps> = () => {
   const handleDescriptionChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setDescription(e.target.value);
   };
+
+  // Event Type
+  const [eventType, setEventType] = React.useState<EventType>(EventType.gbm);
+  const handleTypeChange = (e: React.ChangeEvent<{ value: EventType }>): void => {
+    setEventType(e.target.value);
+  };
+
+  const option = Object.values(EventType).map((value) => (
+    <MenuItem key={value} value={value}>
+      {value}
+    </MenuItem>
+  ));
 
   // Initialize startTime to current time
   const [startTime, setStartTime] = React.useState(new Date());
@@ -58,6 +71,7 @@ const CreateEventPage: React.FC<RouteComponentProps> = () => {
       description,
       start_time: startTime.toUTCString(),
       end_time: endTime.toUTCString(),
+      event_type: eventType,
     };
 
     const body = {
@@ -92,6 +106,15 @@ const CreateEventPage: React.FC<RouteComponentProps> = () => {
 
         <Box paddingBottom={1}>
           <TextField id="event-description" multiline fullWidth label="Description" value={description} onChange={handleDescriptionChange} />
+        </Box>
+
+        <Box paddingBottom={1}>
+          <FormControl>
+            <InputLabel>Type</InputLabel>
+            <Select value={eventType} onChange={handleTypeChange}>
+              {option}
+            </Select>
+          </FormControl>
         </Box>
 
         <Box paddingBottom={1}>

@@ -25,6 +25,7 @@ describe Api::EventsController do
           description: 'description goes here',
           start_time: '2020-09-15T01:00:00.000Z',
           end_time: '2020-09-15T00:00:00.000Z',
+          event_type: 'Socials',
         }
         Event.new(**@expected_event).save
 
@@ -44,6 +45,7 @@ describe Api::EventsController do
           description: 'description goes here',
           start_time: '2020-09-15T01:00:00.000Z',
           end_time: '2020-09-15T00:00:00.000Z',
+          event_type: 'Socials',
           forms: [{
             id: '8888888888',
             form_type: 'sign-in',
@@ -70,11 +72,13 @@ describe Api::EventsController do
         @start_time = 'Wed, 16 Sep 2020 05:27:32 GMT'
         @end_time = 'Wed, 16 Sep 2020 06:27:32 GMT'
         @create_rsvp_form = false
+        @event_type = 'GBM'
         @expected = {
           name: @name,
           description: @description,
           start_time: @start_time,
           end_time: @end_time,
+          event_type: @event_type,
         }
 
         post :create, params: { event: @expected, create_rsvp_form: @create_rsvp_form }, as: :json
@@ -88,6 +92,7 @@ describe Api::EventsController do
         expect(@created.description).to eq(@description)
         expect(@created.start_time.to_i).to eq(DateTime.parse(@start_time).to_i)
         expect(@created.end_time.to_i).to eq(DateTime.parse(@end_time).to_i)
+        expect(@created.event_type).to eq(@event_type)
       end
 
       it 'only creates a sign-in form when not told to create an RSVP form' do
