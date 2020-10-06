@@ -25,7 +25,7 @@ Then 'I enter the old credentials' do
   click_button 'login'
 end
 
-Then 'I go to the change password page directly' do 
+Then 'I go to the change password page directly' do
   visit('/change_password')
 end
 
