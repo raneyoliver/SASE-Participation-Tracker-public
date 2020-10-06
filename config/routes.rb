@@ -7,10 +7,6 @@ Rails.application.routes.draw do
       post 'create'
     end
 
-    devise_scope :admin do
-      post 'api/admins/sign_in' => 'devise/sessions#create'
-    end
-
     devise_for :admins, controllers: {
       registrations: 'api/registrations',
       sessions: 'api/sessions',

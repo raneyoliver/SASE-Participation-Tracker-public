@@ -3,7 +3,8 @@ class Api::EventsController < ApplicationController
   def list
     head :bad_request and return unless helpers.check_auth
 
-    @events = Event.includes(forms: [:form_users]).select(:id, :name, :description, :event_type, :start_time, :end_time)
+    @events = Event.includes(forms: [:form_users])
+                   .select(:id, :name, :description, :start_time, :end_time, :event_type)
 
     @response = @events.map do |event|
       helpers.serialize_event event
@@ -18,16 +19,11 @@ class Api::EventsController < ApplicationController
     @event = Event.new(event_params)
     head :bad_request and return unless @event.save
 
-    # Create sign-in form
-    @form = Form.new(
-      id: helpers.make_unique_id,
-      event_id: @event.id,
-      start_time: @event.start_time,
-      end_time: @event.end_time,
-      form_type: 'sign-in',
-      questions: [].to_json
-    )
-    @form.save
+    helpers.create_form_for_event(@event, 'sign-in')
+
+    return unless params[:create_rsvp_form]
+
+    helpers.create_form_for_event(@event, 'RSVP')
   end
 
   private

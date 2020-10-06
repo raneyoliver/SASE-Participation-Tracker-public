@@ -1,14 +1,8 @@
 import * as React from 'react';
 import { RouteComponentProps, navigate } from '@reach/router';
 import {
-  Box, TextField, Button,
+  Box, TextField, Button, FormControlLabel, Checkbox, InputLabel, MenuItem, FormControl, Select,
 } from '@material-ui/core';
-
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-
 import { DateTimePicker } from '@material-ui/pickers';
 import AddIcon from '@material-ui/icons/Add';
 import CardWithHeader from '../CardWithHeader/CardWithHeader';
@@ -31,10 +25,16 @@ const CreateEventPage: React.FC<RouteComponentProps> = () => {
   };
 
   // Event Type
-  const [eventType, setType] = React.useState<EventType>(EventType.gbm);
+  const [eventType, setEventType] = React.useState<EventType>(EventType.gbm);
   const handleTypeChange = (e: React.ChangeEvent<{ value: EventType }>): void => {
-    setType(e.target.value);
+    setEventType(e.target.value);
   };
+
+  const option = Object.values(EventType).map((value) => (
+    <MenuItem key={value} value={value}>
+      {value}
+    </MenuItem>
+  ));
 
   // Initialize startTime to current time
   const [startTime, setStartTime] = React.useState(new Date());
@@ -53,6 +53,11 @@ const CreateEventPage: React.FC<RouteComponentProps> = () => {
     if (date < startTime) setStartTime(new Date(date.valueOf() - 60 * 60 * 1000));
   };
 
+  const [createRSVPForm, setCreateRSVPForm] = React.useState(false);
+  const handleCreateRSVPFormChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    setCreateRSVPForm(e.target.checked);
+  };
+
   // Validate form info to show errors and determine whether to allow submit
   const startTimeValid = !Number.isNaN(startTime.valueOf());
   const endTimeValid = !Number.isNaN(startTime.valueOf());
@@ -61,12 +66,17 @@ const CreateEventPage: React.FC<RouteComponentProps> = () => {
   const handleSubmit = (): void => {
     if (!formValid) return;
     // Form is valid, convert times to UTC format and post
-    const body: Event = {
+    const eventBody: Event = {
       name,
       description,
       start_time: startTime.toUTCString(),
       end_time: endTime.toUTCString(),
-      event_type: eventType.toString(),
+      event_type: eventType,
+    };
+
+    const body = {
+      event: eventBody,
+      create_rsvp_form: createRSVPForm,
     };
 
     fetch('/api/events/create', {
@@ -85,6 +95,8 @@ const CreateEventPage: React.FC<RouteComponentProps> = () => {
     });
   };
 
+  const RSVPCheckbox = <Checkbox id="event-create-RSVP-form" name="RSVPCheck" color="primary" checked={createRSVPForm} onChange={handleCreateRSVPFormChange} />;
+
   return (
     <Box margin="auto" width="50%" minWidth={500}>
       <CardWithHeader title="Create New Event">
@@ -100,11 +112,7 @@ const CreateEventPage: React.FC<RouteComponentProps> = () => {
           <FormControl>
             <InputLabel>Type</InputLabel>
             <Select value={eventType} onChange={handleTypeChange}>
-              <MenuItem value={EventType.gbm}>GBM</MenuItem>
-              <MenuItem value={EventType.socials}>Socials</MenuItem>
-              <MenuItem value={EventType.mentor}>Mentor/Mentee</MenuItem>
-              <MenuItem value={EventType.volunteer}>Volunteer</MenuItem>
-              <MenuItem value={EventType.profitshare}>Profit Share</MenuItem>
+              {option}
             </Select>
           </FormControl>
         </Box>
@@ -115,6 +123,10 @@ const CreateEventPage: React.FC<RouteComponentProps> = () => {
 
         <Box paddingBottom={1}>
           <DateTimePicker disablePast label="End Time" format={dateFormat} value={endTime} onChange={handleEndTimeChange} />
+        </Box>
+
+        <Box paddingBottom={1}>
+          <FormControlLabel id="event-create-RSVP" label="Create an RSVP Form for this event?" labelPlacement="start" style={{ marginLeft: 0 }} control={RSVPCheckbox} />
         </Box>
 
         <Button id="submit" variant="contained" color="secondary" disabled={!formValid} startIcon={<AddIcon />} onClick={handleSubmit}>
