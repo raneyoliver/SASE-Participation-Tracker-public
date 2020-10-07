@@ -3,7 +3,7 @@ When 'I go to the form page to see event details' do
 end
 
 Then 'I see the event type related to the form' do
-  expect(page).to have_content('GBM')
+  expect(page).to have_content('Socials')
 end
 
 Then 'I see the event description related to the form' do
