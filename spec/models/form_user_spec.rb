@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe FormUser, type: :model do
   context 'when a new FormUser is created' do
     before :each do
-      @event_data = { id: 1, name: 'Test Event', description: 'description',
+      @event_data = { id: 1, name: 'Test Event', description: 'description', event_type: 'GBM',
                       start_time: '2020-09-15T01:00:00.000Z', end_time: '2020-09-15T00:00:00.000Z' }
       Event.create(@event_data)
       @form_data = { id: '8888888888', event_id: 1, start_time: '2020-09-15T01:00:00.000Z',
@@ -53,7 +53,7 @@ RSpec.describe FormUser, type: :model do
 
   context 'when FormUser exist in the database' do
     before :all do
-      @event_data = { id: 1, name: 'Test Event', description: 'description',
+      @event_data = { id: 1, name: 'Test Event', description: 'description', event_type: 'GBM',
                       start_time: '2020-09-15T01:00:00.000Z', end_time: '2020-09-15T00:00:00.000Z' }
       Event.create(@event_data)
       @form_data = { id: '8888888888', event_id: 1, start_time: '2020-09-15T01:00:00.000Z',

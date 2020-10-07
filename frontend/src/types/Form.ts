@@ -8,5 +8,7 @@ export interface SerializedForm {
     questions: string;
     event: {
       name: string;
+      description: string;
+      event_type: string;
     };
   }
