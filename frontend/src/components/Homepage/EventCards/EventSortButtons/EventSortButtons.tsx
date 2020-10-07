@@ -8,6 +8,7 @@ import {
   sortEventsByTimeAscending, sortEventsByTimeDescending,
 } from '../../../../utils/sortEvents';
 import { filterEventsOnlyPast, filterEventsOnlyUpcoming } from '../../../../utils/filterEvents';
+import { EventType } from '../../../../Enums';
 
 interface EventSortButtonsProps {
   events: SerializedEvent[];
@@ -26,6 +27,8 @@ enum DateFilter {
   Past = 'Past',
   Upcoming = 'Upcoming',
 }
+
+const eventTypes = Object.values(EventType);
 
 function getNextSortDirection(currentDirection: SortDirection): SortDirection {
   switch (currentDirection) {
@@ -58,6 +61,9 @@ const EventSortButtons: React.FC<EventSortButtonsProps> = ({ events, onSort }) =
 
   // Default date filter is to show all events
   const [dateFilter, setDateFilter] = React.useState(DateFilter.All);
+
+  // Default event type filter is to show all events (when no types are selected, all will show up)
+  const [selectedEventTypes, setSelectedEventTypes] = React.useState(new Set());
 
   // When sort button is clicked or filters are changed, resort events
   React.useEffect(() => {
@@ -94,9 +100,29 @@ const EventSortButtons: React.FC<EventSortButtonsProps> = ({ events, onSort }) =
     setDateSortDirection(getNextSortDirection(dateSortDirection));
   };
 
-  // Set filtered events when date filter changes
+  const eventTypeFilterButtons = eventTypes.map((eventType) => {
+    // Either add or remove from selected types on click
+    const selected = selectedEventTypes.has(eventType);
+    const handleClick = selected ? (): void => {
+      const newSelectedEventTypes = new Set(selectedEventTypes);
+      newSelectedEventTypes.delete(eventType);
+      setSelectedEventTypes(newSelectedEventTypes);
+    } : (): void => {
+      setSelectedEventTypes(new Set(selectedEventTypes).add(eventType));
+    };
+
+    return (
+      <Button variant={selected ? 'contained' : null} onClick={handleClick} key={eventType}>
+        {eventType}
+      </Button>
+    );
+  });
+
+  // Set filtered events when filters change
   React.useEffect(() => {
     let newEvents = [...initialEvents];
+
+    // Apply date filter
     switch (dateFilter) {
       case (DateFilter.Past): {
         newEvents = filterEventsOnlyPast(newEvents);
@@ -110,8 +136,13 @@ const EventSortButtons: React.FC<EventSortButtonsProps> = ({ events, onSort }) =
       default: break;
     }
 
+    // Apply event type filter
+    if (selectedEventTypes.size) {
+      newEvents = newEvents.filter((event) => selectedEventTypes.has(event.event_type));
+    }
+
     setFilteredEvents(newEvents);
-  }, [initialEvents, dateFilter]);
+  }, [initialEvents, dateFilter, selectedEventTypes]);
 
   return (
     <>
@@ -132,7 +163,7 @@ const EventSortButtons: React.FC<EventSortButtonsProps> = ({ events, onSort }) =
           Date
         </Button>
       </Box>
-      <Box display="flex" alignItems="center">
+      <Box display="flex" alignItems="center" marginBottom={1}>
         <Box marginRight={1}>
           <Typography>
             Date Filter:
@@ -140,6 +171,16 @@ const EventSortButtons: React.FC<EventSortButtonsProps> = ({ events, onSort }) =
         </Box>
         <ButtonGroup color="secondary" size="small">
           {dateFilterButtons}
+        </ButtonGroup>
+      </Box>
+      <Box display="flex" alignItems="center">
+        <Box marginRight={1}>
+          <Typography>
+            Event Types:
+          </Typography>
+        </Box>
+        <ButtonGroup color="secondary" size="small">
+          {eventTypeFilterButtons}
         </ButtonGroup>
       </Box>
     </>
