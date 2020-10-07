@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {
-  Box, Button,
+  Button,
 } from '@material-ui/core';
 import { navigate } from '@reach/router';
 import getCSRFToken from '../../../utils/getCSRFToken';

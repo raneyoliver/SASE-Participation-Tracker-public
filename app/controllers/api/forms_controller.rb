@@ -2,7 +2,8 @@
 class Api::FormsController < ApplicationController
   def show
     @form = Form.find(params[:id])
-    render json: @form, include: { event: { only: :name } }, except: [:start_time, :end_time]
+    @serialized_form = helpers.serialize_form @form
+    render json: @serialized_form
   rescue ActiveRecord::RecordNotFound
     head :not_found and return
   end

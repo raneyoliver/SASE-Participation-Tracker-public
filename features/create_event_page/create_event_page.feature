@@ -21,3 +21,21 @@ Scenario: Submit button is not clickable when the form is missing a name
   Then I go back to the create event page
   Then I fill out the form without a name
   Then I can't click the submit button
+
+@javascript
+@authRequired
+Scenario: Submit button is clickable when the form is missing a description
+  When I go to the create event page
+  Then I log in
+  Then I go back to the create event page
+  Then I fill out the form without a description
+  Then I can click the submit button on the create event page
+
+@javascript
+@authRequired
+Scenario: Submit button is not clickable when the create RSVP form checkbox is not checked
+  When I go to the create event page
+  Then I log in
+  Then I go back to the create event page
+  Then I fill out the form without checking the RSVP form box
+  Then I can click the submit button on the create event page

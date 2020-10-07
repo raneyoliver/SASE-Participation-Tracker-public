@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Box, Typography } from '@material-ui/core';
 import { Link } from '@reach/router';
 import { SerializedEvent, SerializedFormData } from '../../../../types/Event';
-import FormType from '../../../../Enums';
+import { FormType } from '../../../../Enums';
 import formatDate from '../../../../utils/formatDate';
 import CardWithHeader from '../../../CardWithHeader/CardWithHeader';
 import EventCardMenu from './EventCardMenu/EventCardMenu';
@@ -15,7 +15,7 @@ const EventCard: React.FC<EventCardProps> = ({ event }) => {
   const startTime = formatDate(new Date(event.start_time));
   const endTime = formatDate(new Date(event.end_time));
 
-  const menu = <EventCardMenu event={event} />
+  const menu = <EventCardMenu event={event} />;
 
   return (
     <CardWithHeader id={`event-card-${event.id}`} title={event.name} icon={menu}>
@@ -26,6 +26,8 @@ const EventCard: React.FC<EventCardProps> = ({ event }) => {
           </Typography>
         </Box>
         <Typography variant="body2">
+          {`Type: ${event.event_type || 'None'}`}
+          <br />
           {`Starts at: ${startTime}`}
           <br />
           {`Ends at: ${endTime}`}

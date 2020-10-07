@@ -4,13 +4,15 @@ Before '@event-date-filtering' do
   Event.new(
     name: 'caveman meetup',
     start_time: @time_in_past,
-    end_time: @time_in_past
+    end_time: @time_in_past,
+    event_type: 'Socials'
   ).save
 
   Event.new(
     name: 'paint the world chrome',
     start_time: @time_in_future,
-    end_time: @time_in_future
+    end_time: @time_in_future,
+    event_type: 'Socials'
   ).save
 end
 
