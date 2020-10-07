@@ -6,30 +6,29 @@ import {
 import CardWithHeader from '../CardWithHeader/CardWithHeader';
 import getCSRFToken from '../../utils/getCSRFToken';
 
-const LoginPage: React.FC<RouteComponentProps> = () => {
-  const [username, setUsername] = React.useState('');
-  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setUsername(e.target.value);
-  };
-
+const ChangePasswordPage: React.FC<RouteComponentProps> = () => {
   const [password, setPassword] = React.useState('');
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setPassword(e.target.value);
   };
 
-  // Validate form info to show errors and determine whether to allow submit
-  const formValid = username && password;
+  const [password_confirmation, setPasswordConfirmation] = React.useState('');
+  const handlePasswordConfirmationChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    setPasswordConfirmation(e.target.value);
+  };
 
-  const handleLogin = (): void => {
+  // Validate form info to show errors and determine whether to allow submit
+  const formValid = (password_confirmation === password) && password_confirmation;
+
+  const handleSubmission = (): void => {
     if (!formValid) return;
     // Form is valid, post
     const body = {
-      username,
       password,
     };
 
-    fetch('/api/admins/sign_in', {
-      method: 'POST',
+    fetch('/api/admins/', {
+      method: 'PUT',
       headers: {
         'Content-type': 'application/json',
         'X-CSRF-Token': getCSRFToken(),
@@ -44,44 +43,42 @@ const LoginPage: React.FC<RouteComponentProps> = () => {
 
   return (
     <Box margin="auto" width="50%" minWidth={500}>
-      <CardWithHeader title="Log In">
+      <CardWithHeader title="Change Password">
         <Box paddingBottom={1}>
           <TextField
-            id="username"
+            id="password"
             required
-            error={!username}
-            label="Username"
-            value={username}
-            onChange={handleNameChange}
-            autoComplete="username"
+            error={!password}
+            label="New Password"
+            type="password"
+            value={password}
+            onChange={handlePasswordChange}
           />
         </Box>
 
         <Box paddingBottom={1}>
           <TextField
-            id="password"
+            id="password-confirmation"
             required
-            error={!username}
-            label="Password"
+            error={!password_confirmation}
+            label="Password Confirmation"
             type="password"
-            value={password}
-            onChange={handlePasswordChange}
-            onKeyPress={(e): void => { if (e.key === 'Enter') handleLogin(); }}
-            autoComplete="current-password"
+            value={password_confirmation}
+            onChange={handlePasswordConfirmationChange}
           />
         </Box>
         <Button
-          id="login"
+          id="change-password"
           variant="contained"
           color="secondary"
           disabled={!formValid}
-          onClick={handleLogin}
+          onClick={handleSubmission}
         >
-          Log In
+          Change Password
         </Button>
       </CardWithHeader>
     </Box>
   );
 };
 
-export default LoginPage;
+export default ChangePasswordPage;

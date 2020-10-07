@@ -31,6 +31,6 @@ Before('@RSVPFormRequired') do
 end
 
 Before('@authRequired') do
-  @admin = Admin.new(username: 'testAdmin', password: '1234')
+  @admin = Admin.new(username: 'Admin', password: 'password')
   @admin.save
 end

@@ -13,6 +13,7 @@ import FormPage from '../FormPage/FormPage';
 import NewUserPage from '../NewUserPage/NewUserPage';
 import ConfirmSubmissionPage from '../ConfirmSubmissionPage/ConfirmSubmissionPage';
 import FormErrorPage from '../FormErrorPage/FormErrorPage';
+import ChangePasswordPage from '../ChangePasswordPage/ChangePasswordPage';
 import ConfirmUpdatePage from '../ConfirmUpdatePage/ConfirmUpdatePage';
 import EditEventErrorPage from '../EditEventErrorPage/EditEventErrorPage';
 
@@ -27,6 +28,7 @@ const App: React.SFC = () => (
           <EditEventPage path="/edit_event/:eventId" />
           <EditEventErrorPage path="edit_event/error" />
           <LoginPage path="/login" />
+          <ChangePasswordPage path="/change_password" />
           <FormPage path="/form/:formId" />
           <NewUserPage path="/form/:formId/new_user/:UIN" />
           <ConfirmSubmissionPage path="/form/confirm_submission" />
