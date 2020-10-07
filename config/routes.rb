@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     resource :events do
       get 'list'
       post 'create'
+      get 'export'
     end
 
     devise_for :admins, controllers: {
