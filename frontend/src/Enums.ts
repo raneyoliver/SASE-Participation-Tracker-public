@@ -1,7 +1,14 @@
 // A Enum to restrict the value of form_type
-enum FormType {
-    'sign-in' = 'Sign-in Form',
-    'RSVP' = 'RSVP Form'
-  }
+export enum FormType {
+  'sign-in' = 'Sign-in Form',
+  'RSVP' = 'RSVP Form',
+}
 
-export default FormType;
+// A Enum to restrict the value of event_type
+export enum EventType {
+  gbm = 'GBM',
+  socials = 'Socials',
+  mentor = 'Mentor/Mentee',
+  volunteer = 'Volunteer',
+  profitshare = 'Profit Share',
+}

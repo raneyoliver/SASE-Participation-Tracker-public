@@ -10,8 +10,8 @@ const EventCards: React.FC = () => {
   // Loading is true until fetching events is done
   const [loading, setLoading] = React.useState(true);
 
-  // Fetch events on page load
   const [events, setEvents] = React.useState<SerializedEvent[]>([]);
+  const [hasEvents, setHasEvents] = React.useState(false);
 
   React.useEffect(() => {
     fetch('/api/events/list').then((response) => {
@@ -21,6 +21,7 @@ const EventCards: React.FC = () => {
       navigate('/login');
       return response;
     }).then((response) => response.json()).then((response: SerializedEvent[]) => {
+      setHasEvents(Boolean(response.length));
       setEvents(response);
     })
       .finally(() => setLoading(false));
@@ -49,21 +50,33 @@ const EventCards: React.FC = () => {
     </Box>
   ));
 
-  return events?.length ? (
-    <>
-      <EventSortButtons events={events} onSort={handleEventSort} />
-      <Box display="flex" flexWrap="wrap" width="100%">
-        {eventCards}
-      </Box>
-    </>
+  const sortButtons = events ? <EventSortButtons events={events} onSort={handleEventSort} /> : null;
+
+  const nonePresentText = hasEvents ? (
+    'No events match your criteria.'
   ) : (
-    <Box margin="auto" width="50%" minWidth={500}>
+    'No events have been created yet. Try clicking the plus icon in the bottom right!'
+  );
+
+  const cardList = events?.length ? (
+    eventCards
+  ) : (
+    <Box margin="auto" width="50%" minWidth={500} paddingTop={1}>
       <CardWithHeader title="No Events">
         <Typography>
-          No events have been created yet. Try clicking the plus icon in the bottom right!
+          {nonePresentText}
         </Typography>
       </CardWithHeader>
     </Box>
+  );
+
+  return (
+    <>
+      {sortButtons}
+      <Box display="flex" flexWrap="wrap" width="100%">
+        {cardList}
+      </Box>
+    </>
   );
 };
 

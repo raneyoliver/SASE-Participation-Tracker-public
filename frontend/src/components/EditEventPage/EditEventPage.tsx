@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { RouteComponentProps, navigate } from '@reach/router';
+import { RouteComponentProps, navigate, useParams } from '@reach/router';
 import {
-  Box, TextField, Button, FormControlLabel, Checkbox, InputLabel, MenuItem, FormControl, Select,
+  Box, TextField, Button, InputLabel, MenuItem, FormControl, Select, Typography,
 } from '@material-ui/core';
 import { DateTimePicker } from '@material-ui/pickers';
 import AddIcon from '@material-ui/icons/Add';
@@ -13,7 +13,11 @@ import { EventType } from '../../Enums';
 // Format datetimes like the following: 12/31/2020 12:00 PM
 const dateFormat = 'MM/dd/yyyy hh:mm a';
 
-const CreateEventPage: React.FC<RouteComponentProps> = () => {
+const EditEventPage: React.FC<RouteComponentProps> = () => {
+  const { eventId } = useParams();
+
+  const [loading, setLoading] = React.useState(true);
+
   const [name, setName] = React.useState('');
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setName(e.target.value);
@@ -23,18 +27,6 @@ const CreateEventPage: React.FC<RouteComponentProps> = () => {
   const handleDescriptionChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setDescription(e.target.value);
   };
-
-  // Event Type
-  const [eventType, setEventType] = React.useState<EventType>(EventType.gbm);
-  const handleTypeChange = (e: React.ChangeEvent<{ value: EventType }>): void => {
-    setEventType(e.target.value);
-  };
-
-  const option = Object.values(EventType).map((value) => (
-    <MenuItem key={value} value={value}>
-      {value}
-    </MenuItem>
-  ));
 
   // Initialize startTime to current time
   const [startTime, setStartTime] = React.useState(new Date());
@@ -53,19 +45,42 @@ const CreateEventPage: React.FC<RouteComponentProps> = () => {
     if (date < startTime) setStartTime(new Date(date.valueOf() - 60 * 60 * 1000));
   };
 
-  const [createRSVPForm, setCreateRSVPForm] = React.useState(false);
-  const handleCreateRSVPFormChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setCreateRSVPForm(e.target.checked);
+  // Event Type
+  const [eventType, setEventType] = React.useState<EventType>(EventType.gbm);
+  const handleTypeChange = (e: React.ChangeEvent<{ value: EventType }>): void => {
+    setEventType(e.target.value);
   };
+
+  const option = Object.values(EventType).map((value) => (
+    <MenuItem key={value} value={value}>
+      {value}
+    </MenuItem>
+  ));
 
   // Validate form info to show errors and determine whether to allow submit
   const startTimeValid = !Number.isNaN(startTime.valueOf());
   const endTimeValid = !Number.isNaN(startTime.valueOf());
   const formValid = name && startTimeValid && endTimeValid;
 
+  // Get event data based on its id, return error page if not found
+  React.useEffect(() => {
+    fetch(`/api/events/${eventId}`).then((response) => {
+      if (response.status === 404) {
+        window.location.href = '/edit_event/error';
+      }
+      return response.json();
+    }).then((response: Event) => {
+      setName(response.name);
+      setDescription(response.description);
+      setStartTime(new Date(response.start_time));
+      setEndTime(new Date(response.end_time));
+      setEventType(response.event_type);
+    }).finally(() => setLoading(false));
+  }, [eventId]);
+
   const handleSubmit = (): void => {
     if (!formValid) return;
-    // Form is valid, convert times to UTC format and post
+
     const eventBody: Event = {
       name,
       description,
@@ -75,37 +90,51 @@ const CreateEventPage: React.FC<RouteComponentProps> = () => {
     };
 
     const body = {
+      id: eventId,
       event: eventBody,
-      create_rsvp_form: createRSVPForm,
     };
 
-    fetch('/api/events/create', {
+    fetch('/api/events/update', {
       method: 'POST',
       headers: {
         'Content-type': 'application/json',
         'X-CSRF-Token': getCSRFToken(),
       },
       body: JSON.stringify(body),
-    }).then((response) => { // Once request has been processed, go back to homepage
-      if (response.ok) {
+    }).then((response) => {
+      if (response.status === 204) {
         navigate('/');
-      } else { // something bad happened...
-        navigate('/login');
+      } else {
+        navigate(`/edit_event/${eventId}`);
       }
     });
   };
 
-  const RSVPCheckbox = <Checkbox id="event-create-RSVP-form" name="RSVPCheck" color="primary" checked={createRSVPForm} onChange={handleCreateRSVPFormChange} />;
+  if (loading) {
+    return (
+      <Typography>
+        Loading...
+      </Typography>
+    );
+  }
 
   return (
     <Box margin="auto" width="50%" minWidth={500}>
-      <CardWithHeader title="Create New Event">
+      <CardWithHeader title="Edit Event">
         <Box paddingBottom={1}>
           <TextField id="event-name" required error={!name} label="Name" value={name} onChange={handleNameChange} />
         </Box>
 
         <Box paddingBottom={1}>
           <TextField id="event-description" multiline fullWidth label="Description" value={description} onChange={handleDescriptionChange} />
+        </Box>
+
+        <Box paddingBottom={1}>
+          <DateTimePicker label="Start Time" format={dateFormat} value={startTime} onChange={handleStartTimeChange} />
+        </Box>
+
+        <Box paddingBottom={1}>
+          <DateTimePicker label="End Time" format={dateFormat} value={endTime} onChange={handleEndTimeChange} />
         </Box>
 
         <Box paddingBottom={1}>
@@ -117,24 +146,12 @@ const CreateEventPage: React.FC<RouteComponentProps> = () => {
           </FormControl>
         </Box>
 
-        <Box paddingBottom={1}>
-          <DateTimePicker disablePast label="Start Time" format={dateFormat} value={startTime} onChange={handleStartTimeChange} />
-        </Box>
-
-        <Box paddingBottom={1}>
-          <DateTimePicker disablePast label="End Time" format={dateFormat} value={endTime} onChange={handleEndTimeChange} />
-        </Box>
-
-        <Box paddingBottom={1}>
-          <FormControlLabel id="event-create-RSVP" label="Create an RSVP Form for this event?" labelPlacement="start" style={{ marginLeft: 0 }} control={RSVPCheckbox} />
-        </Box>
-
         <Button id="submit" variant="contained" color="secondary" disabled={!formValid} startIcon={<AddIcon />} onClick={handleSubmit}>
-          Create Event
+          Update Event
         </Button>
       </CardWithHeader>
     </Box>
   );
 };
 
-export default CreateEventPage;
+export default EditEventPage;
