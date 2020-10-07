@@ -71,6 +71,8 @@ const FormPage: React.FC<RouteComponentProps> = () => {
         }).then((response2) => {
           if (response2.status === 201) {
             navigate('/form/confirm_submission');
+          } else if (response2.status === 200) {
+            navigate('/form/confirm_update');
           }
         });
       } else if (response.status === 200) {
