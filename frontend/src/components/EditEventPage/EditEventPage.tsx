@@ -130,11 +130,11 @@ const EditEventPage: React.FC<RouteComponentProps> = () => {
         </Box>
 
         <Box paddingBottom={1}>
-          <DateTimePicker disablePast label="Start Time" format={dateFormat} value={startTime} onChange={handleStartTimeChange} />
+          <DateTimePicker label="Start Time" format={dateFormat} value={startTime} onChange={handleStartTimeChange} />
         </Box>
 
         <Box paddingBottom={1}>
-          <DateTimePicker disablePast label="End Time" format={dateFormat} value={endTime} onChange={handleEndTimeChange} />
+          <DateTimePicker label="End Time" format={dateFormat} value={endTime} onChange={handleEndTimeChange} />
         </Box>
 
         <Box paddingBottom={1}>
