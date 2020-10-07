@@ -109,6 +109,7 @@ describe Api::EventsController do
           description: @description,
           start_time: @start_time,
           end_time: @end_time,
+          event_type: @event_type,
         }
 
         @form_expected = {
@@ -188,6 +189,7 @@ describe Api::EventsController do
           description: 'yeah',
           start_time: 'aubergine',
           end_time: 'eggplant',
+          event_type: 'badtype',
         }
 
         post :create, params: { event: @expected }, as: :json
