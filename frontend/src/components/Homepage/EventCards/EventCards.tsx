@@ -61,13 +61,11 @@ const EventCards: React.FC = () => {
   const cardList = events?.length ? (
     eventCards
   ) : (
-    <Box margin="auto" width="50%" minWidth={500} paddingTop={1}>
-      <CardWithHeader title="No Events">
-        <Typography>
-          {nonePresentText}
-        </Typography>
-      </CardWithHeader>
-    </Box>
+    <CardWithHeader title="No Events">
+      <Typography>
+        {nonePresentText}
+      </Typography>
+    </CardWithHeader>
   );
 
   return (
