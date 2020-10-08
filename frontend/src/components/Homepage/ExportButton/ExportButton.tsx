@@ -12,7 +12,7 @@ const ExportButton: React.FC<ExportButtonProps> = () => {
   const [csvData, setCSVData] = React.useState([]);
 
   function fetchData(): void {
-    fetch('api/events/export').then((response) => response.json()).then((response) => JSON.parse(response)).then((response) => setCSVData(response));
+    fetch('api/events/export').then((response) => response.json()).then((response) => setCSVData(response));
   }
 
   React.useEffect(() => {
