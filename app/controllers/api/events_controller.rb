@@ -38,22 +38,21 @@ class Api::EventsController < ApplicationController
     f.id as form_id,
     f.form_type,
     u.*
-    
-    from public.user u 
-    
-    join form_user fu on 
+
+    from public.user u
+
+    join form_user fu on
       fu.user_id = u.id
-      
-    join form f on 
+
+    join form f on
       f.id = fu.form_id
-      
-    join public.event e on 
+
+    join public.event e on
       e.id = f.event_id"
-    
+
     @records_array = ActiveRecord::Base.connection.execute(sql)
-    # @users = User.joins(Event.where())
-    
-    render json: 
+
+    render json:
       @records_array.to_json
   end
 
