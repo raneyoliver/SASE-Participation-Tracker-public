@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {
-  Fab, Box, Tooltip, Typography,
+  Fab, Box, Tooltip, Typography, Button,
 } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import { RouteComponentProps } from '@reach/router';
@@ -10,11 +10,15 @@ import LogoutButton from './LogoutButton/LogoutButton';
 const Homepage: React.FC<RouteComponentProps> = () => {
   // Need to re-render the page, navigate doesn't do that
   const handleFabClick = (): void => { window.location.href = '/create_event'; };
+  const handlePasswordChangeClick = (): void => { window.location.href = '/change_password'; };
 
   return (
     <>
       <Box textAlign="center">
         <Box display="flex" justifyContent="flex-end">
+          <Button id="change-password" color="secondary" onClick={handlePasswordChangeClick}>
+            Change Password
+          </Button>
           <LogoutButton id="logout" />
         </Box>
         <Typography variant="h4">

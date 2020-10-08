@@ -65,6 +65,7 @@ const LoginPage: React.FC<RouteComponentProps> = () => {
           type="password"
           value={password}
           onChange={handlePasswordChange}
+          onKeyPress={(e): void => { if (e.key === 'Enter') handleLogin(); }}
           autoComplete="current-password"
         />
       </Box>
