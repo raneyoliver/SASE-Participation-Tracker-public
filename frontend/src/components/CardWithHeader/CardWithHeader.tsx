@@ -9,20 +9,12 @@ interface CardWithHeaderProps {
   action?: JSX.Element;
   id?: string;
   icon?: JSX.Element;
-  fixedWidth?: boolean;
-}
-
-function displayWidth(fixedWidth: boolean): string {
-  if (window.innerWidth >= 1000 && fixedWidth === true) {
-    return '50%';
-  }
-  return '90%';
 }
 
 const CardWithHeader: React.FC<CardWithHeaderProps> = ({
-  title, action, id, icon, fixedWidth, children,
+  title, action, id, icon, children,
 }) => (
-  <Box margin="auto" width={displayWidth(fixedWidth)} paddingTop={1}>
+  <Box margin="auto" paddingTop={1} className="boxWidthFluid">
     <Card id={id}>
       <Box display="flex" justifyContent="space-between" alignItems="center" bgcolor={SASEBlue} color="white">
         <CardHeader title={title} action={action} />
