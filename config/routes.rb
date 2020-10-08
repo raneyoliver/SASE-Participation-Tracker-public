@@ -6,6 +6,10 @@ Rails.application.routes.draw do
       get 'list'
       post 'create'
       get 'export'
+      post 'add_form'
+      get ':id', to: 'events#edit'
+      post 'update'
+      post 'delete'
     end
 
     devise_for :admins, controllers: {
@@ -37,6 +41,8 @@ Rails.application.routes.draw do
 
   # These routes should not be accessible without authenticating through the login page
   get 'create_event' => 'static#authorized_index'
+  get 'change_password' => 'static#authorized_index'
+  get 'edit_event' => 'static#authorized_index'
 
   root to: 'static#index'
   get '*path' => 'static#index'
