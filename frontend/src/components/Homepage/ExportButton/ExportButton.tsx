@@ -11,21 +11,18 @@ interface ExportButtonProps {
 const ExportButton: React.FC<ExportButtonProps> = () => {
   const [csvData, setCSVData] = React.useState([]);
 
-  function fetchData(): void {
-    fetch('api/events/export').then((response) => response.json()).then((response) => setCSVData(response));
-  }
-
   React.useEffect(() => {
-    fetchData();
-  });
+    fetch('api/events/export').then((response) => response.json()).then((response) => setCSVData(response));
+  }, []);
 
   return (
-    <Button id="download" variant="contained" color="secondary">
+    <Button id="download" color='secondary'>
       <CSVLink
         data={csvData}
-        filename="my-file.csv"
+        filename="SASE-user-data.csv"
         className="btn btn-primary"
         target="_blank"
+        style={{textDecoration: 'none', color: 'inherit'}}
       >
         Download
       </CSVLink>

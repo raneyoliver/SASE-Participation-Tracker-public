@@ -50,10 +50,16 @@ class Api::EventsController < ApplicationController
     join public.event e on
       e.id = f.event_id"
 
-    @records_array = ActiveRecord::Base.connection.execute(sql)
+    @response = ActiveRecord::Base.connection.execute(sql)
+
+    # @records_array = Event.includes(forms: [{ form_users: [:user] }]).select(:id, :name)
+
+    # @response = @records_array.map do |event|
+    #   helpers.serialize_export event
+    # end
 
     render json:
-      @records_array.to_json
+      @response.to_json
   end
 
   def add_form

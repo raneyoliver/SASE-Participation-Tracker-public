@@ -12,6 +12,31 @@ module EventsHelper
     )
   end
 
+  # returns an array of events with users who signed up. shows:
+  # event:  id, name
+  # form:   id, user count
+  # user:   id, first_name, last_name, email, phone_number
+  def serialize_export(event)
+    event.as_json(
+      include: {
+        forms: {
+          include: {
+            form_users: {
+              include: {
+                user: {
+                  except: [:created_at, :updated_at, :major, :graduation_year],
+                },
+              },
+              except: [:id, :form_id, :user_id],
+            },
+          },
+          except: [:event_id, :start_time, :end_time, :form_type, :questions],
+          methods: :user_count,
+        },
+      }
+    )
+  end
+
   def make_unique_id
     # previous method
     # id = DateTime.now.strftime("%Y%m%d%k%M%S%L") # date in ms
