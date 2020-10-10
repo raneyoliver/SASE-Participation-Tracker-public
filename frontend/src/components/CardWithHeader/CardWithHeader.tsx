@@ -2,7 +2,7 @@ import * as React from 'react';
 import {
   Card, CardHeader, CardContent, Box,
 } from '@material-ui/core';
-import { isMobile } from 'react-device-detect';
+import { isBrowser } from 'react-device-detect';
 import { SASEBlue } from '../../theme';
 
 interface CardWithHeaderProps {
@@ -14,13 +14,10 @@ interface CardWithHeaderProps {
 }
 
 function displayWidth(fixWidth: boolean): string {
-  if (fixWidth) {
-    return 'auto';
+  if (fixWidth && isBrowser) {
+    return '50%';
   }
-  if (isMobile) {
-    return '95%';
-  }
-  return '50%';
+  return 'auto';
 }
 
 const CardWithHeader: React.FC<CardWithHeaderProps> = ({

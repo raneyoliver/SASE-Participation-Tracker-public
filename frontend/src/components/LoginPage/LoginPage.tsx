@@ -43,7 +43,7 @@ const LoginPage: React.FC<RouteComponentProps> = () => {
   };
 
   return (
-    <CardWithHeader title="Log In">
+    <CardWithHeader title="Log In" fixWidth>
       <Box paddingBottom={1}>
         <TextField
           id="username"

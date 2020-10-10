@@ -18,7 +18,7 @@ const EventCard: React.FC<EventCardProps> = ({ event }) => {
   const menu = <EventCardMenu event={event} />;
 
   return (
-    <CardWithHeader id={`event-card-${event.id}`} title={event.name} icon={menu} fixWidth>
+    <CardWithHeader id={`event-card-${event.id}`} title={event.name} icon={menu}>
       <div style={{ wordWrap: 'break-word' }}>
         <Box overflow="auto" maxHeight={120}>
           <Typography>
