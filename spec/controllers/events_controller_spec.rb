@@ -469,4 +469,78 @@ describe Api::EventsController do
       end
     end
   end
+
+  describe 'GET export' do
+    context 'when no events are created' do
+      it 'returns empty array' do
+        @expected = [].to_json
+        get :export
+
+        expect(response.body).to eq(@expected)
+      end
+    end
+
+    context 'when one event is created' do
+      it 'returns an array with the created event and user info it contains' do
+        @expected_event = {
+          id: 1,
+          name: 'Test Event',
+          description: 'description goes here',
+          start_time: '2020-09-15T01:00:00.000Z',
+          end_time: '2020-09-15T00:00:00.000Z',
+          event_type: 'Socials',
+        }
+        Event.new(**@expected_event).save
+
+        @expected_form = {
+          id: '8888888888',
+          event_id: 1,
+          start_time: '2020-09-15T01:00:00.000Z',
+          end_time: '2020-09-15T00:00:00.000Z',
+          form_type: 'sign-in',
+          questions: '[]',
+        }
+        Form.new(**@expected_form).save
+
+        @expected_user = {
+          id: '95e229d8aca716874c8feca1501379e06f239d03',
+          first_name: 'New',
+          last_name: 'User',
+          major: 'computer science',
+          graduation_year: 2021,
+          email: 'email@address.com',
+          phone_number: '333-333-3333',
+        }
+        User.new(**@expected_user).save
+
+        @expected_form_user = {
+          id: 1,
+          form_id: '8888888888',
+          user_id: '95e229d8aca716874c8feca1501379e06f239d03',
+        }
+        @form_user = FormUser.new(**@expected_form_user)
+        @form_user.save
+
+        @expected_response = {
+          id: 1,
+          name: 'Test Event',
+          user_id: '95e229d8aca716874c8feca1501379e06f239d03',
+          first_name: 'New',
+          last_name: 'User',
+          email: 'email@address.com',
+          phone_number: '333-333-3333',
+        }
+
+        get :export
+
+        @expected_response = @expected_response.stringify_keys
+        @json_response = JSON.parse response.body
+        expect(Event.count).to eq(1)
+        expect(Form.count).to eq(1)
+        expect(@form_user).to be_valid
+        expect(User.count).to eq(1)
+        expect(@json_response[0]).to match(@expected_response)
+      end
+    end
+  end
 end
