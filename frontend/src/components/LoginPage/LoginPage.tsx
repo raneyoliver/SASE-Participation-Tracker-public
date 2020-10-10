@@ -69,6 +69,7 @@ const LoginPage: React.FC<RouteComponentProps> = () => {
           autoComplete="current-password"
         />
       </Box>
+
       <Button
         id="login"
         variant="contained"
