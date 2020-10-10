@@ -29,8 +29,8 @@ class Api::EventsController < ApplicationController
   def export
     head :bad_request and return unless helpers.check_auth
 
-    @records_array = Event.includes(forms: [{ form_users: [:user] }]).order(:id)
-                          .pluck(:id, :name, 'form_user.user_id', :first_name, :last_name, :email, :phone_number)
+    @records_array = Event.joins(forms: [{ form_users: [:user] }]).order(:id)
+                          .select(:id, :name, 'form_user.user_id', :first_name, :last_name, :email, :phone_number)
 
     render json:
       @records_array.to_json
