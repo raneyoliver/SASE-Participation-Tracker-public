@@ -29,37 +29,11 @@ class Api::EventsController < ApplicationController
   def export
     head :bad_request and return unless helpers.check_auth
 
-    sql = "select
-    e.id as event_id,
-    e.name as event_name,
-    e.event_type,
-    e.start_time,
-    e.end_time,
-    f.id as form_id,
-    f.form_type,
-    u.*
-
-    from public.user u
-
-    join form_user fu on
-      fu.user_id = u.id
-
-    join form f on
-      f.id = fu.form_id
-
-    join public.event e on
-      e.id = f.event_id"
-
-    @response = ActiveRecord::Base.connection.execute(sql)
-
-    # @records_array = Event.includes(forms: [{ form_users: [:user] }]).select(:id, :name)
-
-    # @response = @records_array.map do |event|
-    #   helpers.serialize_export event
-    # end
+    @records_array = Event.includes(forms: [{ form_users: [:user] }]).order(:id)
+                          .pluck(:id, 'form_user.user_id', :first_name, :last_name, :email, :phone_number)
 
     render json:
-      @response.to_json
+      @records_array.to_json
   end
 
   def add_form
