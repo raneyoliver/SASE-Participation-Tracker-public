@@ -21,12 +21,12 @@ Then 'I can see all events' do
   expect(@event_cards.length).to be(2)
 end
 
-Then 'I click the past events filter' do
-  click_on 'Past'
+Then 'I click the all events filter' do
+  click_on 'All'
 end
 
-Then 'I click the upcoming events filter' do
-  click_on 'Upcoming'
+Then 'I click the past events filter' do
+  click_on 'Past'
 end
 
 Then 'I can only see events in the past' do

@@ -14,6 +14,7 @@ Then I get redirected to the log in page
 Scenario: Event cards are sorted chronologically by default
   When I go to the homepage
   Then I log in
+  Then I click the all events filter
   Then events should be sorted chronologically
 
 @event-sorting
@@ -22,6 +23,7 @@ Scenario: Event cards are sorted chronologically by default
 Scenario: Event cards are sorted reverse-chronologically after clicking sort by date
   When I go to the homepage
   Then I log in
+  Then I click the all events filter
   Then I click sort by date
   Then events should be sorted reverse-chronologically
 
@@ -31,6 +33,7 @@ Scenario: Event cards are sorted reverse-chronologically after clicking sort by 
 Scenario: Event cards are sorted by id after clicking sort by date twice
   When I go to the homepage
   Then I log in
+  Then I click the all events filter
   Then I click sort by date
   Then I click sort by date
   Then events should be sorted by id
