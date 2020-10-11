@@ -522,8 +522,10 @@ describe Api::EventsController do
         @form_user.save
 
         @expected_response = {
-          id: 1,
-          name: 'Test Event',
+          event_id: 1,
+          event_name: 'Test Event',
+          form_id: '8888888888',
+          form_type: 'sign-in',
           user_id: '95e229d8aca716874c8feca1501379e06f239d03',
           first_name: 'New',
           last_name: 'User',
