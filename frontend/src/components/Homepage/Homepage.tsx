@@ -5,6 +5,7 @@ import {
 import AddIcon from '@material-ui/icons/Add';
 import { RouteComponentProps } from '@reach/router';
 import EventCards from './EventCards/EventCards';
+import ExportButton from './ExportButton/ExportButton';
 import LogoutButton from './LogoutButton/LogoutButton';
 
 const Homepage: React.FC<RouteComponentProps> = () => {
@@ -16,6 +17,7 @@ const Homepage: React.FC<RouteComponentProps> = () => {
     <>
       <Box textAlign="center">
         <Box display="flex" justifyContent="flex-end">
+          <ExportButton id="export" />
           <Button id="change-password" color="secondary" onClick={handlePasswordChangeClick}>
             Change Password
           </Button>
