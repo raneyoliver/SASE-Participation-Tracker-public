@@ -9,6 +9,7 @@ Feature: Filter By Event Type Buttons
 Scenario: You can see all event types by default
   When I go to the homepage
   Then I log in
+  Then I click the all events filter
   Then I can see all events
 
 @eventTypeFiltering
@@ -17,6 +18,7 @@ Scenario: You can see all event types by default
 Scenario: You can only see social events after clicking the Socials filter
   When I go to the homepage
   Then I log in
+  Then I click the all events filter
   Then I click the Socials filter
   Then I can only see social events
 
@@ -26,5 +28,6 @@ Scenario: You can only see social events after clicking the Socials filter
 Scenario: You can only see GBM events after clicking the GBM filter
   When I go to the homepage
   Then I log in
+  Then I click the all events filter
   Then I click the GBM filter
   Then I can only see GBM events

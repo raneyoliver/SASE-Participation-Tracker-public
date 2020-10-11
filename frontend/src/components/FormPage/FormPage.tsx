@@ -100,20 +100,18 @@ const FormPage: React.FC<RouteComponentProps> = () => {
   );
 
   return (
-    <Box margin="10% auto" width="50%" minWidth={500}>
-      <CardWithHeader title={`${FormType[form.form_type as unknown as keyof typeof FormType]} for ${form.event.name} (${form.event.event_type || 'No Type Provided for'} Event)`}>
+    <CardWithHeader title={`${FormType[form.form_type as unknown as keyof typeof FormType]} for ${form.event.name} (${form.event.event_type || 'No Type Provided for'} Event)`} fixWidth>
 
-        {form.event.description !== '' && descriptionBlock}
+      {form.event.description !== '' && descriptionBlock}
 
-        <Box paddingBottom={1}>
-          <TextField id="form-UIN" required error={!UINValid} label="UIN" value={UIN} onChange={handleUINChange} />
-        </Box>
+      <Box paddingBottom={1}>
+        <TextField id="form-UIN" required error={!UINValid} label="UIN" value={UIN} onChange={handleUINChange} />
+      </Box>
 
-        <Button id="submit" variant="contained" color="secondary" disabled={!formValid} startIcon={<AddIcon />} onClick={handleSubmit}>
-          Submit
-        </Button>
-      </CardWithHeader>
-    </Box>
+      <Button id="submit" variant="contained" color="secondary" disabled={!formValid} startIcon={<AddIcon />} onClick={handleSubmit}>
+        Submit
+      </Button>
+    </CardWithHeader>
   );
 };
 

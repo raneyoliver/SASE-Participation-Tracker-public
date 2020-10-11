@@ -26,6 +26,32 @@ class Api::EventsController < ApplicationController
     helpers.create_form_for_event(@event, 'RSVP')
   end
 
+  def export
+    head :bad_request and return unless helpers.check_auth
+
+    @records_array = Event.joins(forms: [{ form_users: [:user] }]).order(:id).select(
+      :event_id,
+      'event.name as event_name',
+      :event_type,
+      :form_id,
+      :form_type,
+      :user_id,
+      :first_name,
+      :last_name,
+      :email,
+      :phone_number
+    )
+
+    @response = @records_array.map do |event|
+      event.as_json(
+        except: :id
+      )
+    end
+
+    render json:
+      @response.to_json
+  end
+
   def add_form
     @event = Event.find(params[:id])
     helpers.create_form_for_event(@event, params[:form_type])
