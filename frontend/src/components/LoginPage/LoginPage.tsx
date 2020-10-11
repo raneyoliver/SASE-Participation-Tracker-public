@@ -1,12 +1,14 @@
 import * as React from 'react';
 import { RouteComponentProps, navigate } from '@reach/router';
 import {
-  Box, TextField, Button,
+  Box, TextField, Button, Typography,
 } from '@material-ui/core';
 import CardWithHeader from '../CardWithHeader/CardWithHeader';
 import getCSRFToken from '../../utils/getCSRFToken';
 
 const LoginPage: React.FC<RouteComponentProps> = () => {
+  const [error, setError] = React.useState(false);
+
   const [username, setUsername] = React.useState('');
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setUsername(e.target.value);
@@ -21,6 +23,7 @@ const LoginPage: React.FC<RouteComponentProps> = () => {
   const formValid = username && password;
 
   const handleLogin = (): void => {
+    setError(false);
     if (!formValid) return;
     // Form is valid, post
     const body = {
@@ -38,6 +41,8 @@ const LoginPage: React.FC<RouteComponentProps> = () => {
     }).then((response) => {
       if (response.ok) {
         navigate('/');
+      } else {
+        setError(true);
       }
     });
   };
@@ -55,7 +60,6 @@ const LoginPage: React.FC<RouteComponentProps> = () => {
           autoComplete="username"
         />
       </Box>
-
       <Box paddingBottom={1}>
         <TextField
           id="password"
@@ -69,7 +73,9 @@ const LoginPage: React.FC<RouteComponentProps> = () => {
           autoComplete="current-password"
         />
       </Box>
-
+      <Box>
+        {error ? <Typography id="error-message" color="error">Error: Invalid Login</Typography> : null}
+      </Box>
       <Button
         id="login"
         variant="contained"

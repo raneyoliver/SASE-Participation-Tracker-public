@@ -37,3 +37,7 @@ end
 Then 'I am unable to click the log in button' do
   expect(page).to have_button('login', disabled: true)
 end
+
+Then 'An error message displays' do
+  expect(page).to have_text('Error: Invalid Login')
+end

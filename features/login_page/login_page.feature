@@ -29,10 +29,11 @@ Scenario: I cannot log in without a password
   Then I am unable to click the log in button
 
 @javascript
-Scenario: I cannot log in with incorrect credentials
+Scenario: I cannot log in with incorrect credentials, and an error message displays
   When I go to the log in page
   Then I enter the wrong credentials
   Then I am unable to log in
+  Then An error message displays
 
 @javascript
 @authRequired
