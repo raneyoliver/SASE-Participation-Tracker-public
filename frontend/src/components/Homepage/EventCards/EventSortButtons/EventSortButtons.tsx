@@ -59,8 +59,8 @@ const EventSortButtons: React.FC<EventSortButtonsProps> = ({ events, onSort }) =
   // Default sort is by date chronologically
   const [dateSortDirection, setDateSortDirection] = React.useState(SortDirection.Ascending);
 
-  // Default date filter is to show all events
-  const [dateFilter, setDateFilter] = React.useState(DateFilter.All);
+  // Default date filter is to show only upcoming events
+  const [dateFilter, setDateFilter] = React.useState(DateFilter.Upcoming);
 
   // Default event type filter is to show all events (when no types are selected, all will show up)
   const [selectedEventTypes, setSelectedEventTypes] = React.useState(new Set());

@@ -9,6 +9,7 @@ so I can copy the link whenever I need it.
 Scenario: Form link is visible on the home page when the form and event exist in the system
   When I go to the homepage to view the form link
   Then I log in
+  Then I click the all events filter
   Then I see the form id on the homepage
   Then the form id links to the form page
   Then I click the link
