@@ -1,6 +1,6 @@
 Feature: Export Button
   As an admin
-  I want a "Download" button on the main page
+  I want a "Export Data" button on the main page
   So I can export user data when I need to share it
 
 @javascript

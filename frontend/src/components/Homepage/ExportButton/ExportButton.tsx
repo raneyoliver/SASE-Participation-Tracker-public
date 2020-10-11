@@ -16,15 +16,15 @@ const ExportButton: React.FC<ExportButtonProps> = () => {
   }, []);
 
   return (
-    <Button id="download" color='secondary'>
+    <Button id="download" color="secondary">
       <CSVLink
         data={csvData}
         filename="SASE-user-data.csv"
         className="btn btn-primary"
         target="_blank"
-        style={{textDecoration: 'none', color: 'inherit'}}
+        style={{ textDecoration: 'none', color: 'inherit' }}
       >
-        Download
+        Export Data
       </CSVLink>
     </Button>
   );
