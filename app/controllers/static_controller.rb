@@ -2,6 +2,12 @@
 class StaticController < ApplicationController
   def index; end
 
+  def login
+    redirect_to '/' and return if helpers.check_auth
+
+    render 'index'
+  end
+
   def authorized_index
     redirect_to '/login' and return unless helpers.check_auth
 

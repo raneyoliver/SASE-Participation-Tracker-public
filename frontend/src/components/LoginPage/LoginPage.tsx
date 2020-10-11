@@ -76,7 +76,7 @@ const LoginPage: React.FC<RouteComponentProps> = () => {
           />
         </Box>
         <Box>
-          {error ? <Typography color="error">Error: Invalid Login</Typography> : null}
+          {error ? <Typography id="error-message" color="error">Error: Invalid Login</Typography> : null}
         </Box>
         <Button
           id="login"

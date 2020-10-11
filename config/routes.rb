@@ -38,6 +38,9 @@ Rails.application.routes.draw do
   # Route that allows heroku to properly find index.js
   get 'index.js' => 'static#index_js'
 
+  # If for some reason somebody goes back to login while still logged in this redirects them
+  get 'login' => 'static#login'
+
   # These routes should not be accessible without authenticating through the login page
   get 'create_event' => 'static#authorized_index'
   get 'change_password' => 'static#authorized_index'
