@@ -43,44 +43,43 @@ const LoginPage: React.FC<RouteComponentProps> = () => {
   };
 
   return (
-    <Box margin="auto" width="50%" minWidth={500}>
-      <CardWithHeader title="Log In">
-        <Box paddingBottom={1}>
-          <TextField
-            id="username"
-            required
-            error={!username}
-            label="Username"
-            value={username}
-            onChange={handleNameChange}
-            autoComplete="username"
-          />
-        </Box>
+    <CardWithHeader title="Log In" fixWidth>
+      <Box paddingBottom={1}>
+        <TextField
+          id="username"
+          required
+          error={!username}
+          label="Username"
+          value={username}
+          onChange={handleNameChange}
+          autoComplete="username"
+        />
+      </Box>
 
-        <Box paddingBottom={1}>
-          <TextField
-            id="password"
-            required
-            error={!username}
-            label="Password"
-            type="password"
-            value={password}
-            onChange={handlePasswordChange}
-            onKeyPress={(e): void => { if (e.key === 'Enter') handleLogin(); }}
-            autoComplete="current-password"
-          />
-        </Box>
-        <Button
-          id="login"
-          variant="contained"
-          color="secondary"
-          disabled={!formValid}
-          onClick={handleLogin}
-        >
-          Log In
-        </Button>
-      </CardWithHeader>
-    </Box>
+      <Box paddingBottom={1}>
+        <TextField
+          id="password"
+          required
+          error={!username}
+          label="Password"
+          type="password"
+          value={password}
+          onChange={handlePasswordChange}
+          onKeyPress={(e): void => { if (e.key === 'Enter') handleLogin(); }}
+          autoComplete="current-password"
+        />
+      </Box>
+
+      <Button
+        id="login"
+        variant="contained"
+        color="secondary"
+        disabled={!formValid}
+        onClick={handleLogin}
+      >
+        Log In
+      </Button>
+    </CardWithHeader>
   );
 };
 
