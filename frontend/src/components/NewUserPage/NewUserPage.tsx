@@ -138,8 +138,8 @@ const NewUserPage: React.FC<RouteComponentProps> = () => {
   }
 
   return (
-    <Box margin="5% auto" width="50%" minWidth={500}>
-      <CardWithHeader title="New User Sign-in Form">
+    <Box>
+      <CardWithHeader title="New User Sign-in Form" fixWidth>
         <Box paddingBottom={1}>
           <TextField id="new-user-first-name" required error={!firstName} label="First Name" value={firstName} onChange={handleFirstNameChange} />
         </Box>
