@@ -28,8 +28,8 @@ describe StaticController do
     end
   end
 
-  describe 'GET login' do
-    it 'redirects to homepage' do
+  describe 'GET login without auth' do
+    it 'redirects to login' do
       session[:current_user_id] = 1
       get :login
       expect(response).to render_template('index')
