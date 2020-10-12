@@ -3,15 +3,16 @@ import {
   Box, Button, ButtonGroup, SvgIcon, Typography,
 } from '@material-ui/core';
 import { ArrowDownward, ArrowUpward } from '@material-ui/icons';
-import { SerializedEvent } from '../../../../../types/Event';
+import { SerializedEvent } from '../../../../types/Event';
 import {
   sortEventsByTimeAscending, sortEventsByTimeDescending,
-} from '../../../../../utils/sortEvents';
-import { filterEventsOnlyPast, filterEventsOnlyUpcoming } from '../../../../../utils/filterEvents';
-import { EventType } from '../../../../../Enums';
+} from '../../../../utils/sortEvents';
+import { filterEventsOnlyPast, filterEventsOnlyUpcoming } from '../../../../utils/filterEvents';
+import { EventType } from '../../../../Enums';
 
 interface EventSortButtonsProps {
   events: SerializedEvent[];
+  variant: 'calendar' | 'cards';
   onSort: (events: SerializedEvent[]) => any;
 }
 
@@ -51,7 +52,7 @@ const sortDirectionIcons = new Map<SortDirection, JSX.Element>([
 const dateSortKeys = [DateFilter.All, DateFilter.Past, DateFilter.Upcoming];
 
 // If we decide to add other sorting methods, we can put them in this component
-const EventSortButtons: React.FC<EventSortButtonsProps> = ({ events, onSort }) => {
+const EventSortButtons: React.FC<EventSortButtonsProps> = ({ events, variant, onSort }) => {
   // Keep initial order of events so that it can be reverted when not sorting or filtering
   const [initialEvents] = React.useState(events);
   const [filteredEvents, setFilteredEvents] = React.useState(events);
@@ -144,35 +145,43 @@ const EventSortButtons: React.FC<EventSortButtonsProps> = ({ events, onSort }) =
     setFilteredEvents(newEvents);
   }, [initialEvents, dateFilter, selectedEventTypes]);
 
+  const dateSortButton = variant === 'cards' ? (
+    <Box display="flex" alignItems="center" marginBottom={1}>
+      <Box marginRight={1}>
+        <Typography>
+          Sort By:
+        </Typography>
+      </Box>
+      <Button
+        id="sort-by-date"
+        variant="contained"
+        color="secondary"
+        size="small"
+        onClick={handleDateSortClick}
+        endIcon={dateSortIcon}
+      >
+        Date
+      </Button>
+    </Box>
+  ) : null;
+
+  const dateFilterButtonGroup = variant === 'cards' ? (
+    <Box display="flex" alignItems="center" marginBottom={1}>
+      <Box marginRight={1}>
+        <Typography>
+          Date Filter:
+        </Typography>
+      </Box>
+      <ButtonGroup color="secondary" size="small">
+        {dateFilterButtons}
+      </ButtonGroup>
+    </Box>
+  ) : null;
+
   return (
     <>
-      <Box display="flex" alignItems="center" marginBottom={1}>
-        <Box marginRight={1}>
-          <Typography>
-            Sort By:
-          </Typography>
-        </Box>
-        <Button
-          id="sort-by-date"
-          variant="contained"
-          color="secondary"
-          size="small"
-          onClick={handleDateSortClick}
-          endIcon={dateSortIcon}
-        >
-          Date
-        </Button>
-      </Box>
-      <Box display="flex" alignItems="center" marginBottom={1}>
-        <Box marginRight={1}>
-          <Typography>
-            Date Filter:
-          </Typography>
-        </Box>
-        <ButtonGroup color="secondary" size="small">
-          {dateFilterButtons}
-        </ButtonGroup>
-      </Box>
+      {dateSortButton}
+      {dateFilterButtonGroup}
       <Box display="flex" alignItems="center">
         <Box marginRight={1}>
           <Typography>

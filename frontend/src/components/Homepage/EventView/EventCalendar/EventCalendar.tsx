@@ -4,6 +4,7 @@ import * as React from 'react';
 import { SASEBlue } from '../../../../theme';
 import { SerializedEvent } from '../../../../types/Event';
 import { daysForMonth } from '../../../../utils/calendarUtils';
+import EventSortButtons from '../EventSortButtons/EventSortButtons';
 import EventChips from './EventChips/EventChips';
 import MonthSelect from './MonthSelect/MonthSelect';
 
@@ -18,6 +19,9 @@ const currentDay = now.getDate();
 
 const EventCalendar: React.FC<EventCalendarProps> = ({ events: initialEvents }) => {
   const [events, setEvents] = React.useState(initialEvents);
+  const handleEventSort = React.useCallback((newEvents: SerializedEvent[]): void => {
+    setEvents(newEvents);
+  }, []);
 
   const [selectedYear, setSelectedYear] = React.useState(currentYear);
   const [selectedMonth, setSelectedMonth] = React.useState(currentMonth);
@@ -98,7 +102,12 @@ const EventCalendar: React.FC<EventCalendarProps> = ({ events: initialEvents }) 
 
   return (
     <>
-      <MonthSelect onYearChange={handleYearChange} onMonthChange={handleMonthChange} />
+      <Box paddingBottom={1}>
+        <MonthSelect onYearChange={handleYearChange} onMonthChange={handleMonthChange} />
+      </Box>
+      <Box paddingBottom={1}>
+        <EventSortButtons events={events} variant="calendar" onSort={handleEventSort} />
+      </Box>
       <Box
         display="grid"
         gridGap={8}

@@ -65,7 +65,7 @@ const MonthSelect: React.FC<MonthSelectProps> = ({ onYearChange, onMonthChange }
   const nextDisabled = nextMonth(year, month)[0] > maxYear;
 
   return (
-    <Box display="flex" alignItems="center" justifyContent="center" paddingBottom={1}>
+    <Box display="flex" alignItems="center" justifyContent="center">
       <Box paddingRight={1}>
         <IconButton disabled={previousDisabled} onClick={handlePreviousMonthClick}>
           <ChevronLeft />

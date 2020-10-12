@@ -3,7 +3,7 @@ import { Typography, Box } from '@material-ui/core';
 import { SerializedEvent } from '../../../../types/Event';
 import EventCard from './EventCard/EventCard';
 import CardWithHeader from '../../../CardWithHeader/CardWithHeader';
-import EventSortButtons from './EventSortButtons/EventSortButtons';
+import EventSortButtons from '../EventSortButtons/EventSortButtons';
 
 interface EventCardsProps {
   events: SerializedEvent[];
@@ -25,7 +25,7 @@ const EventCards: React.FC<EventCardsProps> = ({ events: initialEvents }) => {
     </Box>
   ));
 
-  const sortButtons = events ? <EventSortButtons events={events} onSort={handleEventSort} /> : null;
+  const sortButtons = events ? <EventSortButtons events={events} variant="cards" onSort={handleEventSort} /> : null;
 
   const cardList = events?.length ? (
     eventCards
