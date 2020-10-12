@@ -89,7 +89,7 @@ const EventCalendar: React.FC<EventCalendarProps> = ({ events: initialEvents }) 
           height="100%"
           paddingX={0.5}
         >
-          <Box padding={1} width="calc(min-content + 8px)">
+          <Box paddingLeft={1} paddingTop={1} width="calc(min-content + 8px)">
             <Typography variant="h4" color={textColor}>
               {day}
             </Typography>
