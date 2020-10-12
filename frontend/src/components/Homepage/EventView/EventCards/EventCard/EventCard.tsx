@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { Box, Typography } from '@material-ui/core';
 import { Link } from '@reach/router';
-import { SerializedEvent, SerializedFormData } from '../../../../types/Event';
-import { FormType } from '../../../../Enums';
-import formatDate from '../../../../utils/formatDate';
-import CardWithHeader from '../../../CardWithHeader/CardWithHeader';
+import { SerializedEvent, SerializedFormData } from '../../../../../types/Event';
+import { FormType } from '../../../../../Enums';
+import formatDate from '../../../../../utils/formatDate';
+import CardWithHeader from '../../../../CardWithHeader/CardWithHeader';
 import EventCardMenu from './EventCardMenu/EventCardMenu';
 
 interface EventCardProps {

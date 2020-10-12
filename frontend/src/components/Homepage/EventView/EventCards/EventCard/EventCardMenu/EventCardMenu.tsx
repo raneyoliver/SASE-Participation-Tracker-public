@@ -4,8 +4,8 @@ import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import { SerializedEvent } from '../../../../../types/Event';
-import getCSRFToken from '../../../../../utils/getCSRFToken';
+import { SerializedEvent } from '../../../../../../types/Event';
+import getCSRFToken from '../../../../../../utils/getCSRFToken';
 import DeleteConfirmationDialog from './DeleteConfirmationDialog/DeleteConfirmationDialog';
 
 interface EventCardMenuProps {

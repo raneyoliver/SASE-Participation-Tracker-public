@@ -3,12 +3,12 @@ import {
   Box, Button, ButtonGroup, SvgIcon, Typography,
 } from '@material-ui/core';
 import { ArrowDownward, ArrowUpward } from '@material-ui/icons';
-import { SerializedEvent } from '../../../../types/Event';
+import { SerializedEvent } from '../../../../../types/Event';
 import {
   sortEventsByTimeAscending, sortEventsByTimeDescending,
-} from '../../../../utils/sortEvents';
-import { filterEventsOnlyPast, filterEventsOnlyUpcoming } from '../../../../utils/filterEvents';
-import { EventType } from '../../../../Enums';
+} from '../../../../../utils/sortEvents';
+import { filterEventsOnlyPast, filterEventsOnlyUpcoming } from '../../../../../utils/filterEvents';
+import { EventType } from '../../../../../Enums';
 
 interface EventSortButtonsProps {
   events: SerializedEvent[];
