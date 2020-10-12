@@ -21,6 +21,21 @@ describe StaticController do
     end
   end
 
+  describe 'GET login' do
+    it 'redirects to homepage' do
+      get :login
+      expect(response).to redirect_to('/')
+    end
+  end
+
+  describe 'GET login' do
+    it 'redirects to homepage' do
+      session[:current_user_id] = 1
+      get :login
+      expect(response).to render_template('index')
+    end
+  end
+
   describe 'GET index.js' do
     it 'renders javascript' do
       get :index_js, xhr: true, format: :js
