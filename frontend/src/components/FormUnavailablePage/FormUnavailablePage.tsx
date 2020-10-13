@@ -5,7 +5,7 @@ import {
 import { RouteComponentProps } from '@reach/router';
 import CardWithHeader from '../CardWithHeader/CardWithHeader';
 
-const FormErrorPage: React.FC<RouteComponentProps> = () => (
+const FormUnavailablePage: React.FC<RouteComponentProps> = () => (
   <Box margin="10% auto" width="50%" minWidth={500} textAlign="center">
     <CardWithHeader title="Form Unavailable">
       <Typography>
@@ -15,4 +15,4 @@ const FormErrorPage: React.FC<RouteComponentProps> = () => (
   </Box>
 );
 
-export default FormErrorPage;
+export default FormUnavailablePage;
