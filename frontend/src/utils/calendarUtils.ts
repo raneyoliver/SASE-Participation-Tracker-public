@@ -3,7 +3,7 @@ import {
 } from 'date-fns';
 
 export function previousMonth(year: number, month: number): [number, number] {
-  if (month === 0) return [year - 1, 12];
+  if (month === 0) return [year - 1, 11];
   return [year, month - 1];
 }
 
