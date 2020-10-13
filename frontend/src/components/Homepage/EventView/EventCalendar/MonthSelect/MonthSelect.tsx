@@ -69,12 +69,12 @@ const MonthSelect: React.FC<MonthSelectProps> = ({ onMonthChange }) => {
         </IconButton>
       </Box>
       <Box paddingRight={1}>
-        <NativeSelect value={currMonth} onChange={handleMonthChange} name="Month">
+        <NativeSelect id="month-select" value={currMonth} onChange={handleMonthChange}>
           {monthOptions}
         </NativeSelect>
       </Box>
       <Box paddingRight={1}>
-        <NativeSelect value={currYear} onChange={handleYearChange} name="Year">
+        <NativeSelect id="year-select" value={currYear} onChange={handleYearChange} name="Year">
           {yearOptions}
         </NativeSelect>
       </Box>
