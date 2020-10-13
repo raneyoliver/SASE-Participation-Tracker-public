@@ -93,7 +93,7 @@ const EventCalendar: React.FC<EventCalendarProps> = ({ events: initialEvents }) 
           height="100%"
           paddingX={0.5}
         >
-          <Box paddingLeft={1} paddingTop={1} width="calc(min-content + 8px)">
+          <Box paddingLeft={1} paddingTop={1}>
             <Typography variant="h4" color={textColor}>
               {day}
             </Typography>
@@ -117,8 +117,9 @@ const EventCalendar: React.FC<EventCalendarProps> = ({ events: initialEvents }) 
       </Box>
       <Box
         display="grid"
+        width="100%"
         gridGap={8}
-        gridTemplateColumns="repeat(7, 1fr)"
+        gridTemplateColumns={`repeat(7, calc(${100 / 7}% - 8px))`}
         gridAutoRows="max(150px, 15vh)"
       >
         {calendarDays}
