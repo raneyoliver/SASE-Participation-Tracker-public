@@ -23,15 +23,11 @@ const EventCalendar: React.FC<EventCalendarProps> = ({ events: initialEvents }) 
     setEvents(newEvents);
   }, []);
 
-  const [selectedYear, setSelectedYear] = React.useState(currentYear);
-  const [selectedMonth, setSelectedMonth] = React.useState(currentMonth);
+  const [selectedYearMonth, setSelectedYearMonth] = React.useState([currentYear, currentMonth]);
+  const [selectedYear, selectedMonth] = selectedYearMonth;
 
-  const handleYearChange = (newYear: number): void => {
-    setSelectedYear(newYear);
-  };
-
-  const handleMonthChange = (newMonth: number): void => {
-    setSelectedMonth(newMonth);
+  const handleMonthChange = (newMonth: [number, number]): void => {
+    setSelectedYearMonth(newMonth);
   };
 
   // eventMap is a 3D map with year, month, and day for each event
@@ -103,7 +99,7 @@ const EventCalendar: React.FC<EventCalendarProps> = ({ events: initialEvents }) 
   return (
     <>
       <Box paddingBottom={1}>
-        <MonthSelect onYearChange={handleYearChange} onMonthChange={handleMonthChange} />
+        <MonthSelect onMonthChange={handleMonthChange} />
       </Box>
       <Box paddingBottom={1}>
         <EventSortButtons events={events} variant="calendar" onSort={handleEventSort} />

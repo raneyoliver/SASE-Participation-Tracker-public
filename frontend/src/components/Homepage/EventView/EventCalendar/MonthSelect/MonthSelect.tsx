@@ -26,43 +26,40 @@ const yearOptions = years.map((year) => (
 ));
 
 interface MonthSelectProps {
-  onYearChange: (newYear: number) => any;
-  onMonthChange: (newMonth: number) => any;
+  onMonthChange: (newMonth: [number, number]) => any;
 }
 
-const MonthSelect: React.FC<MonthSelectProps> = ({ onYearChange, onMonthChange }) => {
-  const [year, setYear] = React.useState(currentYear);
-  const [month, setMonth] = React.useState(currentMonth);
+const MonthSelect: React.FC<MonthSelectProps> = ({ onMonthChange }) => {
+  const [month, setMonth] = React.useState<[number, number]>([currentYear, currentMonth]);
 
   /* eslint-disable react-hooks/exhaustive-deps */
-  React.useEffect(() => { onYearChange(year); }, [year]);
   React.useEffect(() => { onMonthChange(month); }, [month]);
   /* eslint-enable react-hooks/exhaustive-deps */
 
+  const [currYear, currMonth] = month;
+
   const handleYearChange = (e: React.ChangeEvent<HTMLSelectElement>): void => {
-    setYear(Number(e.target.value));
+    setMonth([Number(e.target.value), currMonth]);
   };
 
   const handleMonthChange = (e: React.ChangeEvent<HTMLSelectElement>): void => {
-    setMonth(Number(e.target.value));
+    setMonth([currYear, Number(e.target.value)]);
   };
 
   const handlePreviousMonthClick = (): void => {
-    const [newYear, newMonth] = previousMonth(year, month);
+    const [newYear, newMonth] = previousMonth(currYear, currMonth);
     if (newYear < minYear) return;
-    setYear(newYear);
-    setMonth(newMonth);
+    setMonth([newYear, newMonth]);
   };
 
   const handleNextMonthClick = (): void => {
-    const [newYear, newMonth] = nextMonth(year, month);
+    const [newYear, newMonth] = nextMonth(currYear, currMonth);
     if (newYear > maxYear) return;
-    setYear(newYear);
-    setMonth(newMonth);
+    setMonth([newYear, newMonth]);
   };
 
-  const previousDisabled = previousMonth(year, month)[0] < minYear;
-  const nextDisabled = nextMonth(year, month)[0] > maxYear;
+  const previousDisabled = previousMonth(currYear, currMonth)[0] < minYear;
+  const nextDisabled = nextMonth(currYear, currMonth)[0] > maxYear;
 
   return (
     <Box display="flex" alignItems="center" justifyContent="center">
@@ -72,12 +69,12 @@ const MonthSelect: React.FC<MonthSelectProps> = ({ onYearChange, onMonthChange }
         </IconButton>
       </Box>
       <Box paddingRight={1}>
-        <NativeSelect value={month} onChange={handleMonthChange} name="Month">
+        <NativeSelect value={currMonth} onChange={handleMonthChange} name="Month">
           {monthOptions}
         </NativeSelect>
       </Box>
       <Box paddingRight={1}>
-        <NativeSelect value={year} onChange={handleYearChange} name="Year">
+        <NativeSelect value={currYear} onChange={handleYearChange} name="Year">
           {yearOptions}
         </NativeSelect>
       </Box>
