@@ -123,18 +123,20 @@ const EventSortButtons: React.FC<EventSortButtonsProps> = ({ events, variant, on
   React.useEffect(() => {
     let newEvents = [...initialEvents];
 
-    // Apply date filter
-    switch (dateFilter) {
-      case (DateFilter.Past): {
-        newEvents = filterEventsOnlyPast(newEvents);
-        break;
+    // Apply date filter if this variant uses it
+    if (variant === 'cards') {
+      switch (dateFilter) {
+        case (DateFilter.Past): {
+          newEvents = filterEventsOnlyPast(newEvents);
+          break;
+        }
+        case (DateFilter.Upcoming): {
+          newEvents = filterEventsOnlyUpcoming(newEvents);
+          break;
+        }
+        // DateFilter.All: newEvents already includes all events, so do nothing
+        default: break;
       }
-      case (DateFilter.Upcoming): {
-        newEvents = filterEventsOnlyUpcoming(newEvents);
-        break;
-      }
-      // DateFilter.All: newEvents already includes all events, so do nothing
-      default: break;
     }
 
     // Apply event type filter
@@ -143,7 +145,7 @@ const EventSortButtons: React.FC<EventSortButtonsProps> = ({ events, variant, on
     }
 
     setFilteredEvents(newEvents);
-  }, [initialEvents, dateFilter, selectedEventTypes]);
+  }, [initialEvents, dateFilter, selectedEventTypes, variant]);
 
   const dateSortButton = variant === 'cards' ? (
     <Box display="flex" alignItems="center" marginBottom={1}>
