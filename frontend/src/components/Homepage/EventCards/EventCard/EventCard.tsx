@@ -4,6 +4,7 @@ import { Link } from '@reach/router';
 import { SerializedEvent, SerializedFormData } from '../../../../types/Event';
 import { FormType } from '../../../../Enums';
 import formatDate from '../../../../utils/formatDate';
+import validFormLink from '../../../../utils/validFormLink';
 import CardWithHeader from '../../../CardWithHeader/CardWithHeader';
 import EventCardMenu from './EventCardMenu/EventCardMenu';
 
@@ -36,7 +37,7 @@ const EventCard: React.FC<EventCardProps> = ({ event }) => {
         {event.forms.map((form: SerializedFormData) => (
           <Typography variant="body2" key={form.id}>
             {`${FormType[form.form_type as unknown as keyof typeof FormType]} (${form.user_count} respondant${form.user_count === 1 ? '' : 's'}): `}
-            <Link to={`/form/${form.id}`}>{`${form.id}`}</Link>
+            <Link to={validFormLink(event, form)}>{`${form.id}`}</Link>
           </Typography>
         ))}
       </div>
