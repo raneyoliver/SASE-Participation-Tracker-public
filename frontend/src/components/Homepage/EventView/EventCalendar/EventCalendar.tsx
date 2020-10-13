@@ -17,6 +17,14 @@ const currentYear = now.getFullYear();
 const currentMonth = now.getMonth();
 const currentDay = now.getDate();
 
+const weekdayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+const weekdayStyle: React.CSSProperties = { width: `${100 / 7}%`, textAlign: 'center' };
+const weekdays = weekdayNames.map((day) => (
+  <Typography style={weekdayStyle} key={day}>
+    {day}
+  </Typography>
+));
+
 const EventCalendar: React.FC<EventCalendarProps> = ({ events: initialEvents }) => {
   const [events, setEvents] = React.useState(initialEvents);
   const handleEventSort = React.useCallback((newEvents: SerializedEvent[]): void => {
@@ -103,6 +111,9 @@ const EventCalendar: React.FC<EventCalendarProps> = ({ events: initialEvents }) 
       </Box>
       <Box paddingBottom={1}>
         <EventSortButtons events={events} variant="calendar" onSort={handleEventSort} />
+      </Box>
+      <Box paddingBottom={1} display="flex">
+        {weekdays}
       </Box>
       <Box
         display="grid"
