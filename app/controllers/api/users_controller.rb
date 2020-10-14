@@ -15,7 +15,6 @@ class Api::UsersController < ApplicationController
 
     if @user.save
       helpers.send_new_user_email(@user)
-      # UserMailer.with(user: @user).new_user_email.deliver_later
       head :created and return
     end
 
