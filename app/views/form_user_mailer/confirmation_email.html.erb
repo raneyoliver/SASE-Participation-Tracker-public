@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <p>
+      This is an email to confirm that <%= @name %> submitted a <%= @form_user.form.form_type %> form for the event "<%= @form_user.form.event.name %>".
+    </p>
+    <p>
+      Event Details:
+    </p>
+    <ul>
+      <li>Description: <%= @form_user.form.event.description %></li>
+      <li>Type: <%= @form_user.form.event.event_type %></li>
+      <li>Start Time: <%= @form_user.form.event.start_time.in_time_zone('Central Time (US & Canada)').strftime('%B %d, %Y, %I:%M %p') %> CST</li>
+      <li>End Time: <%= @form_user.form.event.end_time.in_time_zone('Central Time (US & Canada)').strftime('%B %d, %Y, %I:%M %p') %> CST</li>
+    </ul>
+  </body>
+</html>
