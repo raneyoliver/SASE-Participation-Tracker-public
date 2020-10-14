@@ -12,7 +12,12 @@ class Api::UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    head :created and return if @user.save
+
+    if @user.save
+      helpers.send_new_user_email(@user)
+      # UserMailer.with(user: @user).new_user_email.deliver_later
+      head :created and return
+    end
 
     head :bad_request and return
   rescue ActiveRecord::RecordNotUnique
