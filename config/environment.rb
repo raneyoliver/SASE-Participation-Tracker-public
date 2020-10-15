@@ -4,6 +4,18 @@ require_relative 'application'
 # Setup capybara if it's being used
 begin
   require 'capybara'
+
+  Capybara.register_driver :selenium do |app|
+    browser_options = ::Selenium::WebDriver::Firefox::Options.new
+    browser_options.args << '--headless' if ENV['SELENIUM_CONFIG'] == 'HEADLESS'
+
+    Capybara::Selenium::Driver.new(
+      app,
+      browser: :firefox,
+      options: browser_options
+    )
+  end
+
   # Use javascript driver for Capybara
   Capybara.configure do |config|
     config.default_driver = :selenium
