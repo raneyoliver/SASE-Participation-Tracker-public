@@ -21,6 +21,7 @@ Scenario: Event menu button does not exist when no events exist
 Scenario: Event menu button does exist when an event exists
   When I go to the homepage
   Then I log in
+  Then I go to the event list
   Then I click the all events filter
   Then I can see an event menu button
 
@@ -30,6 +31,7 @@ Scenario: Event menu button does exist when an event exists
 Scenario: Event menu button button expands to reveal an edit event button
   When I go to the homepage
   Then I log in
+  Then I go to the event list
   Then I click the all events filter
   Then I click on the event menu button
   Then there is an edit event button
@@ -42,6 +44,7 @@ Scenario: Event menu button button expands to reveal an edit event button
 Scenario: Event menu button button expands to reveal a delete event button
   When I go to the homepage
   Then I log in
+  Then I go to the event list
   Then I click the all events filter
   Then I click on the event menu button
   Then there is a delete event button
@@ -54,6 +57,7 @@ Scenario: Event menu button button expands to reveal a delete event button
 Scenario: Event menu button button expands to reveal a create RSVP form button
   When I go to the homepage
   Then I log in
+  Then I go to the event list
   Then I click the all events filter
   Then I click on the event menu button
   Then there is a create RSVP form button
