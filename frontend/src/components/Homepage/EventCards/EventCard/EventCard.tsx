@@ -38,6 +38,8 @@ const EventCard: React.FC<EventCardProps> = ({ event }) => {
           <Typography variant="body2" key={form.id}>
             {`${FormType[form.form_type as unknown as keyof typeof FormType]} (${form.user_count} respondant${form.user_count === 1 ? '' : 's'}): `}
             <Link to={validFormLink(event, form)}>{`${form.id}`}</Link>
+            {`${form.form_type.toString() === 'sign-in' && event.sign_in_restricted === true ? ' (Time-Sensitive)' : ''}`}
+            {`${form.form_type.toString() === 'RSVP' && event.rsvp_restricted === true ? ' (Time-Sensitive)' : ''}`}
           </Typography>
         ))}
       </div>

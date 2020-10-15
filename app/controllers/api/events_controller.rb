@@ -84,6 +84,7 @@ class Api::EventsController < ApplicationController
   private
 
   def event_params
-    params.require(:event).permit(:name, :description, :start_time, :end_time, :event_type)
+    params.require(:event).permit(:name, :description, :start_time, :end_time, :event_type,
+                                  :sign_in_restricted, :rsvp_restricted, :has_rsvp_form)
   end
 end

@@ -8,7 +8,8 @@ export default function validFormLink(event: SerializedEvent, form: SerializedFo
   const isSignIn = form.form_type.toString() === 'sign-in';
   const isRSVP = form.form_type.toString() === 'RSVP';
 
-  if ((isSignIn && outsideEventInterval) || (isRSVP && afterEventStart)) {
+  if ((isSignIn && outsideEventInterval && event.sign_in_restricted === true)
+   || (isRSVP && afterEventStart && event.rsvp_restricted === true)) {
     // Cannot sign in - outside of event interval for sign-in or too late to RSVP
     return '/form/unavailable';
   }

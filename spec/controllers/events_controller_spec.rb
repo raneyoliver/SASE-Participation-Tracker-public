@@ -73,12 +73,18 @@ describe Api::EventsController do
         @end_time = 'Wed, 16 Sep 2020 06:27:32 GMT'
         @create_rsvp_form = false
         @event_type = 'GBM'
+        @sign_in_restricted = false
+        @rsvp_restricted = false
+        @has_rsvp_form = false
         @expected = {
           name: @name,
           description: @description,
           start_time: @start_time,
           end_time: @end_time,
           event_type: @event_type,
+          sign_in_restricted: @sign_in_restricted,
+          rsvp_restricted: @rsvp_restricted,
+          has_rsvp_form: @has_rsvp_form,
         }
 
         post :create, params: { event: @expected, create_rsvp_form: @create_rsvp_form }, as: :json
@@ -93,6 +99,9 @@ describe Api::EventsController do
         expect(@created.start_time.to_i).to eq(DateTime.parse(@start_time).to_i)
         expect(@created.end_time.to_i).to eq(DateTime.parse(@end_time).to_i)
         expect(@created.event_type).to eq(@event_type)
+        expect(@created.sign_in_restricted).to eq @sign_in_restricted
+        expect(@created.rsvp_restricted).to eq @rsvp_restricted
+        expect(@created.has_rsvp_form).to eq @has_rsvp_form
       end
 
       it 'only creates a sign-in form when not told to create an RSVP form' do

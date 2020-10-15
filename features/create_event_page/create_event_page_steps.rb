@@ -38,3 +38,17 @@ end
 Then 'I can click the submit button on the create event page' do
   expect(page).to have_button('submit', disabled: false)
 end
+
+Then 'I check the RSVP form box' do
+  find(:css, '#event-create-RSVP').set(true)
+end
+
+Then 'I can click the RSVP time restriction toggle' do
+  @rsvp = find(:css, '#rsvp', visible: :all)
+  expect(@rsvp.disabled?).to eq(false)
+end
+
+Then 'I cannot click the RSVP time restriction toggle' do
+  @rsvp = find(:css, '#rsvp', visible: :all)
+  expect(@rsvp.disabled?).to eq(true)
+end

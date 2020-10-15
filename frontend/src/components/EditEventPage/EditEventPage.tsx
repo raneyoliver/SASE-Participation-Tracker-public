@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { RouteComponentProps, navigate, useParams } from '@reach/router';
 import {
-  Box, TextField, Button, InputLabel, MenuItem, FormControl, Select, Typography,
+  Box, TextField, Button, InputLabel, MenuItem, FormControl, FormHelperText,
+  Select, Typography, FormGroup, FormControlLabel, FormLabel, Switch,
 } from '@material-ui/core';
 import { DateTimePicker } from '@material-ui/pickers';
 import AddIcon from '@material-ui/icons/Add';
@@ -57,6 +58,15 @@ const EditEventPage: React.FC<RouteComponentProps> = () => {
     </MenuItem>
   ));
 
+  const [disabledButton, setDisabledButton] = React.useState(true);
+  const [timeRestriction, setTimeRestriction] = React.useState({
+    sign_in: false,
+    rsvp: false,
+  });
+  const handleTimeRestrictionChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    setTimeRestriction({ ...timeRestriction, [event.target.name]: event.target.checked });
+  };
+
   // Validate form info to show errors and determine whether to allow submit
   const startTimeValid = !Number.isNaN(startTime.valueOf());
   const endTimeValid = !Number.isNaN(startTime.valueOf());
@@ -75,6 +85,8 @@ const EditEventPage: React.FC<RouteComponentProps> = () => {
       setStartTime(new Date(response.start_time));
       setEndTime(new Date(response.end_time));
       setEventType(response.event_type);
+      setTimeRestriction({ sign_in: response.sign_in_restricted, rsvp: response.rsvp_restricted });
+      setDisabledButton(!response.has_rsvp_form);
     }).finally(() => setLoading(false));
   }, [eventId]);
 
@@ -87,6 +99,9 @@ const EditEventPage: React.FC<RouteComponentProps> = () => {
       start_time: startTime.toUTCString(),
       end_time: endTime.toUTCString(),
       event_type: eventType,
+      sign_in_restricted: timeRestriction.sign_in,
+      rsvp_restricted: timeRestriction.rsvp,
+      has_rsvp_form: !disabledButton,
     };
 
     const body = {
@@ -143,6 +158,27 @@ const EditEventPage: React.FC<RouteComponentProps> = () => {
             <Select value={eventType} onChange={handleTypeChange}>
               {option}
             </Select>
+          </FormControl>
+        </Box>
+
+        <Box paddingBottom={1}>
+          <FormControl component="fieldset">
+            <FormLabel component="legend">Restrict Form Submission Time</FormLabel>
+            <FormGroup>
+              <FormHelperText>
+                (If enabled,
+                Sign-In forms will only be accessible during the event and
+                RSVP forms will only be accessible before the event.)
+              </FormHelperText>
+              <FormControlLabel
+                control={<Switch checked={timeRestriction.sign_in} onChange={handleTimeRestrictionChange} name="sign_in" color="primary" />}
+                label="Sign-In"
+              />
+              <FormControlLabel
+                control={<Switch disabled={disabledButton} checked={timeRestriction.rsvp} onChange={handleTimeRestrictionChange} name="rsvp" color="primary" />}
+                label="RSVP"
+              />
+            </FormGroup>
           </FormControl>
         </Box>
 
