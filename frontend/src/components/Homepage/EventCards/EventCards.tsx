@@ -18,7 +18,7 @@ const EventCards: React.FC = () => {
       if (response.ok) {
         return response;
       }
-      navigate('/login');
+      navigate('/view_events');
       return response;
     }).then((response) => response.json()).then((response: SerializedEvent[]) => {
       setHasEvents(Boolean(response.length));

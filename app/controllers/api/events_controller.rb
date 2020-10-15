@@ -1,8 +1,6 @@
 # Controller for api functionality related to events
 class Api::EventsController < ApplicationController
   def list
-    head :bad_request and return unless helpers.check_auth
-
     @events = Event.includes(forms: [:form_users])
                    .select(:id, :name, :description, :start_time, :end_time, :event_type)
 
