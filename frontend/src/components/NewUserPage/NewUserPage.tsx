@@ -48,6 +48,11 @@ const NewUserPage: React.FC<RouteComponentProps> = () => {
     setEmail(e.target.value);
   };
 
+  const [confirmationEmail, setConfirmationEmail] = React.useState('');
+  const handleConfirmationEmailChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    setConfirmationEmail(e.target.value);
+  };
+
   // had to style the dropdown manually
   const useStyles = makeStyles(() => ({
     formControl: {
@@ -67,9 +72,21 @@ const NewUserPage: React.FC<RouteComponentProps> = () => {
     setGraduationYear(e.target.value);
   };
 
+  // parse passed in value and format it for the user (xxx) xxx-xxxx
+  const normalizePhoneNumber = (newPhoneNumber: string): string => {
+    if (newPhoneNumber.length < 4) return newPhoneNumber;
+    if (newPhoneNumber.length < 7) return `(${newPhoneNumber.slice(0, 3)}) ${newPhoneNumber.slice(3)}`;
+    return `(${newPhoneNumber.slice(0, 3)}) ${newPhoneNumber.slice(3, 6)}-${newPhoneNumber.slice(6, 10)}`;
+  };
+
   const [phoneNumber, setPhoneNumber] = React.useState('');
   const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setPhoneNumber(e.target.value);
+    // remove layout from form input
+    const newPhoneNumber = e.target.value.replace(/[^\d]/g, '');
+    const re = /^[0-9]{0,10}$/;
+    if (re.test(newPhoneNumber)) {
+      setPhoneNumber(newPhoneNumber);
+    }
   };
 
   const [dialogOpen, setDialogOpen] = React.useState(false);
@@ -77,7 +94,12 @@ const NewUserPage: React.FC<RouteComponentProps> = () => {
     setDialogOpen(false);
   };
 
-  const formValid = firstName && lastName && graduationYear && major && email;
+  const validPhoneNumber = phoneNumber.length === 0 || phoneNumber.length === 10;
+  const re = /^\S+@\S+\.\S+$/;
+  const validEmail = re.test(email);
+  const validConfirmationEmail = (email === confirmationEmail) && email;
+  const formValid = (firstName && lastName && graduationYear && major && email
+    && validEmail && validConfirmationEmail && validPhoneNumber);
 
   const handleSubmit = (): void => {
     if (!formValid) return;
@@ -170,11 +192,15 @@ const NewUserPage: React.FC<RouteComponentProps> = () => {
         </Box>
 
         <Box paddingBottom={1}>
-          <TextField id="new-user-email" required error={!email} label="Email Address" value={email} onChange={handleEmailChange} />
+          <TextField id="new-user-email" required error={!validEmail} label="Email Address" value={email} onChange={handleEmailChange} />
         </Box>
 
         <Box paddingBottom={1}>
-          <TextField id="new-user-phone-number" label="Phone Number" value={phoneNumber} onChange={handlePhoneNumberChange} />
+          <TextField id="new-user-confirmation-email" required error={!validConfirmationEmail} label="Confirm Email Address" value={confirmationEmail} onChange={handleConfirmationEmailChange} />
+        </Box>
+
+        <Box paddingBottom={1}>
+          <TextField id="new-user-phone-number" error={!validPhoneNumber} label="Phone Number" value={normalizePhoneNumber(phoneNumber)} onChange={handlePhoneNumberChange} />
         </Box>
 
         <Button id="submit" variant="contained" color="secondary" disabled={!formValid} startIcon={<AddIcon />} onClick={handleSubmit}>
