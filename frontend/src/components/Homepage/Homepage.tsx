@@ -27,7 +27,7 @@ const Homepage: React.FC<RouteComponentProps> = () => {
           Events
         </Typography>
       </Box>
-      <EventCards />
+      <EventCards renderComponents />
       <Box position="fixed" bottom={8} right={8}>
         <Tooltip title="New Event" placement="left">
           <Fab id="new-event" color="primary" size="large" onClick={handleFabClick} aria-label="create new event">

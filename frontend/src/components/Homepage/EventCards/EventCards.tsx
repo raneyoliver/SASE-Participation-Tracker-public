@@ -6,7 +6,11 @@ import EventCard from './EventCard/EventCard';
 import CardWithHeader from '../../CardWithHeader/CardWithHeader';
 import EventSortButtons from './EventSortButtons/EventSortButtons';
 
-const EventCards: React.FC = () => {
+interface RenderProps {
+  renderComponents: boolean;
+}
+
+const EventCards: React.FC<RenderProps> = ({ renderComponents }) => {
   // Loading is true until fetching events is done
   const [loading, setLoading] = React.useState(true);
 
@@ -46,7 +50,7 @@ const EventCards: React.FC = () => {
 
   const eventCards = events.map((event) => (
     <Box width={columnWidth} padding={1} boxSizing="border-box" key={event.id}>
-      <EventCard event={event} />
+      <EventCard event={event} renderComponents={renderComponents} />
     </Box>
   ));
 

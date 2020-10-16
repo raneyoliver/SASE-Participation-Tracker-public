@@ -9,16 +9,17 @@ import EventCardMenu from './EventCardMenu/EventCardMenu';
 
 interface EventCardProps {
   event: SerializedEvent;
+  renderComponents: boolean;
 }
 
-const EventCard: React.FC<EventCardProps> = ({ event }) => {
+const EventCard: React.FC<EventCardProps> = ({ event, renderComponents }) => {
   const startTime = formatDate(new Date(event.start_time));
   const endTime = formatDate(new Date(event.end_time));
 
   const menu = <EventCardMenu event={event} />;
 
   return (
-    <CardWithHeader id={`event-card-${event.id}`} title={event.name} icon={menu}>
+    <CardWithHeader id={`event-card-${event.id}`} title={event.name} icon={renderComponents ? menu : null}>
       <div style={{ wordWrap: 'break-word' }}>
         <Box overflow="auto" maxHeight={120}>
           <Typography>
@@ -33,12 +34,12 @@ const EventCard: React.FC<EventCardProps> = ({ event }) => {
           {`Ends at: ${endTime}`}
           <br />
         </Typography>
-        {event.forms.map((form: SerializedFormData) => (
+        {renderComponents ? event.forms.map((form: SerializedFormData) => (
           <Typography variant="body2" key={form.id}>
             {`${FormType[form.form_type as unknown as keyof typeof FormType]} (${form.user_count} respondant${form.user_count === 1 ? '' : 's'}): `}
             <Link to={`/form/${form.id}`}>{`${form.id}`}</Link>
           </Typography>
-        ))}
+        )) : null}
       </div>
     </CardWithHeader>
   );
