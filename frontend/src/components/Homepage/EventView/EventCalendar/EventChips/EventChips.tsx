@@ -1,7 +1,10 @@
-import { Box, Chip } from '@material-ui/core';
+import {
+  Box, Chip,
+} from '@material-ui/core';
 import * as React from 'react';
 import { SerializedEvent } from '../../../../../types/Event';
 import formatTime from '../../../../../utils/formatTime';
+import EventDetailsPopup from './EventDetailsPopup/EventDetailsPopup';
 
 const chipStyle = { width: '100%', justifyContent: 'flex-start' };
 
@@ -10,9 +13,16 @@ interface EventChipsProps {
 }
 
 const EventChips: React.FC<EventChipsProps> = ({ events }) => {
+  const [popEvent, setPopEvent] = React.useState(null);
+  const [anchorE1, setAnchorE1] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorE1);
+  const handleClose = (): void => {
+    setAnchorE1(null);
+  };
   const eventChips = events.map((event) => {
-    const handleClick = (): void => {
-      // TODO: open card for event on click
+    const handleClick = (JSevent: React.MouseEvent<HTMLElement>): void => {
+      setPopEvent(event);
+      setAnchorE1(JSevent.currentTarget);
     };
     const label = `${formatTime(new Date(event.start_time))}: ${event.name}`;
 
@@ -26,6 +36,12 @@ const EventChips: React.FC<EventChipsProps> = ({ events }) => {
   return (
     <Box overflow="auto">
       {eventChips}
+      <EventDetailsPopup
+        open={open}
+        anchorE1={anchorE1}
+        handleClose={handleClose}
+        event={popEvent}
+      />
     </Box>
   );
 };
