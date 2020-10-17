@@ -27,11 +27,11 @@ Then 'I cannot see the event type' do
 end
 
 Then 'I cannot see the event start datetime' do
-  expect(page).not_to have_content(DateTime.now.strftime('%m/%d/%Y, %H:%M'))
+  expect(page).not_to have_content(DateTime.now.strftime('%m/%d/%Y'))
 end
 
 Then 'I cannot see the event end datetime' do
-  expect(page).not_to have_content((DateTime.now + (1 / 24.0)).strftime('%m/%d/%Y, %H:%M'))
+  expect(page).not_to have_content((DateTime.now + (1 / 24.0)).strftime('%m/%d/%Y'))
 end
 
 Then 'I cannot see the event sign-in form link' do
@@ -55,11 +55,11 @@ Then 'I can see the event type' do
 end
 
 Then 'I can see the event start datetime' do
-  expect(page).to have_content(DateTime.now.strftime('%m/%d/%Y, %H:%M'))
+  expect(page).to have_content(DateTime.now.strftime('%m/%d/%Y'))
 end
 
 Then 'I can see the event end datetime' do
-  expect(page).to have_content((DateTime.now + (1 / 24.0)).strftime('%m/%d/%Y, %H:%M'))
+  expect(page).to have_content((DateTime.now + (1 / 24.0)).strftime('%m/%d/%Y'))
 end
 
 Then 'I can see the event sign-in form link' do

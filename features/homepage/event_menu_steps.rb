@@ -10,10 +10,6 @@ Before '@event-menu' do
   ).save
 end
 
-Then 'I can not see an event menu button' do
-  expect(page).not_to have_selector('#event-menu-button')
-end
-
 Then 'I can see an event menu button' do
   expect(page).to have_selector('#event-menu-button')
 end
