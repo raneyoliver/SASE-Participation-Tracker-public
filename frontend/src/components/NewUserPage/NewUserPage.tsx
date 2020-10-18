@@ -94,10 +94,10 @@ const NewUserPage: React.FC<RouteComponentProps> = () => {
     setDialogOpen(false);
   };
 
-  const validPhoneNumber = phoneNumber.length === 0 || phoneNumber.length === 10;
   const re = /^\S+@\S+\.\S+$/;
   const validEmail = re.test(email);
   const validConfirmationEmail = (email === confirmationEmail) && email;
+  const validPhoneNumber = phoneNumber.length === 0 || phoneNumber.length === 10;
   const formValid = (firstName && lastName && graduationYear && major && email
     && validEmail && validConfirmationEmail && validPhoneNumber);
 
@@ -196,7 +196,7 @@ const NewUserPage: React.FC<RouteComponentProps> = () => {
         </Box>
 
         <Box paddingBottom={1}>
-          <TextField id="new-user-confirmation-email" required error={!validConfirmationEmail} label="Confirm Email Address" value={confirmationEmail} onChange={handleConfirmationEmailChange} />
+          <TextField id="new-user-confirmation-email" required error={!validConfirmationEmail} label="Confirm Email" value={confirmationEmail} onChange={handleConfirmationEmailChange} />
         </Box>
 
         <Box paddingBottom={1}>
