@@ -77,7 +77,7 @@ Scenario: Submit button is not clickable when the email is blank
 
 @formRequired
 @javascript
-Scenario: Submit button is not clickable when the email is missing both an @ followed by an dot symbol
+Scenario: Submit button is not clickable when the email is missing both an @ followed by a dot symbol
   When I go to the new user page
   Then I enter my first name on the new user page
   Then I enter my last name on the new user page
