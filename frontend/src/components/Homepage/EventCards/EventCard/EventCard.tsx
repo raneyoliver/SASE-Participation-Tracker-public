@@ -16,10 +16,10 @@ const EventCard: React.FC<EventCardProps> = ({ event, renderComponents }) => {
   const startTime = formatDate(new Date(event.start_time));
   const endTime = formatDate(new Date(event.end_time));
 
-  const menu = <EventCardMenu event={event} />;
+  const menu = renderComponents ? <EventCardMenu event={event} /> : null;
 
   return (
-    <CardWithHeader id={`event-card-${event.id}`} title={event.name} icon={renderComponents ? menu : null}>
+    <CardWithHeader id={`event-card-${event.id}`} title={event.name} icon={menu}>
       <div style={{ wordWrap: 'break-word' }}>
         <Box overflow="auto" maxHeight={120}>
           <Typography>

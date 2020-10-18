@@ -16,7 +16,7 @@ import FormErrorPage from '../FormErrorPage/FormErrorPage';
 import ChangePasswordPage from '../ChangePasswordPage/ChangePasswordPage';
 import ConfirmUpdatePage from '../ConfirmUpdatePage/ConfirmUpdatePage';
 import EditEventErrorPage from '../EditEventErrorPage/EditEventErrorPage';
-import ViewEventsPage from '../ViewEventsPage/ViewEventsPage'
+import ViewEventsPage from '../ViewEventsPage/ViewEventsPage';
 
 const App: React.SFC = () => (
   <ThemeProvider theme={theme}>
