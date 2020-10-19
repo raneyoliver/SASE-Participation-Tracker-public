@@ -9,7 +9,7 @@ const FormUnavailablePage: React.FC<RouteComponentProps> = () => (
   <Box margin="10% auto" width="50%" minWidth={500} textAlign="center">
     <CardWithHeader title="Form Unavailable">
       <Typography>
-        It is either too early or too late to access this form.
+        This form is unavailable at this time.
       </Typography>
     </CardWithHeader>
   </Box>

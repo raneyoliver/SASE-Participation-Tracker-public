@@ -29,5 +29,42 @@ describe Api::FormsController do
         expect(response).to have_http_status(:not_found)
       end
     end
+
+    context 'when the given id is time-restricted and outside of its time range' do
+      it 'returns a forbidden status code' do
+        # Sign-In
+        event_data = { id: 1, name: 'Test Event', description: 'description', event_type: 'GBM',
+                       start_time: '2020-09-15T01:00:00.000Z', end_time: '2020-09-15T00:00:00.000Z',
+                       has_rsvp_form: true }
+        @event = Event.create(event_data)
+        form_data = { id: '8888888887', event_id: 1, start_time: '2020-09-15T01:00:00.000Z',
+                      end_time: '2020-09-15T00:00:00.000Z', form_type: 'sign-in', questions: '[]', time_restricted: true }
+        @sign_in_form = Form.create(form_data)
+        expect(Form.count).to eq(1)
+        @id = '8888888887'
+        
+        get :show, params: { id: @id }, format: :json
+        expect(response).to have_http_status(:forbidden)
+        Event.delete_all
+        Form.delete_all
+        expect(Form.count).to eq(0)
+
+        # RSVP
+        event_data = { id: 1, name: 'Test Event', description: 'description', event_type: 'GBM',
+                       start_time: '2020-09-15T01:00:00.000Z', end_time: '2020-09-15T00:00:00.000Z',
+                       has_rsvp_form: true }
+        @event = Event.create(event_data)
+        form_data = { id: '8888888889', event_id: 1, start_time: '2020-09-15T01:00:00.000Z',
+                      end_time: '2020-09-15T00:00:00.000Z', form_type: 'RSVP', questions: '[]', time_restricted: true }
+        @rsvp_form = Form.create(form_data)
+        expect(Form.count).to eq(1)
+        @id = '8888888889'
+
+        get :show, params: { id: @id }, format: :json
+        expect(response).to have_http_status(:forbidden)
+        Event.delete_all
+        Form.delete_all
+      end
+    end
   end
 end
