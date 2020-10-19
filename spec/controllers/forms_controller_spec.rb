@@ -38,11 +38,12 @@ describe Api::FormsController do
                        has_rsvp_form: true }
         @event = Event.create(event_data)
         form_data = { id: '8888888887', event_id: 1, start_time: '2020-09-15T01:00:00.000Z',
-                      end_time: '2020-09-15T00:00:00.000Z', form_type: 'sign-in', questions: '[]', time_restricted: true }
+                      end_time: '2020-09-15T00:00:00.000Z', form_type: 'sign-in', questions: '[]',
+                      time_restricted: true }
         @sign_in_form = Form.create(form_data)
         expect(Form.count).to eq(1)
         @id = '8888888887'
-        
+
         get :show, params: { id: @id }, format: :json
         expect(response).to have_http_status(:forbidden)
         Event.delete_all

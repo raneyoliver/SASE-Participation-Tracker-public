@@ -13,7 +13,6 @@ class Api::EventsController < ApplicationController
     render json: @response.to_json
   end
 
-  # rubocop:disable Metrics/AbcSize
   def create
     head :bad_request and return unless helpers.check_auth
 
@@ -26,7 +25,6 @@ class Api::EventsController < ApplicationController
 
     helpers.create_form_for_event(@event, 'RSVP', params[:rsvp_restricted])
   end
-  # rubocop:enable Metrics/AbcSize
 
   def export
     head :bad_request and return unless helpers.check_auth
@@ -80,7 +78,6 @@ class Api::EventsController < ApplicationController
     head :not_found and return
   end
 
-  # rubocop:disable Metrics/AbcSize
   def update
     @event = Event.find(params[:id])
     @event.update(event_params)
@@ -95,7 +92,6 @@ class Api::EventsController < ApplicationController
   rescue ActiveRecord::RecordNotFound
     head :not_found and return
   end
-  # rubocop:enable Metrics/AbcSize
 
   def delete
     @event = Event.find(params[:id])
