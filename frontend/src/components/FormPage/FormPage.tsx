@@ -22,6 +22,9 @@ const FormPage: React.FC<RouteComponentProps> = () => {
       if (response.status === 404) {
         window.location.href = '/form/error';
       }
+      if (response.status === 403) {
+        window.location.href = '/form/unavailable';
+      }
       return response.json();
     }).then((response: SerializedForm) => {
       setForm(response);

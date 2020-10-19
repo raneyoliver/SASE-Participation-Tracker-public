@@ -7,8 +7,6 @@ export interface Event {
   start_time: string;
   end_time: string;
   event_type: EventType;
-  sign_in_restricted: boolean;
-  rsvp_restricted: boolean;
   has_rsvp_form: boolean;
 }
 
@@ -21,8 +19,6 @@ export interface SerializedEvent {
   end_time: string;
   forms: SerializedFormData[];
   event_type: EventType;
-  sign_in_restricted: boolean;
-  rsvp_restricted: boolean;
   has_rsvp_form: boolean;
 }
 
@@ -30,4 +26,5 @@ export interface SerializedFormData {
   id: string;
   form_type: FormType;
   user_count: number;
+  time_restricted: boolean;
 }

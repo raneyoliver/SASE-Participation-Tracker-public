@@ -19,11 +19,11 @@ class Api::EventsController < ApplicationController
     @event = Event.new(event_params)
     head :bad_request and return unless @event.save
 
-    helpers.create_form_for_event(@event, 'sign-in')
+    helpers.create_form_for_event(@event, 'sign-in', params[:sign_in_restricted])
 
     return unless params[:create_rsvp_form]
 
-    helpers.create_form_for_event(@event, 'RSVP')
+    helpers.create_form_for_event(@event, 'RSVP', params[:rsvp_restricted])
   end
 
   def export
@@ -60,8 +60,21 @@ class Api::EventsController < ApplicationController
   end
 
   def edit
-    @event = Event.find(params[:id])
-    render json: @event
+    @records = Event.joins(:forms).select(
+      :id, :name, :description, :start_time, :end_time,
+      :event_type, :has_rsvp_form
+    ).find(params[:id])
+
+    @response = @records.as_json(
+      include: {
+        forms: {
+          only: [:id, :form_type, :time_restricted],
+        }
+      }
+    )
+
+    render json: @response
+
   rescue ActiveRecord::RecordNotFound
     head :not_found and return
   end
@@ -69,6 +82,13 @@ class Api::EventsController < ApplicationController
   def update
     @event = Event.find(params[:id])
     @event.update(event_params)
+  
+    # Change form restrictions
+    @sign_in_form = Form.where(event_id: params[:id], form_type: 'sign-in')
+    @rsvp_form = Form.where(event_id: params[:id], form_type: 'RSVP')
+    @sign_in_form.update(time_restricted: params.fetch(:sign_in_restricted))
+    @rsvp_form.update(time_restricted: params.fetch(:rsvp_restricted))
+
     head :bad_request and return unless @event.save
   rescue ActiveRecord::RecordNotFound
     head :not_found and return
@@ -84,7 +104,6 @@ class Api::EventsController < ApplicationController
   private
 
   def event_params
-    params.require(:event).permit(:name, :description, :start_time, :end_time, :event_type,
-                                  :sign_in_restricted, :rsvp_restricted, :has_rsvp_form)
+    params.require(:event).permit(:name, :description, :start_time, :end_time, :event_type, :has_rsvp_form)
   end
 end

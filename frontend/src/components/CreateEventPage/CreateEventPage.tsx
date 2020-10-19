@@ -65,7 +65,7 @@ const CreateEventPage: React.FC<RouteComponentProps> = () => {
     sign_in: false,
     rsvp: false,
   });
-  const handleTimeRestrictionChange = (event: React.ChangeEvent<HTMLInputElement>): any => {
+  const handleTimeRestrictionChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setTimeRestriction({ ...timeRestriction, [event.target.name]: event.target.checked });
   };
 
@@ -83,14 +83,14 @@ const CreateEventPage: React.FC<RouteComponentProps> = () => {
       start_time: startTime.toUTCString(),
       end_time: endTime.toUTCString(),
       event_type: eventType,
-      sign_in_restricted: timeRestriction.sign_in,
-      rsvp_restricted: createRSVPForm ? timeRestriction.rsvp : false,
       has_rsvp_form: createRSVPForm,
     };
 
     const body = {
       event: eventBody,
       create_rsvp_form: createRSVPForm,
+      sign_in_restricted: timeRestriction.sign_in,
+      rsvp_restricted: timeRestriction.rsvp,
     };
 
     fetch('/api/events/create', {
@@ -156,7 +156,7 @@ const CreateEventPage: React.FC<RouteComponentProps> = () => {
                 label="Sign-In"
               />
               <FormControlLabel
-                control={<Switch disabled={disabledButton} checked={timeRestriction.rsvp} onChange={handleTimeRestrictionChange} id="rsvp" color="primary" />}
+                control={<Switch disabled={disabledButton} checked={timeRestriction.rsvp} onChange={handleTimeRestrictionChange} id="rsvp" name="rsvp" color="primary" />}
                 label="RSVP"
               />
             </FormGroup>

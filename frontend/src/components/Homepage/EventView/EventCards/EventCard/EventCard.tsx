@@ -1,11 +1,10 @@
 import * as React from 'react';
 import { Box, Typography } from '@material-ui/core';
 import { Link } from '@reach/router';
-import { SerializedEvent, SerializedFormData } from '../../../../types/Event';
-import { FormType } from '../../../../Enums';
-import formatDate from '../../../../utils/formatDate';
-import validFormLink from '../../../../utils/validFormLink';
-import CardWithHeader from '../../../CardWithHeader/CardWithHeader';
+import { SerializedEvent, SerializedFormData } from '../../../../../types/Event';
+import { FormType } from '../../../../../Enums';
+import formatDate from '../../../../../utils/formatDate';
+import CardWithHeader from '../../../../CardWithHeader/CardWithHeader';
 import EventCardMenu from './EventCardMenu/EventCardMenu';
 
 interface EventCardProps {
@@ -37,9 +36,7 @@ const EventCard: React.FC<EventCardProps> = ({ event }) => {
         {event.forms.map((form: SerializedFormData) => (
           <Typography variant="body2" key={form.id}>
             {`${FormType[form.form_type as unknown as keyof typeof FormType]} (${form.user_count} respondant${form.user_count === 1 ? '' : 's'}): `}
-            <Link to={validFormLink(event, form)}>{`${form.id}`}</Link>
-            {`${form.form_type.toString() === 'sign-in' && event.sign_in_restricted === true ? ' (Time-Sensitive)' : ''}`}
-            {`${form.form_type.toString() === 'RSVP' && event.rsvp_restricted === true ? ' (Time-Sensitive)' : ''}`}
+            <Link to={`/form/${form.id}`}>{`${form.id}`}</Link>
           </Typography>
         ))}
       </div>

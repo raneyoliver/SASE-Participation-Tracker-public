@@ -7,8 +7,9 @@ import {
 import { DateTimePicker } from '@material-ui/pickers';
 import AddIcon from '@material-ui/icons/Add';
 import CardWithHeader from '../CardWithHeader/CardWithHeader';
-import { Event } from '../../types/Event';
+import { Event, SerializedEvent } from '../../types/Event';
 import getCSRFToken from '../../utils/getCSRFToken';
+import getFormRestriction from '../../utils/getFormRestriction';
 import { EventType } from '../../Enums';
 
 // Format datetimes like the following: 12/31/2020 12:00 PM
@@ -85,8 +86,11 @@ const EditEventPage: React.FC<RouteComponentProps> = () => {
       setStartTime(new Date(response.start_time));
       setEndTime(new Date(response.end_time));
       setEventType(response.event_type);
-      setTimeRestriction({ sign_in: response.sign_in_restricted, rsvp: response.rsvp_restricted });
       setDisabledButton(!response.has_rsvp_form);
+      setTimeRestriction({
+        sign_in: getFormRestriction('sign-in', response as unknown as SerializedEvent),
+        rsvp: getFormRestriction('RSVP', response as unknown as SerializedEvent),
+      });
     }).finally(() => setLoading(false));
   }, [eventId]);
 
@@ -99,14 +103,14 @@ const EditEventPage: React.FC<RouteComponentProps> = () => {
       start_time: startTime.toUTCString(),
       end_time: endTime.toUTCString(),
       event_type: eventType,
-      sign_in_restricted: timeRestriction.sign_in,
-      rsvp_restricted: timeRestriction.rsvp,
       has_rsvp_form: !disabledButton,
     };
 
     const body = {
       id: eventId,
       event: eventBody,
+      sign_in_restricted: timeRestriction.sign_in,
+      rsvp_restricted: timeRestriction.rsvp,
     };
 
     fetch('/api/events/update', {
