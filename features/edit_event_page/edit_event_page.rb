@@ -9,6 +9,30 @@ Before '@event' do
   ).save
 end
 
+Before '@sign_in_form' do
+  Form.new(
+    id: '8888888888',
+    event_id: 1,
+    start_time: 'Thu, 1 Jan 1970 01:00:00 +0000',
+    end_time: 'Thu, 1 Jan 1970 02:00:00 +0000',
+    form_type: 'sign-in',
+    questions: '[]',
+    time_restricted: true
+  ).save
+end
+
+Before '@rsvp_form' do
+  Form.new(
+    id: '8888888889',
+    event_id: 1,
+    start_time: 'Thu, 1 Jan 1970 01:00:00 +0000',
+    end_time: 'Thu, 1 Jan 1970 02:00:00 +0000',
+    form_type: 'RSVP',
+    questions: '[]',
+    time_restricted: true
+  ).save
+end
+
 Then 'I go back to the edit event page' do
   visit '/edit_event/1'
 end
@@ -29,4 +53,11 @@ end
 
 Then "I can't click the update button" do
   expect(page).to have_button('submit', disabled: true)
+end
+
+Then 'the switches show previous restriction settings' do
+  @sign_in = find(:css, '#sign_in', visible: :all)
+  @rsvp = find(:css, '#rsvp', visible: :all)
+  expect(@sign_in.checked?).to eq(true)
+  expect(@rsvp.checked?).to eq(true)
 end

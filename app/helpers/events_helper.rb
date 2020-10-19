@@ -30,7 +30,7 @@ module EventsHelper
       end_time: event.end_time,
       form_type: form_type,
       questions: [].to_json,
-      time_restricted: time_restricted,
+      time_restricted: time_restricted
     )
     form.save
   end

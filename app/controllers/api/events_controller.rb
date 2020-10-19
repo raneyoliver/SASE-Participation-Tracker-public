@@ -13,6 +13,7 @@ class Api::EventsController < ApplicationController
     render json: @response.to_json
   end
 
+  # rubocop:disable Metrics/AbcSize
   def create
     head :bad_request and return unless helpers.check_auth
 
@@ -25,6 +26,7 @@ class Api::EventsController < ApplicationController
 
     helpers.create_form_for_event(@event, 'RSVP', params[:rsvp_restricted])
   end
+  # rubocop:enable Metrics/AbcSize
 
   def export
     head :bad_request and return unless helpers.check_auth
@@ -54,13 +56,13 @@ class Api::EventsController < ApplicationController
 
   def add_form
     @event = Event.find(params[:id])
-    helpers.create_form_for_event(@event, params[:form_type])
+    helpers.create_form_for_event(@event, params[:form_type], params[:time_restricted])
   rescue ActiveRecord::RecordNotFound
     head :not_found and return
   end
 
   def edit
-    @records = Event.joins(:forms).select(
+    @records = Event.joins(:forms).order(:id).select(
       :id, :name, :description, :start_time, :end_time,
       :event_type, :has_rsvp_form
     ).find(params[:id])
@@ -69,20 +71,20 @@ class Api::EventsController < ApplicationController
       include: {
         forms: {
           only: [:id, :form_type, :time_restricted],
-        }
+        },
       }
     )
 
     render json: @response
-
   rescue ActiveRecord::RecordNotFound
     head :not_found and return
   end
 
+  # rubocop:disable Metrics/AbcSize
   def update
     @event = Event.find(params[:id])
     @event.update(event_params)
-  
+
     # Change form restrictions
     @sign_in_form = Form.where(event_id: params[:id], form_type: 'sign-in')
     @rsvp_form = Form.where(event_id: params[:id], form_type: 'RSVP')
@@ -93,6 +95,7 @@ class Api::EventsController < ApplicationController
   rescue ActiveRecord::RecordNotFound
     head :not_found and return
   end
+  # rubocop:enable Metrics/AbcSize
 
   def delete
     @event = Event.find(params[:id])

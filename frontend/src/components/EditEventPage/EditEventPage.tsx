@@ -175,11 +175,11 @@ const EditEventPage: React.FC<RouteComponentProps> = () => {
                 RSVP forms will only be accessible before the event.)
               </FormHelperText>
               <FormControlLabel
-                control={<Switch checked={timeRestriction.sign_in} onChange={handleTimeRestrictionChange} name="sign_in" color="primary" />}
+                control={<Switch checked={timeRestriction.sign_in} onChange={handleTimeRestrictionChange} id="sign_in" name="sign_in" color="primary" />}
                 label="Sign-In"
               />
               <FormControlLabel
-                control={<Switch disabled={disabledButton} checked={timeRestriction.rsvp} onChange={handleTimeRestrictionChange} name="rsvp" color="primary" />}
+                control={<Switch disabled={disabledButton} checked={timeRestriction.rsvp} onChange={handleTimeRestrictionChange} id="rsvp" name="rsvp" color="primary" />}
                 label="RSVP"
               />
             </FormGroup>

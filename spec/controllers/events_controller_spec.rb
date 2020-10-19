@@ -73,8 +73,6 @@ describe Api::EventsController do
         @end_time = 'Wed, 16 Sep 2020 06:27:32 GMT'
         @create_rsvp_form = false
         @event_type = 'GBM'
-        @sign_in_restricted = false
-        @rsvp_restricted = false
         @has_rsvp_form = false
         @expected = {
           name: @name,
@@ -82,8 +80,6 @@ describe Api::EventsController do
           start_time: @start_time,
           end_time: @end_time,
           event_type: @event_type,
-          sign_in_restricted: @sign_in_restricted,
-          rsvp_restricted: @rsvp_restricted,
           has_rsvp_form: @has_rsvp_form,
         }
 
@@ -99,8 +95,6 @@ describe Api::EventsController do
         expect(@created.start_time.to_i).to eq(DateTime.parse(@start_time).to_i)
         expect(@created.end_time.to_i).to eq(DateTime.parse(@end_time).to_i)
         expect(@created.event_type).to eq(@event_type)
-        expect(@created.sign_in_restricted).to eq @sign_in_restricted
-        expect(@created.rsvp_restricted).to eq @rsvp_restricted
         expect(@created.has_rsvp_form).to eq @has_rsvp_form
       end
 
@@ -112,6 +106,8 @@ describe Api::EventsController do
         @create_rsvp_form = false
         @form_type = 'sign-in'
         @questions = '[]'
+        @sign_in_restricted = true
+        @rsvp_restricted = false
 
         @event_expected = {
           name: @name,
@@ -131,7 +127,9 @@ describe Api::EventsController do
 
         post :create, params: { event: @event_expected,
                                 form: @form_expected,
-                                create_rsvp_form: @create_rsvp_form }, as: :json
+                                create_rsvp_form: @create_rsvp_form,
+                                sign_in_restricted: @sign_in_restricted,
+                                rsvp_restricted: @rsvp_restricted }, as: :json
 
         expect(response).to have_http_status(:no_content)
         expect(Form.count).to eq(1)
@@ -140,6 +138,7 @@ describe Api::EventsController do
         expect(@created.end_time.to_i).to eq(DateTime.parse(@end_time).to_i)
         expect(@created.form_type).to eq(@form_type)
         expect(@created.questions).to eq(@questions)
+        expect(@created.time_restricted).to eq(@sign_in_restricted)
 
         # Check if the form is linked to the event created
         expect(@created.event_id).to eq(Event.first.id)
@@ -156,6 +155,7 @@ describe Api::EventsController do
         @create_rsvp_form = true
         @form_type = 'RSVP'
         @questions = '[]'
+        @time_restricted = true
         @event_expected = {
           name: @name,
           description: @description,
@@ -169,11 +169,13 @@ describe Api::EventsController do
           end_time: @end_time,
           form_type: @form_type,
           questions: @questions,
+          time_restricted: @time_restricted,
         }
 
         post :create, params: { event: @event_expected,
                                 form: @form_expected,
-                                create_rsvp_form: @create_rsvp_form }, as: :json
+                                create_rsvp_form: @create_rsvp_form,
+                                rsvp_restricted: @time_restricted }, as: :json
 
         expect(response).to have_http_status(:no_content)
         expect(Form.count).to eq(2)
@@ -182,6 +184,7 @@ describe Api::EventsController do
         expect(@created.end_time.to_i).to eq(DateTime.parse(@end_time).to_i)
         expect(@created.form_type).to eq(@form_type)
         expect(@created.questions).to eq(@questions)
+        expect(@created.time_restricted).to eq(@time_restricted)
 
         # Check if the form is linked to the event created
         expect(@created.event_id).to eq(Event.first.id)
@@ -224,15 +227,20 @@ describe Api::EventsController do
       it 'creates new form for event' do
         @start_time = 'Wed, 16 Sep 2020 05:27:32 GMT'
         @end_time = 'Wed, 16 Sep 2020 06:27:32 GMT'
-        @form_type = 'RSPV'
+        @form_type = 'RSVP'
         @questions = '[]'
+        @time_restricted = true
 
         # get event
         expect(Event.count).to eq(1)
         expect(Form.count).to eq(0)
         @created = Event.first
 
-        post :add_form, params: { id: @created.id, form_type: @form_type }, format: :json
+        post :add_form, params: {
+          id: @created.id,
+          form_type: @form_type,
+          time_restricted: @time_restricted,
+        }, format: :json
 
         expect(response).to have_http_status(:no_content)
 
@@ -248,6 +256,7 @@ describe Api::EventsController do
         expect(@created_form.end_time.to_i).to eq(DateTime.parse(@end_time).to_i)
         expect(@created_form.form_type).to eq(@form_type)
         expect(@created_form.questions).to eq(@questions)
+        expect(@created_form.time_restricted).to eq(@time_restricted)
 
         # remove any objects created
         Form.delete_all
@@ -284,6 +293,8 @@ describe Api::EventsController do
         description: 'dummy edit event discription',
         start_time: 'Wed, 16 Sep 2020 05:27:32 GMT',
         end_time: 'Wed, 16 Sep 2020 06:27:32 GMT',
+        event_type: 'GBM',
+        has_rsvp_form: false,
       }
       Event.new(**@expected).save
       expect(Event.count).to eq(1)
@@ -295,10 +306,28 @@ describe Api::EventsController do
         @description = 'dummy edit event discription'
         @start_time = 'Wed, 16 Sep 2020 05:27:32 GMT'
         @end_time = 'Wed, 16 Sep 2020 06:27:32 GMT'
+        @event_type = 'GBM'
+        @has_rsvp_form = false
+        @form_type = 'sign-in'
+        @time_restricted = true
+        @questions = '[]'
+        @form_id = '8888888888'
 
         # get event
         expect(Event.count).to eq(1)
         @created = Event.first
+
+        @expected = {
+          id: @form_id,
+          event_id: @created.id,
+          start_time: @start_time,
+          end_time: @end_time,
+          form_type: @form_type,
+          questions: @questions,
+          time_restricted: @time_restricted,
+        }
+        Form.new(**@expected).save
+        expect(Form.count).to eq(1)
 
         # delete event
         get :edit, params: { id: @created.id }, format: :json
@@ -313,6 +342,8 @@ describe Api::EventsController do
         expect(@json_response['description']).to eq(@description)
         expect(DateTime.parse(@json_response['start_time']).to_i).to eq(DateTime.parse(@start_time).to_i)
         expect(DateTime.parse(@json_response['end_time']).to_i).to eq(DateTime.parse(@end_time).to_i)
+        expect(@json_response['event_type']).to eq(@event_type)
+        expect(Form.first.time_restricted).to eq(@time_restricted)
 
         # remove any objects created
         Event.delete_all
@@ -356,11 +387,26 @@ describe Api::EventsController do
         expect(Event.count).to eq(1)
         @created = Event.first
 
+        @form = {
+          id: '8888888888',
+          event_id: @created.id,
+          start_time: @created.start_time,
+          end_time: @created.end_time,
+          form_type: 'sign-in',
+          questions: '[]',
+          time_restricted: true,
+        }
+        Form.new(**@form).save
+        expect(Form.count).to eq(1)
+        @form_created = Form.first
+
         # create content for updated event
         @updated_name = 'dummy updated event name'
         @updated_description = 'dummy updated event description'
         @updated_start_time = 'Wed, 16 Sep 2020 05:27:20 GMT'
         @updated_end_time = 'Wed, 16 Sep 2020 06:27:10 GMT'
+        @updated_sign_in_restricted = true
+        @updated_rsvp_restricted = true
         @updated_event = {
           name: @updated_name,
           description: @updated_description,
@@ -369,7 +415,12 @@ describe Api::EventsController do
         }
 
         # update event
-        post :update, params: { event: @updated_event, id: @created.id }, format: :json
+        post :update, params: {
+          event: @updated_event,
+          id: @created.id,
+          sign_in_restricted: @updated_sign_in_restricted,
+          rsvp_restricted: @updated_rsvp_restricted,
+        }, format: :json
 
         expect(response).to have_http_status(:no_content)
         expect(Event.count).to eq(1)
@@ -382,6 +433,8 @@ describe Api::EventsController do
         expect(@updated.description).to eq(@updated_description)
         expect(@updated.start_time.to_i).to eq(DateTime.parse(@updated_start_time).to_i)
         expect(@updated.end_time.to_i).to eq(DateTime.parse(@updated_end_time).to_i)
+        @sign_in_form = Form.where(event_id: @created.id, form_type: 'sign-in').first
+        expect(@sign_in_form.time_restricted).to eq(@updated_sign_in_restricted)
 
         # remove any objects created
         Event.delete_all
@@ -394,13 +447,20 @@ describe Api::EventsController do
         expect(Event.count).to eq(1)
         @created = Event.first
 
+        @sign_in_restricted = false
+        @rsvp_restricted = false
         @updated_event = {
           description: 'dummy event discription',
           start_time: 'dummy invalid event start time',
           end_time: 'dummy invalid event end time',
         }
 
-        post :update, params: { event: @updated_event, id: @created.id }, format: :json
+        post :update, params: {
+          event: @updated_event,
+          id: @created.id,
+          sign_in_restricted: @sign_in_restricted,
+          rsvp_restricted: @rsvp_restricted,
+        }, format: :json
 
         expect(response).to have_http_status(:bad_request)
 

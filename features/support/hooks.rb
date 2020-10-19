@@ -8,6 +8,28 @@ Before('@formRequired') do
   Form.create(form_data)
 end
 
+Before('@restrictedSignInFormRequired') do
+  event_data = { id: 1, name: 'Test Event', description: 'description',
+                 start_time: '1970-01-01T06:00:00.000Z', end_time: '1970-01-01T06:00:00.000Z',
+                 event_type: 'Socials' }
+  Event.create(event_data)
+  form_data = { id: 'de12b1128f3', event_id: 1, start_time: '1970-01-01T06:00:00.000Z',
+                end_time: '1970-01-01T06:00:00.000Z', form_type: 'sign-in', questions: '[]',
+                time_restricted: true }
+  Form.create(form_data)
+end
+
+Before('@restrictedRSVPFormRequired') do
+  event_data = { id: 1, name: 'Test Event', description: 'description',
+                 start_time: '1970-01-01T06:00:00.000Z', end_time: '1970-01-01T06:00:00.000Z',
+                 event_type: 'Socials' }
+  Event.create(event_data)
+  form_data = { id: 'de12b1128f3', event_id: 1, start_time: '1970-01-01T06:00:00.000Z',
+                end_time: '1970-01-01T06:00:00.000Z', form_type: 'RSVP', questions: '[]',
+                time_restricted: true }
+  Form.create(form_data)
+end
+
 Before('@userRequired') do
   user_data = { id: '95e229d8aca716874c8feca1501379e06f239d03', first_name: 'New', last_name: 'User',
                 major: 'computer science', graduation_year: 2021, email: 'email@address.com',
