@@ -23,7 +23,7 @@ function displayWidth(fixWidth: boolean): string {
 const CardWithHeader: React.FC<CardWithHeaderProps> = ({
   title, action, id, icon, fixWidth, children,
 }) => (
-  <Box margin="auto" paddingTop={1} width={displayWidth(fixWidth)}>
+  <Box margin="auto" width={displayWidth(fixWidth)}>
     <Card id={id}>
       <Box display="flex" justifyContent="space-between" alignItems="center" bgcolor={SASEBlue} color="white">
         <CardHeader title={title} action={action} />

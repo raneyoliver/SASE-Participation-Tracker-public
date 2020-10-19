@@ -8,13 +8,6 @@ Scenario: Unauthenticated requests are redirected to the login page
 When I go to the homepage
 Then I get redirected to the log in page
 
-@javascript
-@authRequired
-Scenario: Event menu button does not exist when no events exist
-  When I go to the homepage
-  Then I log in
-  Then I can not see an event menu button
-
 @event-menu
 @javascript
 @authRequired
