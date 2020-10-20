@@ -12,7 +12,7 @@ interface EventDetailsPopupProps {
 }
 
 const EventDetailsPopup: React.FC<EventDetailsPopupProps> = ({
-  open, anchorE1, handleClose, event, renderComponents: render
+  open, anchorE1, handleClose, event, renderComponents: render,
 }) => (
   <div>
     <Popover
