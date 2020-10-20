@@ -21,13 +21,6 @@ describe StaticController do
     end
   end
 
-  describe 'GET login' do
-    it 'redirects to homepage' do
-      get :login
-      expect(response).to redirect_to('/')
-    end
-  end
-
   describe 'GET login without auth' do
     it 'redirects to login' do
       session[:current_user_id] = 1
