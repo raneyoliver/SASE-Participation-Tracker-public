@@ -1,0 +1,8 @@
+
+This is an email to confirm that <%= @name %> submitted a <%= @form_user.form.form_type %> form for the event "<%= @form_user.form.event.name %>".
+ 
+Event Details:
+  - Description: <%= @form_user.form.event.description %>
+  - Type: <%= @form_user.form.event.event_type %>
+  - Start Time: <%= @form_user.form.event.start_time.in_time_zone('Central Time (US & Canada)').strftime('%B %d, %Y, %I:%M %p') %> CST
+  - End Time: <%= @form_user.form.event.end_time.in_time_zone('Central Time (US & Canada)').strftime('%B %d, %Y, %I:%M %p') %> CST

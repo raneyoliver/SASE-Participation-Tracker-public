@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <p>
+      <%= @name %>, thank you for submitting a form to the SASE Participation Tracker. The system will now remember your UIN when you submit future forms.
+    </p>
+    <p>
+      Your Details:
+    </p>
+    <ul>
+      <li>Major: <%= @user.major %></li>
+      <li>Graduation Year: <%= @user.graduation_year %></li>
+      <li>Phone Number: <%= @user.phone_number %></li>
+    </ul>
+  </body>
+</html>

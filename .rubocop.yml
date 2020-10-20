@@ -33,6 +33,9 @@ Metrics/MethodLength:
 Metrics/BlockLength:
   Enabled: false
 
+Metrics/AbcSize:
+  Max: 20
+
 Style/TrailingCommaInHashLiteral:
   EnforcedStyleForMultiline: comma
 

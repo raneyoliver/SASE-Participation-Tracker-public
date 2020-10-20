@@ -87,6 +87,10 @@ describe Api::UsersController do
         expect(@created.email).to eq(@email)
         expect(@created.phone_number).to eq(nil)
       end
+      it 'sends a new user email' do
+        expect { post :create, params: { user: @expected }, format: :json }
+          .to have_enqueued_job(ActionMailer::MailDeliveryJob)
+      end
     end
 
     context 'when given valid user data for an existing user' do
