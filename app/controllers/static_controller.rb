@@ -7,7 +7,7 @@ class StaticController < ApplicationController
 
     render 'index'
   end
-  
+
   def login
     redirect_to '/' and return if helpers.check_auth
 
