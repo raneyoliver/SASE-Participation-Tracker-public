@@ -4,9 +4,9 @@ import {
 } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import { RouteComponentProps } from '@reach/router';
-import EventCards from './EventCards/EventCards';
 import ExportButton from './ExportButton/ExportButton';
 import LogoutButton from './LogoutButton/LogoutButton';
+import EventView from './EventView/EventView';
 
 const Homepage: React.FC<RouteComponentProps> = () => {
   // Need to re-render the page, navigate doesn't do that
@@ -27,7 +27,7 @@ const Homepage: React.FC<RouteComponentProps> = () => {
           Events
         </Typography>
       </Box>
-      <EventCards renderComponents />
+      <EventView />
       <Box position="fixed" bottom={8} right={8}>
         <Tooltip title="New Event" placement="left">
           <Fab id="new-event" color="primary" size="large" onClick={handleFabClick} aria-label="create new event">

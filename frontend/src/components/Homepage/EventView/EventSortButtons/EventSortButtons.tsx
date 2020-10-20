@@ -12,6 +12,7 @@ import { EventType } from '../../../../Enums';
 
 interface EventSortButtonsProps {
   events: SerializedEvent[];
+  variant: 'calendar' | 'cards';
   onSort: (events: SerializedEvent[]) => any;
 }
 
@@ -51,7 +52,7 @@ const sortDirectionIcons = new Map<SortDirection, JSX.Element>([
 const dateSortKeys = [DateFilter.All, DateFilter.Past, DateFilter.Upcoming];
 
 // If we decide to add other sorting methods, we can put them in this component
-const EventSortButtons: React.FC<EventSortButtonsProps> = ({ events, onSort }) => {
+const EventSortButtons: React.FC<EventSortButtonsProps> = ({ events, variant, onSort }) => {
   // Keep initial order of events so that it can be reverted when not sorting or filtering
   const [initialEvents] = React.useState(events);
   const [filteredEvents, setFilteredEvents] = React.useState(events);
@@ -122,18 +123,20 @@ const EventSortButtons: React.FC<EventSortButtonsProps> = ({ events, onSort }) =
   React.useEffect(() => {
     let newEvents = [...initialEvents];
 
-    // Apply date filter
-    switch (dateFilter) {
-      case (DateFilter.Past): {
-        newEvents = filterEventsOnlyPast(newEvents);
-        break;
+    // Apply date filter if this variant uses it
+    if (variant === 'cards') {
+      switch (dateFilter) {
+        case (DateFilter.Past): {
+          newEvents = filterEventsOnlyPast(newEvents);
+          break;
+        }
+        case (DateFilter.Upcoming): {
+          newEvents = filterEventsOnlyUpcoming(newEvents);
+          break;
+        }
+        // DateFilter.All: newEvents already includes all events, so do nothing
+        default: break;
       }
-      case (DateFilter.Upcoming): {
-        newEvents = filterEventsOnlyUpcoming(newEvents);
-        break;
-      }
-      // DateFilter.All: newEvents already includes all events, so do nothing
-      default: break;
     }
 
     // Apply event type filter
@@ -142,37 +145,45 @@ const EventSortButtons: React.FC<EventSortButtonsProps> = ({ events, onSort }) =
     }
 
     setFilteredEvents(newEvents);
-  }, [initialEvents, dateFilter, selectedEventTypes]);
+  }, [initialEvents, dateFilter, selectedEventTypes, variant]);
+
+  const dateSortButton = variant === 'cards' ? (
+    <Box display="flex" alignItems="center" marginBottom={1}>
+      <Box marginRight={1}>
+        <Typography>
+          Sort By:
+        </Typography>
+      </Box>
+      <Button
+        id="sort-by-date"
+        variant="contained"
+        color="secondary"
+        size="small"
+        onClick={handleDateSortClick}
+        endIcon={dateSortIcon}
+      >
+        Date
+      </Button>
+    </Box>
+  ) : null;
+
+  const dateFilterButtonGroup = variant === 'cards' ? (
+    <Box display="flex" alignItems="center" marginBottom={1}>
+      <Box marginRight={1}>
+        <Typography>
+          Date Filter:
+        </Typography>
+      </Box>
+      <ButtonGroup color="secondary" size="small">
+        {dateFilterButtons}
+      </ButtonGroup>
+    </Box>
+  ) : null;
 
   return (
     <>
-      <Box display="flex" alignItems="center" marginBottom={1}>
-        <Box marginRight={1}>
-          <Typography>
-            Sort By:
-          </Typography>
-        </Box>
-        <Button
-          id="sort-by-date"
-          variant="contained"
-          color="secondary"
-          size="small"
-          onClick={handleDateSortClick}
-          endIcon={dateSortIcon}
-        >
-          Date
-        </Button>
-      </Box>
-      <Box display="flex" alignItems="center" marginBottom={1}>
-        <Box marginRight={1}>
-          <Typography>
-            Date Filter:
-          </Typography>
-        </Box>
-        <ButtonGroup color="secondary" size="small">
-          {dateFilterButtons}
-        </ButtonGroup>
-      </Box>
+      {dateSortButton}
+      {dateFilterButtonGroup}
       <Box display="flex" alignItems="center">
         <Box marginRight={1}>
           <Typography>

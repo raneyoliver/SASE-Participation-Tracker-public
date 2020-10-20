@@ -9,6 +9,7 @@ Feature: Filter By Date Buttons
 Scenario: You can see only upcoming events by default
   When I go to the homepage
   Then I log in
+  Then I go to the event list
   Then I can only see events in the future
 
 @event-date-filtering
@@ -17,6 +18,7 @@ Scenario: You can see only upcoming events by default
 Scenario: You can only see past events after clicking past
   When I go to the homepage
   Then I log in
+  Then I go to the event list
   Then I click the past events filter
   Then I can only see events in the past
 
@@ -26,5 +28,6 @@ Scenario: You can only see past events after clicking past
 Scenario: You can see all events after clicking the all date filter
   When I go to the homepage
   Then I log in
+  Then I go to the event list
   Then I click the all events filter
   Then I can see all events
