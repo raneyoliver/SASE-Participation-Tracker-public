@@ -3,9 +3,9 @@ import {
   Box, Typography, Button,
 } from '@material-ui/core';
 import { RouteComponentProps } from '@reach/router';
-import EventCards from '../Homepage/EventCards/EventCards';
+import EventView from '../Homepage/EventView/EventView';
 
-const Homepage: React.FC<RouteComponentProps> = () => {
+const ViewEventsPage: React.FC<RouteComponentProps> = () => {
   // Need to re-render the page, navigate doesn't do that
   const handleLoginClick = (): void => { window.location.href = '/login'; };
 
@@ -21,9 +21,9 @@ const Homepage: React.FC<RouteComponentProps> = () => {
           Events
         </Typography>
       </Box>
-      <EventCards renderComponents={false} />
+      <EventView renderComponents={false} />
     </>
   );
 };
 
-export default Homepage;
+export default ViewEventsPage;

@@ -12,11 +12,11 @@ interface EventCardProps {
   renderComponents: boolean;
 }
 
-const EventCard: React.FC<EventCardProps> = ({ event, renderComponents }) => {
+const EventCard: React.FC<EventCardProps> = ({ event, renderComponents: render }) => {
   const startTime = formatDate(new Date(event.start_time));
   const endTime = formatDate(new Date(event.end_time));
 
-  const menu = renderComponents ? <EventCardMenu event={event} /> : null;
+  const menu = render ? <EventCardMenu event={event} /> : null;
 
   return (
     <CardWithHeader id={`event-card-${event.id}`} title={event.name} icon={menu}>
@@ -34,7 +34,7 @@ const EventCard: React.FC<EventCardProps> = ({ event, renderComponents }) => {
           {`Ends at: ${endTime}`}
           <br />
         </Typography>
-        {renderComponents ? event.forms.map((form: SerializedFormData) => (
+        {render ? event.forms.map((form: SerializedFormData) => (
           <Typography variant="body2" key={form.id}>
             {`${FormType[form.form_type as unknown as keyof typeof FormType]} (${form.user_count} respondant${form.user_count === 1 ? '' : 's'}): `}
             <Link to={`/form/${form.id}`}>{`${form.id}`}</Link>

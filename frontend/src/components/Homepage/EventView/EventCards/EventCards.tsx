@@ -7,9 +7,11 @@ import EventSortButtons from '../EventSortButtons/EventSortButtons';
 
 interface EventCardsProps {
   events: SerializedEvent[];
+  renderComponents: boolean;
 }
 
-const EventCards: React.FC<EventCardsProps> = ({ events: initialEvents }) => {
+// eslint-disable-next-line max-len
+const EventCards: React.FC<EventCardsProps> = ({ events: initialEvents, renderComponents: render }) => {
   const [events, setEvents] = React.useState(initialEvents);
   const handleEventSort = React.useCallback((newEvents: SerializedEvent[]): void => {
     setEvents(newEvents);
@@ -21,7 +23,7 @@ const EventCards: React.FC<EventCardsProps> = ({ events: initialEvents }) => {
 
   const eventCards = events.map((event) => (
     <Box width={columnWidth} padding={1} boxSizing="border-box" key={event.id}>
-      <EventCard event={event} />
+      <EventCard event={event} renderComponents={render} />
     </Box>
   ));
 

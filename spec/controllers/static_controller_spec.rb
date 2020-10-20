@@ -36,6 +36,21 @@ describe StaticController do
     end
   end
 
+  describe 'GET Homepage' do
+    it 'renders the homepage' do
+      get :view_events
+      expect(response).to redirect_to('/')
+    end
+  end
+
+  describe 'GET Homepage without auth' do
+    it 'redirects to view events page' do
+      session[:current_user_id] = 1
+      get :view_events
+      expect(response).to redirect_to('/view_events')
+    end
+  end
+
   describe 'GET index.js' do
     it 'renders javascript' do
       get :index_js, xhr: true, format: :js
