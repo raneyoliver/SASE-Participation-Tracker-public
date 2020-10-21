@@ -47,7 +47,7 @@ describe StaticController do
   describe 'GET Homepage with auth' do
     it 'renders the homepage' do
       get :view_events
-      expect(response).to render_template('/index')
+      expect(response).to render_template('index')
     end
   end
 
