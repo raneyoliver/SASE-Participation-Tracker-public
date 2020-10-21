@@ -9,6 +9,24 @@ Rails.application.configure do
   # explitly define default url options
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
+  # Set ActiveJob to run asynchronously
+  config.active_job.queue_adapter = :async
+
+  # Uncomment this block to actually send emails in development
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    :address              => 'smtp.gmail.com',
+    :port                 => 587,
+    :user_name            => ENV['GMAIL_USERNAME'],
+    :password             => ENV['GMAIL_PASSWORD'],
+    :authentication       => :login,
+    :enable_starttls_auto => true
+  }
+
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = false
+
+
   # Do not eager load code on boot.
   config.eager_load = false
 

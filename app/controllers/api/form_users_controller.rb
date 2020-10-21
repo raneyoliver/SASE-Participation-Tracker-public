@@ -11,7 +11,10 @@ class Api::FormUsersController < ApplicationController
 
     head :ok and return unless @form_user.new_record? # Done this way right now to satisfy rubocop
 
-    head :created and return if @form_user.save
+    if @form_user.save
+      helpers.send_confirmation_email(@form_user)
+      head :created and return
+    end
 
     raise StandardError
   rescue StandardError
