@@ -32,7 +32,7 @@ describe Api::FormsController do
 
     context 'when the given id is time-restricted and outside of its time range' do
       it 'returns a forbidden status code' do
-        # Sign-In
+        # Sign-In Past-Due
         event_data = { id: 1, name: 'Test Event', description: 'description', event_type: 'GBM',
                        start_time: '2020-09-15T01:00:00.000Z', end_time: '2020-09-15T00:00:00.000Z',
                        has_rsvp_form: true }
@@ -50,7 +50,25 @@ describe Api::FormsController do
         Form.delete_all
         expect(Form.count).to eq(0)
 
-        # RSVP
+        # Sign-In Too Early
+        event_data = { id: 1, name: 'Test Event', description: 'description', event_type: 'GBM',
+                       start_time: 1.days.from_now, end_time: 1.days.from_now,
+                       has_rsvp_form: true }
+        @event = Event.create(event_data)
+        form_data = { id: '8888888886', event_id: 1, start_time: 1.days.from_now,
+                      end_time: 1.days.from_now, form_type: 'sign-in', questions: '[]',
+                      time_restricted: true }
+        @sign_in_form = Form.create(form_data)
+        expect(Form.count).to eq(1)
+        @id = '8888888886'
+
+        get :show, params: { id: @id }, format: :json
+        expect(response).to have_http_status(:forbidden)
+        Event.delete_all
+        Form.delete_all
+        expect(Form.count).to eq(0)
+
+        # RSVP Past-Due
         event_data = { id: 1, name: 'Test Event', description: 'description', event_type: 'GBM',
                        start_time: '2020-09-15T01:00:00.000Z', end_time: '2020-09-15T00:00:00.000Z',
                        has_rsvp_form: true }

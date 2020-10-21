@@ -12,10 +12,15 @@ module FormsHelper
     )
   end
 
-  def valid?(form)
-    return true if form.form_type == 'sign-in' && DateTime.now >= form.start_time && DateTime.now <= form.end_time
-    return true if form.form_type == 'RSVP' && DateTime.now < form.start_time
+  def form_valid?(form)
+    if form.time_restricted == true
+      return true if form.form_type == 'sign-in' && DateTime.now >= form.start_time && DateTime.now <= form.end_time
+      return true if form.form_type == 'RSVP' && DateTime.now < form.start_time
 
-    false
+      # Restricted
+      return false
+    end
+
+    true
   end
 end

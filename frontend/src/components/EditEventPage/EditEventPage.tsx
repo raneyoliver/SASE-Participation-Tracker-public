@@ -6,6 +6,7 @@ import {
 } from '@material-ui/core';
 import { DateTimePicker } from '@material-ui/pickers';
 import AddIcon from '@material-ui/icons/Add';
+import { makeStyles } from '@material-ui/core/styles';
 import CardWithHeader from '../CardWithHeader/CardWithHeader';
 import { Event, SerializedEvent } from '../../types/Event';
 import getCSRFToken from '../../utils/getCSRFToken';
@@ -67,6 +68,13 @@ const EditEventPage: React.FC<RouteComponentProps> = () => {
   const handleTimeRestrictionChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setTimeRestriction({ ...timeRestriction, [event.target.name]: event.target.checked });
   };
+
+  const useStyles = makeStyles(() => ({
+    formLabel: {
+      color: 'black',
+    },
+  }));
+  const classes = useStyles();
 
   // Validate form info to show errors and determine whether to allow submit
   const startTimeValid = !Number.isNaN(startTime.valueOf());
@@ -166,8 +174,10 @@ const EditEventPage: React.FC<RouteComponentProps> = () => {
         </Box>
 
         <Box paddingBottom={1}>
-          <FormControl component="fieldset">
-            <FormLabel component="legend">Restrict Form Submission Time</FormLabel>
+          <FormControl>
+            <FormLabel className={classes.formLabel}>
+              Restrict Form Submission Time
+            </FormLabel>
             <FormGroup>
               <FormHelperText>
                 (If enabled,
