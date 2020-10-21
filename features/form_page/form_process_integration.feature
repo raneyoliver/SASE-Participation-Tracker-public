@@ -15,6 +15,7 @@ Scenario: Filling out a form as a first time user
   Then I enter my major on the new user page
   Then I select my graduation year on the new user page
   Then I enter my email on the new user page
+  Then I enter my email again on the new user page
   Then I enter my phone number on the new user page
   Then I click the form submit button on the new user page
   Then I navigate to the confirm submission page

@@ -38,8 +38,44 @@ Then 'I enter my email on the new user page' do
   fill_in('new-user-email', with: 'address@domain.com')
 end
 
+Then 'I enter my email again on the new user page' do
+  fill_in('new-user-confirmation-email', with: 'address@domain.com')
+end
+
+Then 'I enter an email without @ followed by dot in it on the new user page' do
+  fill_in('new-user-email', with: 'addressdomaincom')
+end
+
+Then 'I enter an email without @ followed by dot in it again on the new user page' do
+  fill_in('new-user-confirmation-email', with: 'addressdomaincom')
+end
+
+Then 'I enter my email missing an @ symbol on the new user page' do
+  fill_in('new-user-email', with: 'addressdomain.com')
+end
+
+Then 'I enter my email missing an @ symbol again on the new user page' do
+  fill_in('new-user-confirmation-email', with: 'addressdomain.com')
+end
+
+Then 'I enter my email missing a dot symbol after the @ on the new user page' do
+  fill_in('new-user-email', with: 'address@domaincom')
+end
+
+Then 'I enter my email missing a dot symbol after the @ again on the new user page' do
+  fill_in('new-user-confirmation-email', with: 'address@domaincom')
+end
+
+Then 'I enter a non matching email on the new user page' do
+  fill_in('new-user-confirmation-email', with: 'dummyaddress@domain.com')
+end
+
+Then 'I enter an invalid phone number on the new user page' do
+  fill_in('new-user-phone-number', with: '33333333')
+end
+
 Then 'I enter my phone number on the new user page' do
-  fill_in('new-user-phone-number', with: '333-333-3333')
+  fill_in('new-user-phone-number', with: '3333333333')
 end
 
 Then 'I can click the form submit button on the new user page' do
