@@ -26,4 +26,6 @@ Scenario: The view events page contains events
 @javascript
 Scenario: Authenticated requests to the homepage render the homepage
   When I go to the homepage
+  Then I log in
+  Then I go to the homepage
   Then I get redirected to the homepage
