@@ -19,8 +19,8 @@ class Api::FormUsersController < ApplicationController
       helpers.send_confirmation_email(@form_user)
       head :created and return
     end
-
-    raise StandardError
+  rescue ActiveRecord::RecordNotFound
+    head :bad_request and return
   rescue StandardError
     head :bad_request and return
   end
