@@ -6,13 +6,13 @@ so that I know what events are coming up
 @javascript
 Scenario: Navigating to the homepage without authenticating redirects to the view events Page
   When I go to the homepage
-  Then I am redirected to the view events page
+  Then I get redirected to the view events page
 
 @javascript
 Scenario: The view events page contains a log in button that redirects to the login page
   When I go to the view events page
   Then I click the log in button
-  Then I get redirected to the log in page
+  Then I get redirected to the view events page
 
 @javascript
 @event-date-filtering

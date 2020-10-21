@@ -6,7 +6,7 @@ so I can find event details without cluttering the calendar.
 @javascript
 Scenario: Unauthenticated requests are redirected to the login page
 When I go to the homepage
-Then I get redirected to the log in page
+Then I get redirected to the view events page
 
 @javascript
 @authRequired
