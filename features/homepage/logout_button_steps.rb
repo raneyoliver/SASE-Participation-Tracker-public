@@ -10,6 +10,3 @@ end
 Then 'I attempt to access the create event page' do
   visit '/'
 end
-Then 'I am unable to access the create event page' do
-  expect(page).to have_current_path('/login')
-end
