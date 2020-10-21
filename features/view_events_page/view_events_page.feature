@@ -18,5 +18,6 @@ Scenario: The view events page contains a log in button that redirects to the lo
 @event-date-filtering
 Scenario: The view events page contains events
   When I go to the view events page
+  Then I go to the event list
   Then I click the all events filter
   Then I can see all events
