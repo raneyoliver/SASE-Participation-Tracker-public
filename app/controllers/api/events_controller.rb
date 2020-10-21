@@ -53,6 +53,8 @@ class Api::EventsController < ApplicationController
   end
 
   def add_form
+    head :bad_request and return unless helpers.check_auth
+
     @event = Event.find(params[:id])
     helpers.create_form_for_event(@event, params[:form_type], params[:time_restricted])
   rescue ActiveRecord::RecordNotFound
@@ -60,6 +62,8 @@ class Api::EventsController < ApplicationController
   end
 
   def edit
+    head :bad_request and return unless helpers.check_auth
+
     @records = Event.joins(:forms).order(:id).select(
       :id, :name, :description, :start_time, :end_time,
       :event_type, :has_rsvp_form
@@ -79,6 +83,8 @@ class Api::EventsController < ApplicationController
   end
 
   def update
+    head :bad_request and return unless helpers.check_auth
+
     @event = Event.find(params[:id])
     @event.update(event_params)
 
@@ -94,6 +100,8 @@ class Api::EventsController < ApplicationController
   end
 
   def delete
+    head :bad_request and return unless helpers.check_auth
+
     @event = Event.find(params[:id])
     @event.destroy
   rescue ActiveRecord::RecordNotFound

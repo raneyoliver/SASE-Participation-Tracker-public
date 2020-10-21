@@ -13,6 +13,7 @@ Scenario: Filling out the new user page as a user that already exists
   Then I enter my major on the new user page
   Then I select my graduation year on the new user page
   Then I enter my email on the new user page
+  Then I enter my email again on the new user page
   Then I enter my phone number on the new user page
   Then I click the form submit button on the new user page
   Then I receive an alert about the user already existing
