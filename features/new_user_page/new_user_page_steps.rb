@@ -18,6 +18,10 @@ When 'I go the the new user page with a non-numerical UIN' do
   visit '/form/1/new_user/afcde!@#$'
 end
 
+When 'I go to the new user page with a restricted form ID' do
+  visit '/form/de12b1128f3/new_user/333333333'
+end
+
 Then 'I enter my first name on the new user page' do
   fill_in('new-user-first-name', with: 'New')
 end
@@ -88,4 +92,12 @@ end
 
 Then 'I am redirected to an error page from the new user page' do
   expect(page).to have_current_path('/form/error')
+end
+
+Then 'I click on the form submit button on the new user page' do
+  click_button('submit')
+end
+
+Then 'I am redirected to an unavailable page from the new user page' do
+  expect(page).to have_current_path('/form/unavailable')
 end

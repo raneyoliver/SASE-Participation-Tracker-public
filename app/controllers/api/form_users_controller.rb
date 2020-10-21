@@ -1,6 +1,10 @@
 # Controller for api functionality related to events
 class Api::FormUsersController < ApplicationController
   def create
+    # Can't sign into a form just because you're new here
+    @form = Form.find(form_user_params[:form_id])
+    head :forbidden and return unless helpers.form_valid?(@form)
+
     params[:form_user][:user_id] = helpers.hash_user_uin(unhashed_id)
     @form_user = FormUser.find_or_initialize_by(form_user_params)
 
