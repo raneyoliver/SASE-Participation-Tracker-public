@@ -12,7 +12,7 @@ Scenario: Navigating to the homepage without authenticating redirects to the vie
 Scenario: The view events page contains a log in button that redirects to the login page
   When I go to the view events page
   Then I click the log in button
-  Then I get redirected to the view events page
+  Then I get redirected to the log in page
 
 @javascript
 @event-date-filtering
