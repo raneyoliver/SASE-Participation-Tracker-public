@@ -44,6 +44,13 @@ describe StaticController do
     end
   end
 
+  describe 'GET Homepage with auth' do
+    it 'renders the homepage' do
+      get :view_events
+      expect(response).to render_template('/index')
+    end
+  end
+
   describe 'GET index.js' do
     it 'renders javascript' do
       get :index_js, xhr: true, format: :js

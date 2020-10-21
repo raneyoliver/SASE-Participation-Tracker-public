@@ -21,3 +21,9 @@ Scenario: The view events page contains events
   Then I go to the event list
   Then I click the all events filter
   Then I can see all events
+
+@authRequired
+@javascript
+Scenario: Authenticated requests to the homepage render the homepage
+  When I go to the homepage
+  Then I get redirected to the homepage
