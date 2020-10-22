@@ -52,4 +52,4 @@ Scenario: After changing the password, the old password no longer works
 
 Scenario: I cannot access the change password page without being logged in
   When I go to the change password page directly
-  Then I get redirected to the log in page
+  Then I get redirected to the view events page

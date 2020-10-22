@@ -5,7 +5,7 @@ import {
 
 // Renders a navigation bar with a link to the homepage
 const NavBar: React.SFC = () => {
-  const handleTitleClick = (): void => { window.location.href = '/edit_event/error'; };
+  const handleTitleClick = (): void => { window.location.href = '/'; };
 
   return (
     <AppBar position="sticky">
