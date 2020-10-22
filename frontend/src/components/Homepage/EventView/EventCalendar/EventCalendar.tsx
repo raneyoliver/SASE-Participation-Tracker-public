@@ -10,6 +10,7 @@ import MonthSelect from './MonthSelect/MonthSelect';
 
 interface EventCalendarProps {
   events: SerializedEvent[];
+  renderComponents: boolean;
 }
 
 const now = new Date();
@@ -25,7 +26,8 @@ const weekdays = weekdayNames.map((day) => (
   </Typography>
 ));
 
-const EventCalendar: React.FC<EventCalendarProps> = ({ events: initialEvents }) => {
+// eslint-disable-next-line max-len
+const EventCalendar: React.FC<EventCalendarProps> = ({ events: initialEvents, renderComponents: render }) => {
   const [events, setEvents] = React.useState(initialEvents);
   const handleEventSort = React.useCallback((newEvents: SerializedEvent[]): void => {
     setEvents(newEvents);
@@ -98,7 +100,7 @@ const EventCalendar: React.FC<EventCalendarProps> = ({ events: initialEvents }) 
               {day}
             </Typography>
           </Box>
-          <EventChips events={eventsForDay} />
+          <EventChips events={eventsForDay} renderComponents={render} />
         </Box>
       </Paper>
     );

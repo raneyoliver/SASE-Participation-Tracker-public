@@ -6,13 +6,13 @@ Feature: Log In
 @javascript
 Scenario: I cannot access the homepage without logging in
   When I go to the homepage
-  Then I get redirected to the log in page
+  Then I get redirected to the view events page
 
 @javascript
 @authRequired
 Scenario: Entering valid credentials takes me to the homepage
   When I go to the homepage
-  Then I get redirected to the log in page
+  Then I get redirected to the view events page
   Then I log in
   Then I get redirected to the homepage
 

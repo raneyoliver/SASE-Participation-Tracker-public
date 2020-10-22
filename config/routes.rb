@@ -42,6 +42,8 @@ Rails.application.routes.draw do
   # If for some reason somebody goes back to login while still logged in this redirects them
   get 'login' => 'static#login'
 
+  get '/' => 'static#view_events'
+
   # These routes should not be accessible without authenticating through the login page
   get 'create_event' => 'static#authorized_index'
   get 'change_password' => 'static#authorized_index'

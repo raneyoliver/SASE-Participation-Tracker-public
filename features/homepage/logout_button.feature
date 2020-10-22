@@ -14,4 +14,4 @@ Then I get redirected to the log in page
 Then I attempt to access the homepage
 Then I am unable to access the homepage
 Then I attempt to access the create event page
-Then I am unable to access the create event page
+Then I get redirected to the view events page
