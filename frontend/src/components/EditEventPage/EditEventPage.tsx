@@ -130,7 +130,7 @@ const EditEventPage: React.FC<RouteComponentProps> = () => {
       body: JSON.stringify(body),
     }).then((response) => {
       if (response.status === 204) {
-        navigate('/');
+        window.location.href = '/';
       } else {
         navigate(`/edit_event/${eventId}`);
       }

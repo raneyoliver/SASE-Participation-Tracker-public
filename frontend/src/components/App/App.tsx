@@ -17,6 +17,7 @@ import FormUnavailablePage from '../FormUnavailablePage/FormUnavailablePage';
 import ChangePasswordPage from '../ChangePasswordPage/ChangePasswordPage';
 import ConfirmUpdatePage from '../ConfirmUpdatePage/ConfirmUpdatePage';
 import EditEventErrorPage from '../EditEventErrorPage/EditEventErrorPage';
+import ViewEventsPage from '../ViewEventsPage/ViewEventsPage';
 
 const App: React.SFC = () => (
   <ThemeProvider theme={theme}>
@@ -25,6 +26,7 @@ const App: React.SFC = () => (
       <Box padding={1}>
         <Router>
           <Homepage path="/" />
+          <ViewEventsPage path="/view_events" />
           <CreateEventPage path="/create_event" />
           <EditEventPage path="/edit_event/:eventId" />
           <EditEventErrorPage path="edit_event/error" />

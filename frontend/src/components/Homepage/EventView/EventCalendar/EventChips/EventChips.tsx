@@ -10,9 +10,10 @@ const chipStyle = { width: '100%', justifyContent: 'flex-start' };
 
 interface EventChipsProps {
   events: SerializedEvent[];
+  renderComponents: boolean;
 }
 
-const EventChips: React.FC<EventChipsProps> = ({ events }) => {
+const EventChips: React.FC<EventChipsProps> = ({ events, renderComponents: render }) => {
   const [popEvent, setPopEvent] = React.useState(null);
   const [anchorE1, setAnchorE1] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorE1);
@@ -41,6 +42,7 @@ const EventChips: React.FC<EventChipsProps> = ({ events }) => {
         anchorE1={anchorE1}
         handleClose={handleClose}
         event={popEvent}
+        renderComponents={render}
       />
     </Box>
   );

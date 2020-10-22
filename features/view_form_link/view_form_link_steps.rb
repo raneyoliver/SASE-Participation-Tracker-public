@@ -3,6 +3,7 @@ When 'I go to the homepage to view the form link' do
 end
 
 Then 'I log in' do
+  visit '/login'
   fill_in('username', with: 'Admin')
   fill_in('password', with: 'password')
   click_on 'login'

@@ -30,6 +30,7 @@ Then 'I go to the change password page directly' do
 end
 
 Then 'I log in with the new credentials' do
+  visit('/login')
   fill_in('username', with: 'Admin')
   fill_in('password', with: '1234')
   click_button 'login'

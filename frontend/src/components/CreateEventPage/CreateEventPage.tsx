@@ -110,7 +110,7 @@ const CreateEventPage: React.FC<RouteComponentProps> = () => {
       body: JSON.stringify(body),
     }).then((response) => { // Once request has been processed, go back to homepage
       if (response.ok) {
-        navigate('/');
+        window.location.href = '/';
       } else { // something bad happened...
         navigate('/login');
       }

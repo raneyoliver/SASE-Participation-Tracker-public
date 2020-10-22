@@ -8,10 +8,11 @@ interface EventDetailsPopupProps {
     anchorE1: HTMLElement;
     handleClose(): void;
     event: SerializedEvent;
+    renderComponents: boolean;
 }
 
 const EventDetailsPopup: React.FC<EventDetailsPopupProps> = ({
-  open, anchorE1, handleClose, event,
+  open, anchorE1, handleClose, event, renderComponents: render,
 }) => (
   <div>
     <Popover
@@ -29,7 +30,7 @@ const EventDetailsPopup: React.FC<EventDetailsPopupProps> = ({
     >
       <Paper elevation={24}>
         <Box padding={1}>
-          <EventCard event={event} />
+          <EventCard event={event} renderComponents={render} />
         </Box>
       </Paper>
     </Popover>

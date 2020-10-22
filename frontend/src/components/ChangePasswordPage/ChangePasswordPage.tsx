@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { RouteComponentProps, navigate } from '@reach/router';
+import { RouteComponentProps } from '@reach/router';
 import {
   Box, TextField, Button,
 } from '@material-ui/core';
@@ -36,7 +36,7 @@ const ChangePasswordPage: React.FC<RouteComponentProps> = () => {
       body: JSON.stringify(body),
     }).then((response) => {
       if (response.ok) {
-        navigate('/');
+        window.location.href = '/';
       }
     });
   };

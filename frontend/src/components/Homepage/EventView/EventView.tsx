@@ -13,7 +13,11 @@ enum ViewType {
   List = 'List',
 }
 
-const EventView: React.FC = () => {
+interface EventViewProps {
+  renderComponents: boolean;
+}
+
+const EventView: React.FC<EventViewProps> = ({ renderComponents: render }) => {
   // Fetch event cards on first render
   const [loading, setLoading] = React.useState(true);
 
@@ -72,10 +76,10 @@ const EventView: React.FC = () => {
   const eventView = (
     <>
       <Box display={selectedViewType === ViewType.List ? null : 'none'}>
-        <EventCards events={events} />
+        <EventCards events={events} renderComponents={render} />
       </Box>
       <Box display={selectedViewType === ViewType.Calendar ? null : 'none'}>
-        <EventCalendar events={events} />
+        <EventCalendar events={events} renderComponents={render} />
       </Box>
     </>
   );
