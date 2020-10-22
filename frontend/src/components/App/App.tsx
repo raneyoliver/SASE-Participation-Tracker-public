@@ -13,6 +13,7 @@ import FormPage from '../FormPage/FormPage';
 import NewUserPage from '../NewUserPage/NewUserPage';
 import ConfirmSubmissionPage from '../ConfirmSubmissionPage/ConfirmSubmissionPage';
 import FormErrorPage from '../FormErrorPage/FormErrorPage';
+import FormUnavailablePage from '../FormUnavailablePage/FormUnavailablePage';
 import ChangePasswordPage from '../ChangePasswordPage/ChangePasswordPage';
 import ConfirmUpdatePage from '../ConfirmUpdatePage/ConfirmUpdatePage';
 import EditEventErrorPage from '../EditEventErrorPage/EditEventErrorPage';
@@ -36,6 +37,7 @@ const App: React.SFC = () => (
           <ConfirmSubmissionPage path="/form/confirm_submission" />
           <ConfirmUpdatePage path="/form/confirm_update" />
           <FormErrorPage path="/form/error" />
+          <FormUnavailablePage path="/form/unavailable" />
         </Router>
       </Box>
     </MuiPickersUtilsProvider>

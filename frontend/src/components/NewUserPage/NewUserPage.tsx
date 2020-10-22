@@ -142,6 +142,9 @@ const NewUserPage: React.FC<RouteComponentProps> = () => {
           },
           body: JSON.stringify(formUserBody),
         }).then((response2) => {
+          if (response2.status === 403) {
+            window.location.href = '/form/unavailable';
+          }
           if (response2.status === 201) {
             navigate('/form/confirm_submission');
           }

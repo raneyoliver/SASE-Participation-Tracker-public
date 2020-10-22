@@ -9,6 +9,7 @@ When I go to the homepage
 Then I get redirected to the view events page
 
 @event
+@sign_in_form
 @javascript
 @authRequired
 Scenario: Update button is clickable when the form is filled out
@@ -19,6 +20,7 @@ Scenario: Update button is clickable when the form is filled out
   Then I can click the update button
 
 @event
+@sign_in_form
 @javascript
 @authRequired
 Scenario: Update button is not clickable when the form is missing a name
@@ -27,3 +29,14 @@ Scenario: Update button is not clickable when the form is missing a name
   Then I go back to the edit event page
   Then I remove the prefilled name
   Then I can't click the update button
+
+@event
+@sign_in_form
+@rsvp_form
+@javascript
+@authRequired
+Scenario: Time restrictions on forms are remembered
+  When I go to the homepage
+  Then I log in
+  Then I go back to the edit event page
+  Then the switches show previous restriction settings

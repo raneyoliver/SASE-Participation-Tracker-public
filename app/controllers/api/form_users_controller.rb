@@ -1,6 +1,10 @@
 # Controller for api functionality related to events
 class Api::FormUsersController < ApplicationController
   def create
+    # Can't sign into a form just because you're new here
+    @form = Form.find(form_user_params[:form_id])
+    head :forbidden and return unless helpers.form_valid?(@form)
+
     params[:form_user][:user_id] = helpers.hash_user_uin(unhashed_id)
     @form_user = FormUser.find_or_initialize_by(form_user_params)
 
@@ -15,8 +19,8 @@ class Api::FormUsersController < ApplicationController
       helpers.send_confirmation_email(@form_user)
       head :created and return
     end
-
-    raise StandardError
+  rescue ActiveRecord::RecordNotFound
+    head :bad_request and return
   rescue StandardError
     head :bad_request and return
   end

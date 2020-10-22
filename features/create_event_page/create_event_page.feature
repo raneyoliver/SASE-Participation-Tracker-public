@@ -6,6 +6,23 @@ Feature: Create Event page
 # Note: capybara can't actually send POST requests, so this doesn't test /api/events/create
 @javascript
 @authRequired
+Scenario: RSVP restriction toggle is clickable when there is a RSVP form being created
+  When I go to the create event page
+  Then I log in
+  Then I go back to the create event page
+  Then I check the RSVP form box
+  Then I can click the RSVP time restriction toggle
+
+@javascript
+@authRequired
+Scenario: RSVP restriction toggle is not clickable when there is no RSVP form being created
+  When I go to the create event page
+  Then I log in
+  Then I go back to the create event page
+  Then I cannot click the RSVP time restriction toggle
+
+@javascript
+@authRequired
 Scenario: Submit button is clickable when the form is filled out
   When I go to the create event page
   Then I log in

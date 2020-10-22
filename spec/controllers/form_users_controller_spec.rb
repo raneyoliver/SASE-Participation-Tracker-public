@@ -105,5 +105,26 @@ describe Api::FormUsersController do
         expect(response).to have_http_status(:bad_request)
       end
     end
+
+    context 'when given a restricted form id' do
+      it 'responds with forbidden because the form is now unavailable' do
+        @event_data = { id: 1, name: 'Test Event', description: 'description',
+                        start_time: '2020-09-15T01:00:00.000Z', end_time: '2020-09-15T00:00:00.000Z' }
+        Event.create(@event_data)
+
+        form_data = { id: '8888888888', event_id: 1, start_time: '2020-09-15T01:00:00.000Z',
+                      end_time: '2020-09-15T00:00:00.000Z', form_type: 'sign-in', questions: '[]',
+                      time_restricted: true }
+        @form = Form.create(form_data)
+
+        @form_user_data = {
+          form_id: '8888888888',
+          user_id: '333333333',
+        }
+
+        post :create, params: { form_user: @form_user_data }, format: :json
+        expect(response).to have_http_status(:forbidden)
+      end
+    end
   end
 end

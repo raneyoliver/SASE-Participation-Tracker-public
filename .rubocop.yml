@@ -34,7 +34,13 @@ Metrics/BlockLength:
   Enabled: false
 
 Metrics/AbcSize:
-  Max: 20
+  Max: 24
+
+Metrics/CyclomaticComplexity:
+  Max: 10
+
+Metrics/PerceivedComplexity:
+  Max: 10
 
 Style/TrailingCommaInHashLiteral:
   EnforcedStyleForMultiline: comma

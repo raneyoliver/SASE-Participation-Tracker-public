@@ -24,4 +24,5 @@ export interface SerializedFormData {
   id: string;
   form_type: FormType;
   user_count: number;
+  time_restricted: boolean;
 }

@@ -1,10 +1,12 @@
 import * as React from 'react';
 import { RouteComponentProps, navigate } from '@reach/router';
 import {
-  Box, TextField, Button, FormControlLabel, Checkbox, InputLabel, MenuItem, FormControl, Select,
+  Box, TextField, Button, FormLabel, FormControlLabel, Checkbox, InputLabel,
+  MenuItem, FormControl, Select, Switch, FormGroup, FormHelperText,
 } from '@material-ui/core';
 import { DateTimePicker } from '@material-ui/pickers';
 import AddIcon from '@material-ui/icons/Add';
+import { makeStyles } from '@material-ui/core/styles';
 import CardWithHeader from '../CardWithHeader/CardWithHeader';
 import { Event } from '../../types/Event';
 import getCSRFToken from '../../utils/getCSRFToken';
@@ -53,10 +55,27 @@ const CreateEventPage: React.FC<RouteComponentProps> = () => {
     if (date < startTime) setStartTime(new Date(date.valueOf() - 60 * 60 * 1000));
   };
 
+  const [disabledButton, setDisabledButton] = React.useState(true);
   const [createRSVPForm, setCreateRSVPForm] = React.useState(false);
   const handleCreateRSVPFormChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setCreateRSVPForm(e.target.checked);
+    setDisabledButton(!disabledButton);
   };
+
+  const [timeRestriction, setTimeRestriction] = React.useState({
+    sign_in: false,
+    rsvp: false,
+  });
+  const handleTimeRestrictionChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    setTimeRestriction({ ...timeRestriction, [event.target.name]: event.target.checked });
+  };
+
+  const useStyles = makeStyles(() => ({
+    formLabel: {
+      color: 'black',
+    },
+  }));
+  const classes = useStyles();
 
   // Validate form info to show errors and determine whether to allow submit
   const startTimeValid = !Number.isNaN(startTime.valueOf());
@@ -77,6 +96,8 @@ const CreateEventPage: React.FC<RouteComponentProps> = () => {
     const body = {
       event: eventBody,
       create_rsvp_form: createRSVPForm,
+      sign_in_restricted: timeRestriction.sign_in,
+      rsvp_restricted: timeRestriction.rsvp,
     };
 
     fetch('/api/events/create', {
@@ -96,7 +117,6 @@ const CreateEventPage: React.FC<RouteComponentProps> = () => {
   };
 
   const RSVPCheckbox = <Checkbox id="event-create-RSVP-form" name="RSVPCheck" color="primary" checked={createRSVPForm} onChange={handleCreateRSVPFormChange} />;
-
   return (
     <Box margin="auto" width="50%" minWidth={500}>
       <CardWithHeader title="Create New Event">
@@ -127,6 +147,29 @@ const CreateEventPage: React.FC<RouteComponentProps> = () => {
 
         <Box paddingBottom={1}>
           <FormControlLabel id="event-create-RSVP" label="Create an RSVP Form for this event?" labelPlacement="start" style={{ marginLeft: 0 }} control={RSVPCheckbox} />
+        </Box>
+
+        <Box paddingBottom={1}>
+          <FormControl>
+            <FormLabel className={classes.formLabel}>
+              Restrict Form Submission Time
+            </FormLabel>
+            <FormGroup>
+              <FormHelperText>
+                (If enabled,
+                Sign-In forms will only be accessible during the event and
+                RSVP forms will only be accessible before the event.)
+              </FormHelperText>
+              <FormControlLabel
+                control={<Switch checked={timeRestriction.sign_in} onChange={handleTimeRestrictionChange} id="sign_in" name="sign_in" color="primary" />}
+                label="Sign-In"
+              />
+              <FormControlLabel
+                control={<Switch disabled={disabledButton} checked={timeRestriction.rsvp} onChange={handleTimeRestrictionChange} id="rsvp" name="rsvp" color="primary" />}
+                label="RSVP"
+              />
+            </FormGroup>
+          </FormControl>
         </Box>
 
         <Button id="submit" variant="contained" color="secondary" disabled={!formValid} startIcon={<AddIcon />} onClick={handleSubmit}>

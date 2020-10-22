@@ -22,14 +22,15 @@ module EventsHelper
     Digest::SHA1.hexdigest([Time.now, rand].join)[0..10]
   end
 
-  def create_form_for_event(event, form_type)
+  def create_form_for_event(event, form_type, time_restricted)
     form = Form.new(
       id: make_unique_id,
       event_id: event.id,
       start_time: event.start_time,
       end_time: event.end_time,
       form_type: form_type,
-      questions: [].to_json
+      questions: [].to_json,
+      time_restricted: time_restricted
     )
     form.save
   end

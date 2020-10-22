@@ -24,3 +24,7 @@ end
 Then 'I go to the form page from the home page' do
   expect(page).to have_current_path('/form/de12b1128f3')
 end
+
+Then 'I am redirected to the form unavailable page' do
+  expect(page).to have_current_path('/form/unavailable')
+end

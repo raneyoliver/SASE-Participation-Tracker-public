@@ -5,6 +5,7 @@ export interface SerializedForm {
     id: string;
     event_id: number;
     form_type: FormType;
+    time_restricted: boolean;
     questions: string;
     event: {
       name: string;

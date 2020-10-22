@@ -1,13 +1,17 @@
 import * as React from 'react';
 import { RouteComponentProps, navigate, useParams } from '@reach/router';
 import {
-  Box, TextField, Button, InputLabel, MenuItem, FormControl, Select, Typography,
+  Box, TextField, Button, InputLabel, MenuItem, FormControl, FormHelperText,
+  Select, Typography, FormGroup, FormControlLabel, FormLabel, Switch,
 } from '@material-ui/core';
 import { DateTimePicker } from '@material-ui/pickers';
 import AddIcon from '@material-ui/icons/Add';
+import { makeStyles } from '@material-ui/core/styles';
 import CardWithHeader from '../CardWithHeader/CardWithHeader';
-import { Event } from '../../types/Event';
+import { Event, SerializedEvent } from '../../types/Event';
 import getCSRFToken from '../../utils/getCSRFToken';
+import getFormRestriction from '../../utils/getFormRestriction';
+import hasRSVP from '../../utils/hasRSVP';
 import { EventType } from '../../Enums';
 
 // Format datetimes like the following: 12/31/2020 12:00 PM
@@ -57,6 +61,22 @@ const EditEventPage: React.FC<RouteComponentProps> = () => {
     </MenuItem>
   ));
 
+  const [disabledButton, setDisabledButton] = React.useState(true);
+  const [timeRestriction, setTimeRestriction] = React.useState({
+    sign_in: false,
+    rsvp: false,
+  });
+  const handleTimeRestrictionChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    setTimeRestriction({ ...timeRestriction, [event.target.name]: event.target.checked });
+  };
+
+  const useStyles = makeStyles(() => ({
+    formLabel: {
+      color: 'black',
+    },
+  }));
+  const classes = useStyles();
+
   // Validate form info to show errors and determine whether to allow submit
   const startTimeValid = !Number.isNaN(startTime.valueOf());
   const endTimeValid = !Number.isNaN(startTime.valueOf());
@@ -69,12 +89,17 @@ const EditEventPage: React.FC<RouteComponentProps> = () => {
         window.location.href = '/edit_event/error';
       }
       return response.json();
-    }).then((response: Event) => {
+    }).then((response: SerializedEvent) => {
       setName(response.name);
       setDescription(response.description);
       setStartTime(new Date(response.start_time));
       setEndTime(new Date(response.end_time));
       setEventType(response.event_type);
+      setDisabledButton(!hasRSVP(response));
+      setTimeRestriction({
+        sign_in: getFormRestriction('sign-in', response),
+        rsvp: getFormRestriction('RSVP', response),
+      });
     }).finally(() => setLoading(false));
   }, [eventId]);
 
@@ -92,6 +117,8 @@ const EditEventPage: React.FC<RouteComponentProps> = () => {
     const body = {
       id: eventId,
       event: eventBody,
+      sign_in_restricted: timeRestriction.sign_in,
+      rsvp_restricted: timeRestriction.rsvp,
     };
 
     fetch('/api/events/update', {
@@ -143,6 +170,29 @@ const EditEventPage: React.FC<RouteComponentProps> = () => {
             <Select value={eventType} onChange={handleTypeChange}>
               {option}
             </Select>
+          </FormControl>
+        </Box>
+
+        <Box paddingBottom={1}>
+          <FormControl>
+            <FormLabel className={classes.formLabel}>
+              Restrict Form Submission Time
+            </FormLabel>
+            <FormGroup>
+              <FormHelperText>
+                (If enabled,
+                Sign-In forms will only be accessible during the event and
+                RSVP forms will only be accessible before the event.)
+              </FormHelperText>
+              <FormControlLabel
+                control={<Switch checked={timeRestriction.sign_in} onChange={handleTimeRestrictionChange} id="sign_in" name="sign_in" color="primary" />}
+                label="Sign-In"
+              />
+              <FormControlLabel
+                control={<Switch disabled={disabledButton} checked={timeRestriction.rsvp} onChange={handleTimeRestrictionChange} id="rsvp" name="rsvp" color="primary" />}
+                label="RSVP"
+              />
+            </FormGroup>
           </FormControl>
         </Box>
 
