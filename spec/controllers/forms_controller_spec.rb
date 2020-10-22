@@ -34,8 +34,7 @@ describe Api::FormsController do
       it 'returns a forbidden status code' do
         # Sign-In Past-Due
         event_data = { id: 1, name: 'Test Event', description: 'description', event_type: 'GBM',
-                       start_time: '2020-09-15T01:00:00.000Z', end_time: '2020-09-15T00:00:00.000Z',
-                       has_rsvp_form: true }
+                       start_time: '2020-09-15T01:00:00.000Z', end_time: '2020-09-15T00:00:00.000Z' }
         @event = Event.create(event_data)
         form_data = { id: '8888888887', event_id: 1, start_time: '2020-09-15T01:00:00.000Z',
                       end_time: '2020-09-15T00:00:00.000Z', form_type: 'sign-in', questions: '[]',
@@ -52,8 +51,7 @@ describe Api::FormsController do
 
         # Sign-In Too Early
         event_data = { id: 1, name: 'Test Event', description: 'description', event_type: 'GBM',
-                       start_time: 1.days.from_now, end_time: 1.days.from_now,
-                       has_rsvp_form: true }
+                       start_time: 1.days.from_now, end_time: 1.days.from_now }
         @event = Event.create(event_data)
         form_data = { id: '8888888886', event_id: 1, start_time: 1.days.from_now,
                       end_time: 1.days.from_now, form_type: 'sign-in', questions: '[]',
@@ -70,8 +68,7 @@ describe Api::FormsController do
 
         # RSVP Past-Due
         event_data = { id: 1, name: 'Test Event', description: 'description', event_type: 'GBM',
-                       start_time: '2020-09-15T01:00:00.000Z', end_time: '2020-09-15T00:00:00.000Z',
-                       has_rsvp_form: true }
+                       start_time: '2020-09-15T01:00:00.000Z', end_time: '2020-09-15T00:00:00.000Z' }
         @event = Event.create(event_data)
         form_data = { id: '8888888889', event_id: 1, start_time: '2020-09-15T01:00:00.000Z',
                       end_time: '2020-09-15T00:00:00.000Z', form_type: 'RSVP', questions: '[]', time_restricted: true }

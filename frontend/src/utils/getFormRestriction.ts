@@ -1,10 +1,11 @@
+import hasRSVP from './hasRSVP';
 import { SerializedEvent } from '../types/Event';
 
 export default function getFormRestriction(
   form_type: string,
   event: SerializedEvent,
 ): boolean {
-  if (form_type === 'RSVP' && event.has_rsvp_form === false) {
+  if (form_type === 'RSVP' && hasRSVP(event) === false) {
     return false;
   }
   if (event.forms[0].form_type.toString() === form_type) {

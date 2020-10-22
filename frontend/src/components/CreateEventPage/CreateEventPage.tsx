@@ -91,7 +91,6 @@ const CreateEventPage: React.FC<RouteComponentProps> = () => {
       start_time: startTime.toUTCString(),
       end_time: endTime.toUTCString(),
       event_type: eventType,
-      has_rsvp_form: createRSVPForm,
     };
 
     const body = {

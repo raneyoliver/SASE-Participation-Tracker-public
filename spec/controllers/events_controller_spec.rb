@@ -73,14 +73,12 @@ describe Api::EventsController do
         @end_time = 'Wed, 16 Sep 2020 06:27:32 GMT'
         @create_rsvp_form = false
         @event_type = 'GBM'
-        @has_rsvp_form = false
         @expected = {
           name: @name,
           description: @description,
           start_time: @start_time,
           end_time: @end_time,
           event_type: @event_type,
-          has_rsvp_form: @has_rsvp_form,
         }
 
         post :create, params: { event: @expected, create_rsvp_form: @create_rsvp_form }, as: :json
@@ -95,7 +93,6 @@ describe Api::EventsController do
         expect(@created.start_time.to_i).to eq(DateTime.parse(@start_time).to_i)
         expect(@created.end_time.to_i).to eq(DateTime.parse(@end_time).to_i)
         expect(@created.event_type).to eq(@event_type)
-        expect(@created.has_rsvp_form).to eq @has_rsvp_form
       end
 
       it 'only creates a sign-in form when not told to create an RSVP form' do
@@ -294,7 +291,6 @@ describe Api::EventsController do
         start_time: 'Wed, 16 Sep 2020 05:27:32 GMT',
         end_time: 'Wed, 16 Sep 2020 06:27:32 GMT',
         event_type: 'GBM',
-        has_rsvp_form: false,
       }
       Event.new(**@expected).save
       expect(Event.count).to eq(1)
@@ -307,7 +303,6 @@ describe Api::EventsController do
         @start_time = 'Wed, 16 Sep 2020 05:27:32 GMT'
         @end_time = 'Wed, 16 Sep 2020 06:27:32 GMT'
         @event_type = 'GBM'
-        @has_rsvp_form = false
         @form_type = 'sign-in'
         @time_restricted = true
         @questions = '[]'

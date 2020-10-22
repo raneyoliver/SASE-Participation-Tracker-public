@@ -64,7 +64,7 @@ class Api::EventsController < ApplicationController
 
     @records = Event.joins(:forms).order(:id).select(
       :id, :name, :description, :start_time, :end_time,
-      :event_type, :has_rsvp_form
+      :event_type
     ).find(params[:id])
 
     @response = @records.as_json(
@@ -109,6 +109,6 @@ class Api::EventsController < ApplicationController
   private
 
   def event_params
-    params.require(:event).permit(:name, :description, :start_time, :end_time, :event_type, :has_rsvp_form)
+    params.require(:event).permit(:name, :description, :start_time, :end_time, :event_type)
   end
 end
