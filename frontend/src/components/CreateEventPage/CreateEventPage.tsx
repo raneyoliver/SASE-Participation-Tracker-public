@@ -2,7 +2,7 @@ import * as React from 'react';
 import { RouteComponentProps, navigate } from '@reach/router';
 import {
   Box, TextField, Button, FormLabel, FormControlLabel, Checkbox, InputLabel,
-  MenuItem, FormControl, Select, Switch, FormGroup, FormHelperText,
+  MenuItem, FormControl, Select, Switch, FormGroup, FormHelperText, Tooltip,
 } from '@material-ui/core';
 import { DateTimePicker } from '@material-ui/pickers';
 import AddIcon from '@material-ui/icons/Add';
@@ -164,17 +164,23 @@ const CreateEventPage: React.FC<RouteComponentProps> = () => {
                 control={<Switch checked={timeRestriction.sign_in} onChange={handleTimeRestrictionChange} id="sign_in" name="sign_in" color="primary" />}
                 label="Sign-In"
               />
-              <FormControlLabel
-                control={<Switch disabled={disabledButton} checked={timeRestriction.rsvp} onChange={handleTimeRestrictionChange} id="rsvp" name="rsvp" color="primary" />}
-                label="RSVP"
-              />
+              <Tooltip title={!disabledButton ? '' : 'Check mark the option to create an RSVP form to enable time restriction.'}>
+                <FormControlLabel
+                  control={<Switch disabled={disabledButton} checked={timeRestriction.rsvp} onChange={handleTimeRestrictionChange} id="rsvp" name="rsvp" color="primary" />}
+                  label="RSVP"
+                />
+              </Tooltip>
             </FormGroup>
           </FormControl>
         </Box>
 
-        <Button id="submit" variant="contained" color="secondary" disabled={!formValid} startIcon={<AddIcon />} onClick={handleSubmit}>
-          Create Event
-        </Button>
+        <Tooltip title={formValid ? '' : 'Fill in all fields to create event.'}>
+          <span>
+            <Button id="submit" variant="contained" color="secondary" disabled={!formValid} startIcon={<AddIcon />} onClick={handleSubmit}>
+              Create Event
+            </Button>
+          </span>
+        </Tooltip>
       </CardWithHeader>
     </Box>
   );

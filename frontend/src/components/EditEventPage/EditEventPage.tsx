@@ -2,7 +2,7 @@ import * as React from 'react';
 import { RouteComponentProps, navigate, useParams } from '@reach/router';
 import {
   Box, TextField, Button, InputLabel, MenuItem, FormControl, FormHelperText,
-  Select, Typography, FormGroup, FormControlLabel, FormLabel, Switch,
+  Select, Typography, FormGroup, FormControlLabel, FormLabel, Switch, Tooltip,
 } from '@material-ui/core';
 import { DateTimePicker } from '@material-ui/pickers';
 import AddIcon from '@material-ui/icons/Add';
@@ -188,17 +188,23 @@ const EditEventPage: React.FC<RouteComponentProps> = () => {
                 control={<Switch checked={timeRestriction.sign_in} onChange={handleTimeRestrictionChange} id="sign_in" name="sign_in" color="primary" />}
                 label="Sign-In"
               />
-              <FormControlLabel
-                control={<Switch disabled={disabledButton} checked={timeRestriction.rsvp} onChange={handleTimeRestrictionChange} id="rsvp" name="rsvp" color="primary" />}
-                label="RSVP"
-              />
+              <Tooltip title={!disabledButton ? '' : 'Check mark the option to create an RSVP form above to enable time restriction.'}>
+                <FormControlLabel
+                  control={<Switch disabled={disabledButton} checked={timeRestriction.rsvp} onChange={handleTimeRestrictionChange} id="rsvp" name="rsvp" color="primary" />}
+                  label="RSVP"
+                />
+              </Tooltip>
             </FormGroup>
           </FormControl>
         </Box>
 
-        <Button id="submit" variant="contained" color="secondary" disabled={!formValid} startIcon={<AddIcon />} onClick={handleSubmit}>
-          Update Event
-        </Button>
+        <Tooltip title={formValid ? '' : 'Fill in all fields to update event.'}>
+          <span>
+            <Button id="submit" variant="contained" color="secondary" disabled={!formValid} startIcon={<AddIcon />} onClick={handleSubmit}>
+              Update Event
+            </Button>
+          </span>
+        </Tooltip>
       </CardWithHeader>
     </Box>
   );

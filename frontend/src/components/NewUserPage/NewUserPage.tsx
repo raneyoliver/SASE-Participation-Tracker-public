@@ -2,7 +2,7 @@ import * as React from 'react';
 import { RouteComponentProps, navigate, useParams } from '@reach/router';
 import { makeStyles } from '@material-ui/core/styles';
 import {
-  Box, TextField, Button, Typography, FormControl, NativeSelect, InputLabel,
+  Box, TextField, Button, Typography, FormControl, NativeSelect, InputLabel, Tooltip,
 } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import CardWithHeader from '../CardWithHeader/CardWithHeader';
@@ -207,9 +207,13 @@ const NewUserPage: React.FC<RouteComponentProps> = () => {
           <TextField id="new-user-phone-number" error={!validPhoneNumber} label="Phone Number" value={normalizePhoneNumber(phoneNumber)} onChange={handlePhoneNumberChange} />
         </Box>
 
-        <Button id="submit" variant="contained" color="secondary" disabled={!formValid} startIcon={<AddIcon />} onClick={handleSubmit}>
-          Submit
-        </Button>
+        <Tooltip title={formValid ? '' : 'Please fill in all fields to submit.'}>
+          <span>
+            <Button id="submit" variant="contained" color="secondary" disabled={!formValid} startIcon={<AddIcon />} onClick={handleSubmit}>
+              Submit
+            </Button>
+          </span>
+        </Tooltip>
       </CardWithHeader>
       <UserAlreadyExistsDialog open={dialogOpen} handleClose={handleDialogClose} />
     </Box>
