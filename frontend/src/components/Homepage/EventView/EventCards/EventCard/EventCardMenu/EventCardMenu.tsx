@@ -7,6 +7,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { SerializedEvent } from '../../../../../../types/Event';
 import getCSRFToken from '../../../../../../utils/getCSRFToken';
 import DeleteConfirmationDialog from './DeleteConfirmationDialog/DeleteConfirmationDialog';
+import { FormType } from '../../../../../../Enums';
 
 interface EventCardMenuProps {
   event: SerializedEvent;
@@ -30,7 +31,7 @@ const EventCardMenu: React.FC<EventCardMenuProps> = ({ event }) => {
   const handleCreateRSVP = (): void => {
     const body = {
       id: event.id,
-      form_type: 'RSVP',
+      form_type: FormType.RSVP,
     };
 
     fetch('/api/events/add_form', {
@@ -89,7 +90,7 @@ const EventCardMenu: React.FC<EventCardMenuProps> = ({ event }) => {
     'Delete Event': handleDeleteClickOpen,
   };
 
-  const hasRSVPForm = event.forms.some((form) => form.form_type.toString() === 'RSVP');
+  const hasRSVPForm = event.forms.some((form) => form.form_type === FormType.RSVP);
 
   if (!hasRSVPForm) {
     menuOptions['Create RSVP Form'] = handleCreateRSVP;
