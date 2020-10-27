@@ -19,16 +19,16 @@ const FormPage: React.FC<RouteComponentProps> = () => {
   const [form, setForm] = React.useState<SerializedForm>();
   React.useEffect(() => {
     fetch(`/api/forms/${formId}`).then((response) => {
-      if (response.status === 404) {
-        window.location.href = '/form/error';
-      }
-      if (response.status === 403) {
-        window.location.href = '/form/unavailable';
-      }
+      if (response.status === 404) window.location.href = '/form/error';
+      else if (response.status === 403) window.location.href = '/form/unavailable';
+      else if (!response.ok) throw Error();
       return response.json();
     }).then((response: SerializedForm) => {
       setForm(response);
-    }).finally(() => setLoading(false));
+      setLoading(false);
+    }).catch(() => {
+      window.location.href = '/form/error';
+    });
   }, [formId]);
 
   const [UIN, setUIN] = React.useState('');
