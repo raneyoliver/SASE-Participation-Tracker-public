@@ -31,7 +31,7 @@ const App: React.SFC = () => (
           <FormPage path="/form/:formId" />
           <NewUserPage path="/form/:formId/new_user/:UIN" />
           <TextBoxPage path="/form/confirm_submission" title="Thank You!" text="Your submission has been recorded. You may safely close this page." />
-          <TextBoxPage path="/form/confirm_update" title="Thank You!" text="Your previous submission has been updated. You may safely close this page." />
+          <TextBoxPage path="/form/repeat_submission" title="Submission Already Received" text="You already responded to this form. Your submission remains unchanged." />
           <TextBoxPage path="/form/error" title="Uh Oh!" text="There was an issue navigating to your form. Please try again." />
           <TextBoxPage path="/form/unavailable" title="Form Unavailable" text="This form is unavailable at this time." />
         </Router>
