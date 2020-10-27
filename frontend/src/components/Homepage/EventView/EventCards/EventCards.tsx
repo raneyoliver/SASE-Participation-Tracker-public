@@ -18,7 +18,7 @@ const EventCards: React.FC<EventCardsProps> = ({ events: initialEvents, renderCo
   }, []);
 
   const eventCards = events.map((event) => (
-    <Grid key={event.id} item xs={4}>
+    <Grid key={event.id} item xs={12} sm={6} md={4}>
       <EventCard event={event} renderComponents={render} />
     </Grid>
   ));
