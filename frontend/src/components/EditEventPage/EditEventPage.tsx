@@ -74,6 +74,9 @@ const EditEventPage: React.FC<RouteComponentProps> = () => {
     formLabel: {
       color: 'black',
     },
+    removeMarginTop: {
+      marginTop: -2,
+    },
   }));
   const classes = useStyles();
 
@@ -188,12 +191,16 @@ const EditEventPage: React.FC<RouteComponentProps> = () => {
                 control={<Switch checked={timeRestriction.sign_in} onChange={handleTimeRestrictionChange} id="sign_in" name="sign_in" color="primary" />}
                 label="Sign-In"
               />
-              <Tooltip title={!disabledButton ? '' : 'Check mark the option to create an RSVP form above to enable time restriction.'}>
-                <FormControlLabel
-                  control={<Switch disabled={disabledButton} checked={timeRestriction.rsvp} onChange={handleTimeRestrictionChange} id="rsvp" name="rsvp" color="primary" />}
-                  label="RSVP"
-                />
-              </Tooltip>
+              <FormControlLabel
+                control={(
+                  <Tooltip classes={{ tooltip: classes.removeMarginTop }} title={!disabledButton ? '' : 'Check mark the option to create an RSVP form above to enable time restriction.'}>
+                    <span>
+                      <Switch disabled={disabledButton} checked={timeRestriction.rsvp} onChange={handleTimeRestrictionChange} id="rsvp" name="rsvp" color="primary" />
+                    </span>
+                  </Tooltip>
+                )}
+                label="RSVP"
+              />
             </FormGroup>
           </FormControl>
         </Box>
