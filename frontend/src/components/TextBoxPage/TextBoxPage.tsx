@@ -5,14 +5,19 @@ import {
 import { RouteComponentProps } from '@reach/router';
 import CardWithHeader from '../CardWithHeader/CardWithHeader';
 
-const FormUnavailablePage: React.FC<RouteComponentProps> = () => (
+interface TextBoxPageProps extends RouteComponentProps {
+  title: string;
+  text: string;
+}
+
+const TextBoxPage: React.FC<TextBoxPageProps> = ({ title, text }) => (
   <Box margin="10% auto" width="50%" minWidth={500} textAlign="center">
-    <CardWithHeader title="Form Unavailable">
+    <CardWithHeader title={title}>
       <Typography>
-        This form is unavailable at this time.
+        { text }
       </Typography>
     </CardWithHeader>
   </Box>
 );
 
-export default FormUnavailablePage;
+export default TextBoxPage;
