@@ -47,7 +47,7 @@ const EventCardMenu: React.FC<EventCardMenuProps> = ({ event }) => {
       } else {
         navigate('/login');
       }
-    });
+    }).catch(() => { /* Ignore errors, user can click button again */ });
 
     handleClose();
   };
@@ -82,7 +82,7 @@ const EventCardMenu: React.FC<EventCardMenuProps> = ({ event }) => {
       } else {
         navigate('/login');
       }
-    });
+    }).catch(() => { /* Ignore errors, user can click button again */ });
   };
 
   const menuOptions: Record<string, () => any> = {
