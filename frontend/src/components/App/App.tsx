@@ -18,6 +18,7 @@ import ChangePasswordPage from '../ChangePasswordPage/ChangePasswordPage';
 import ConfirmUpdatePage from '../ConfirmUpdatePage/ConfirmUpdatePage';
 import EditEventErrorPage from '../EditEventErrorPage/EditEventErrorPage';
 import ViewEventsPage from '../ViewEventsPage/ViewEventsPage';
+import HelpPage from '../HelpPage/HelpPage';
 
 const App: React.SFC = () => (
   <ThemeProvider theme={theme}>
@@ -38,6 +39,7 @@ const App: React.SFC = () => (
           <ConfirmUpdatePage path="/form/confirm_update" />
           <FormErrorPage path="/form/error" />
           <FormUnavailablePage path="/form/unavailable" />
+          <HelpPage path="/help" />
         </Router>
       </Box>
     </MuiPickersUtilsProvider>
