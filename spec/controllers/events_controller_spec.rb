@@ -573,7 +573,7 @@ describe Api::EventsController do
           major: 'computer science',
           graduation_year: 2021,
           email: 'email@address.com',
-          phone_number: '333-333-3333',
+          phone_number: '3333333333',
         }
         User.new(**@expected_user).save
 
@@ -595,7 +595,7 @@ describe Api::EventsController do
           first_name: 'New',
           last_name: 'User',
           email: 'email@address.com',
-          phone_number: '333-333-3333',
+          phone_number: '3333333333',
         }
 
         get :export

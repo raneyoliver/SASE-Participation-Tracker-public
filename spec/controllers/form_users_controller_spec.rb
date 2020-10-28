@@ -6,7 +6,7 @@ describe Api::FormUsersController do
       before :each do
         user_data = { id: '95e229d8aca716874c8feca1501379e06f239d03', first_name: 'New', last_name: 'User',
                       major: 'computer science', graduation_year: 2021, email: 'email@address.com',
-                      phone_number: '333-333-3333' }
+                      phone_number: '3333333333' }
         @user = User.create(user_data)
         @event_data = { id: 1, name: 'Test Event', description: 'description', event_type: 'GBM',
                         start_time: '2020-09-15T01:00:00.000Z', end_time: '2020-09-15T00:00:00.000Z' }
@@ -53,7 +53,7 @@ describe Api::FormUsersController do
       before :all do
         user_data = { id: '95e229d8aca716874c8feca1501379e06f239d03', first_name: 'New', last_name: 'User',
                       major: 'computer science', graduation_year: 2021, email: 'email@address.com',
-                      phone_number: '333-333-3333' }
+                      phone_number: '3333333333' }
         @user = User.create(user_data)
         @event_data = { id: 1, name: 'Test Event', description: 'description',
                         start_time: '2020-09-15T01:00:00.000Z', end_time: '2020-09-15T00:00:00.000Z' }

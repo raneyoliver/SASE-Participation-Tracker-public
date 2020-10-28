@@ -6,7 +6,7 @@ describe Api::UsersController do
       before :all do
         user_data = { id: '95e229d8aca716874c8feca1501379e06f239d03', first_name: 'New', last_name: 'User',
                       major: 'computer science', graduation_year: 2021, email: 'email@address.com',
-                      phone_number: '333-333-3333' }
+                      phone_number: '3333333333' }
         @user = User.create(user_data)
       end
       it 'responds with a created status code' do
@@ -44,7 +44,7 @@ describe Api::UsersController do
       @major = 'computer science'
       @graduation_year = 2021
       @email = 'email@address.com'
-      @phone_number = '333-333-3333'
+      @phone_number = '3333333333'
       @expected = {
         id: @id,
         first_name: @first_name,
@@ -97,7 +97,7 @@ describe Api::UsersController do
       it 'does not create a user' do
         user_data = { id: '95e229d8aca716874c8feca1501379e06f239d03', first_name: 'New', last_name: 'User',
                       major: 'computer science', graduation_year: 2021, email: 'email@address.com',
-                      phone_number: '333-333-3333' }
+                      phone_number: '3333333333' }
         @user = User.create(user_data)
         post :create, params: { user: @expected }, format: :json
 

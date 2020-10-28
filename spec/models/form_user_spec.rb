@@ -11,7 +11,7 @@ RSpec.describe FormUser, type: :model do
       Form.create(@form_data)
       @user_data = { id: '3333333333333333333333333333333333333333', first_name: 'New', last_name: 'User',
                      major: 'computer science', graduation_year: 2021, email: 'email@address.com',
-                     phone_number: '333-333-3333' }
+                     phone_number: '3333333333' }
       User.create(@user_data)
       @form_user_data = { form_id: '8888888888', user_id: '3333333333333333333333333333333333333333' }
     end
@@ -61,7 +61,7 @@ RSpec.describe FormUser, type: :model do
       Form.create(@form_data)
       @user_data = { id: '3333333333333333333333333333333333333333', first_name: 'New', last_name: 'User',
                      major: 'computer science', graduation_year: 2021, email: 'email@address.com',
-                     phone_number: '333-333-3333' }
+                     phone_number: '3333333333' }
       User.create(@user_data)
       @form_user_data = { form_id: '8888888888', user_id: '3333333333333333333333333333333333333333' }
       @form_users = [FormUser.create(@form_user_data)]
