@@ -18,7 +18,7 @@ const EventCards: React.FC<EventCardsProps> = ({ events: initialEvents, renderCo
   }, []);
 
   const eventCards = events.map((event) => (
-    <Grid key={event.id} item xs={12} sm={6} md={4}>
+    <Grid key={event.id} item xs={12} sm={6} md={4} lg={3}>
       <EventCard event={event} renderComponents={render} />
     </Grid>
   ));
@@ -26,9 +26,11 @@ const EventCards: React.FC<EventCardsProps> = ({ events: initialEvents, renderCo
   const sortButtons = events ? <EventSortButtons events={events} variant="cards" onSort={handleEventSort} /> : null;
 
   const cardList = events?.length ? (
-    <Grid container spacing={2}>
-      {eventCards}
-    </Grid>
+    <Box margin={6}>
+      <Grid container spacing={8}>
+        {eventCards}
+      </Grid>
+    </Box>
   ) : (
     <Box margin="auto" width="50%" minWidth={500} paddingTop={1}>
       <CardWithHeader title="No Events">
