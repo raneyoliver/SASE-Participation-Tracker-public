@@ -7,8 +7,7 @@ describe Api::FormsController do
         event_data = { id: 1, name: 'Test Event', description: 'description', event_type: 'GBM',
                        start_time: '2020-09-15T01:00:00.000Z', end_time: '2020-09-15T00:00:00.000Z' }
         @event = Event.create(event_data)
-        form_data = { id: 'de12b1128f3', event_id: 1, start_time: '2020-09-15T01:00:00.000Z',
-                      end_time: '2020-09-15T00:00:00.000Z', form_type: 'sign-in', questions: '[]' }
+        form_data = { id: 'de12b1128f3', event_id: 1, form_type: 'sign-in' }
         @form = Form.create(form_data)
 
         get :show, params: { id: @form.id }, format: :json
@@ -17,7 +16,6 @@ describe Api::FormsController do
         expect(@json_response['id']).to eq(@form.id)
         expect(@json_response['event_id']).to eq(@form.event_id)
         expect(@json_response['form_type']).to eq(@form.form_type)
-        expect(@json_response['questions']).to eq(@form.questions)
         expect(@json_response['event']['name']).to eq(@event.name)
       end
     end
@@ -36,9 +34,7 @@ describe Api::FormsController do
         event_data = { id: 1, name: 'Test Event', description: 'description', event_type: 'GBM',
                        start_time: '2020-09-15T01:00:00.000Z', end_time: '2020-09-15T00:00:00.000Z' }
         @event = Event.create(event_data)
-        form_data = { id: '8888888887', event_id: 1, start_time: '2020-09-15T01:00:00.000Z',
-                      end_time: '2020-09-15T00:00:00.000Z', form_type: 'sign-in', questions: '[]',
-                      time_restricted: true }
+        form_data = { id: '8888888887', event_id: 1, form_type: 'sign-in', time_restricted: true }
         @sign_in_form = Form.create(form_data)
         expect(Form.count).to eq(1)
         @id = '8888888887'
@@ -53,9 +49,7 @@ describe Api::FormsController do
         event_data = { id: 1, name: 'Test Event', description: 'description', event_type: 'GBM',
                        start_time: 1.days.from_now, end_time: 1.days.from_now }
         @event = Event.create(event_data)
-        form_data = { id: '8888888886', event_id: 1, start_time: 1.days.from_now,
-                      end_time: 1.days.from_now, form_type: 'sign-in', questions: '[]',
-                      time_restricted: true }
+        form_data = { id: '8888888886', event_id: 1, form_type: 'sign-in', time_restricted: true }
         @sign_in_form = Form.create(form_data)
         expect(Form.count).to eq(1)
         @id = '8888888886'
@@ -70,8 +64,7 @@ describe Api::FormsController do
         event_data = { id: 1, name: 'Test Event', description: 'description', event_type: 'GBM',
                        start_time: '2020-09-15T01:00:00.000Z', end_time: '2020-09-15T00:00:00.000Z' }
         @event = Event.create(event_data)
-        form_data = { id: '8888888889', event_id: 1, start_time: '2020-09-15T01:00:00.000Z',
-                      end_time: '2020-09-15T00:00:00.000Z', form_type: 'RSVP', questions: '[]', time_restricted: true }
+        form_data = { id: '8888888889', event_id: 1, form_type: 'RSVP', time_restricted: true }
         @rsvp_form = Form.create(form_data)
         expect(Form.count).to eq(1)
         @id = '8888888889'

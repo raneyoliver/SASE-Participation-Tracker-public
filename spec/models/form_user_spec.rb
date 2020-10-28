@@ -6,8 +6,7 @@ RSpec.describe FormUser, type: :model do
       @event_data = { id: 1, name: 'Test Event', description: 'description', event_type: 'GBM',
                       start_time: '2020-09-15T01:00:00.000Z', end_time: '2020-09-15T00:00:00.000Z' }
       Event.create(@event_data)
-      @form_data = { id: '8888888888', event_id: 1, start_time: '2020-09-15T01:00:00.000Z',
-                     end_time: '2020-09-15T00:00:00.000Z', form_type: 'sign-in', questions: '[]' }
+      @form_data = { id: '8888888888', event_id: 1, form_type: 'sign-in' }
       Form.create(@form_data)
       @user_data = { id: '3333333333333333333333333333333333333333', first_name: 'New', last_name: 'User',
                      major: 'computer science', graduation_year: 2021, email: 'email@address.com',
@@ -56,8 +55,7 @@ RSpec.describe FormUser, type: :model do
       @event_data = { id: 1, name: 'Test Event', description: 'description', event_type: 'GBM',
                       start_time: '2020-09-15T01:00:00.000Z', end_time: '2020-09-15T00:00:00.000Z' }
       Event.create(@event_data)
-      @form_data = { id: '8888888888', event_id: 1, start_time: '2020-09-15T01:00:00.000Z',
-                     end_time: '2020-09-15T00:00:00.000Z', form_type: 'sign-in', questions: '[]' }
+      @form_data = { id: '8888888888', event_id: 1, form_type: 'sign-in' }
       Form.create(@form_data)
       @user_data = { id: '3333333333333333333333333333333333333333', first_name: 'New', last_name: 'User',
                      major: 'computer science', graduation_year: 2021, email: 'email@address.com',
