@@ -21,11 +21,13 @@ const FormPage: React.FC<RouteComponentProps> = () => {
     fetch(`/api/forms/${formId}`).then((response) => {
       if (response.status === 404) window.location.href = '/form/error';
       else if (response.status === 403) window.location.href = '/form/unavailable';
-      else if (!response.ok) throw Error();
-      return response.json();
+      else return response.json();
+      return undefined;
     }).then((response: SerializedForm) => {
-      setForm(response);
-      setLoading(false);
+      if (response) {
+        setForm(response);
+        setLoading(false);
+      }
     }).catch(() => {
       window.location.href = '/form/error';
     });
