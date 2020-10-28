@@ -9,7 +9,6 @@ import CardWithHeader from '../CardWithHeader/CardWithHeader';
 import { User } from '../../types/User';
 import { FormUser } from '../../types/FormUser';
 import getCSRFToken from '../../utils/getCSRFToken';
-import UserAlreadyExistsDialog from './UserAlreadyExistsDialog/UserAlreadyExistsDialog';
 
 const NewUserPage: React.FC<RouteComponentProps> = () => {
   const { formId, UIN } = useParams();
@@ -25,6 +24,8 @@ const NewUserPage: React.FC<RouteComponentProps> = () => {
       if (response.status === 404) {
         window.location.href = '/form/error';
       }
+    }).catch(() => {
+      window.location.href = '/form/error';
     }).finally(() => setLoading(false));
   }, [UIN, formId]);
 
@@ -52,6 +53,9 @@ const NewUserPage: React.FC<RouteComponentProps> = () => {
   const handleConfirmationEmailChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setConfirmationEmail(e.target.value);
   };
+
+  const [submitting, setSubmitting] = React.useState(false);
+  const [submissionError, setSubmissionError] = React.useState(false);
 
   // had to style the dropdown manually
   const useStyles = makeStyles(() => ({
@@ -89,11 +93,6 @@ const NewUserPage: React.FC<RouteComponentProps> = () => {
     }
   };
 
-  const [dialogOpen, setDialogOpen] = React.useState(false);
-  const handleDialogClose = (): void => {
-    setDialogOpen(false);
-  };
-
   // eslint-disable-next-line no-control-regex
   const re = /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/;
   const validEmail = re.test(email);
@@ -104,6 +103,9 @@ const NewUserPage: React.FC<RouteComponentProps> = () => {
 
   const handleSubmit = (): void => {
     if (!formValid) return;
+
+    setSubmitting(true);
+    setSubmissionError(false);
 
     const userBody: User = {
       id: UIN,
@@ -133,7 +135,9 @@ const NewUserPage: React.FC<RouteComponentProps> = () => {
       },
       body: JSON.stringify(body),
     }).then((response) => {
-      if (response.status === 201) {
+      if (response.status === 201 || response.status === 409) {
+        // 201 means user didn't exist and 409 means they already existed.
+        // In either case, it should be possible to create a form user for this user.
         fetch('/api/form_users/create', {
           method: 'POST',
           headers: {
@@ -144,14 +148,16 @@ const NewUserPage: React.FC<RouteComponentProps> = () => {
         }).then((response2) => {
           if (response2.status === 403) {
             window.location.href = '/form/unavailable';
-          }
-          if (response2.status === 201) {
+          } else if (response2.status === 201) {
             navigate('/form/confirm_submission');
+          } else if (response2.status === 200) {
+            navigate('/form/confirm_update');
           }
         });
-      } else if (response.status === 409) {
-        setDialogOpen(true);
-      }
+      } else throw new Error();
+    }).catch(() => {
+      setSubmitting(false);
+      setSubmissionError(true);
     });
   };
 
@@ -162,6 +168,12 @@ const NewUserPage: React.FC<RouteComponentProps> = () => {
       </Typography>
     );
   }
+
+  const submissionErrorText = submissionError ? (
+    <Typography color="error">
+      An error occurred while changing your password. Please try again.
+    </Typography>
+  ) : null;
 
   return (
     <Box>
@@ -207,11 +219,11 @@ const NewUserPage: React.FC<RouteComponentProps> = () => {
           <TextField id="new-user-phone-number" error={!validPhoneNumber} label="Phone Number" value={normalizePhoneNumber(phoneNumber)} onChange={handlePhoneNumberChange} />
         </Box>
 
-        <Button id="submit" variant="contained" color="secondary" disabled={!formValid} startIcon={<AddIcon />} onClick={handleSubmit}>
+        {submissionErrorText}
+        <Button id="submit" variant="contained" color="secondary" disabled={!formValid || submitting} startIcon={<AddIcon />} onClick={handleSubmit}>
           Submit
         </Button>
       </CardWithHeader>
-      <UserAlreadyExistsDialog open={dialogOpen} handleClose={handleDialogClose} />
     </Box>
   );
 };
