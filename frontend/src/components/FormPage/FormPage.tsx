@@ -111,7 +111,7 @@ const FormPage: React.FC<RouteComponentProps> = () => {
         <TextField id="form-UIN" required error={!UINValid} label="UIN" value={UIN} onChange={handleUINChange} />
       </Box>
 
-      <Tooltip title={formValid ? '' : 'Please fill in all fields to submit.'}>
+      <Tooltip title={formValid ? '' : 'Fill in all fields to submit.'}>
         <span>
           <Button id="submit" variant="contained" color="secondary" disabled={!formValid} startIcon={<AddIcon />} onClick={handleSubmit}>
             Submit

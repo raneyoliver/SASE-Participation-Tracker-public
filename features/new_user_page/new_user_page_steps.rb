@@ -90,6 +90,14 @@ Then "I can't click the form submit button on the new user page" do
   expect(page).to have_button('submit', disabled: true)
 end
 
+Then 'The new user submit tooltip is displayed' do
+  expect(page).to have_css('span[title="Fill in all fields to submit."]')
+end
+
+Then 'The new user submit tooltip is not displayed' do
+  expect(page).to have_css('span[title=""]')
+end
+
 Then 'I am redirected to an error page from the new user page' do
   expect(page).to have_current_path('/form/error')
 end

@@ -207,7 +207,7 @@ const NewUserPage: React.FC<RouteComponentProps> = () => {
           <TextField id="new-user-phone-number" error={!validPhoneNumber} label="Phone Number" value={normalizePhoneNumber(phoneNumber)} onChange={handlePhoneNumberChange} />
         </Box>
 
-        <Tooltip title={formValid ? '' : 'Please fill in all fields to submit.'}>
+        <Tooltip title={formValid ? '' : 'Fill in all fields to submit.'}>
           <span>
             <Button id="submit" variant="contained" color="secondary" disabled={!formValid} startIcon={<AddIcon />} onClick={handleSubmit}>
               Submit

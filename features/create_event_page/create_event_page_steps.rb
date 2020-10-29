@@ -16,6 +16,14 @@ Then 'I can click the submit button' do
   expect(page).to have_button('submit', disabled: false)
 end
 
+Then 'The create event tooltip is displayed' do
+  expect(page).to have_css('span[title="Fill in all fields to create event."]')
+end
+
+Then 'The create event tooltip is not displayed' do
+  expect(page).to have_css('span[title=""]')
+end
+
 Then 'I fill out the form without a name' do
   fill_in('event-description', with: 'Event Description')
   find(:css, '#event-create-RSVP').set(true)

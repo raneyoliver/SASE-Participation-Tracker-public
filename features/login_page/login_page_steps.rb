@@ -21,6 +21,9 @@ end
 Then 'I enter the wrong credentials' do
   fill_in('username', with: 'test')
   fill_in('password', with: 'test')
+end
+
+Then 'I click the log in button to log in' do
   click_button 'login'
 end
 
@@ -38,6 +41,18 @@ Then 'I am unable to click the log in button' do
   expect(page).to have_button('login', disabled: true)
 end
 
+Then 'I am able to click the log in button' do
+  expect(page).to have_button('login', disabled: false)
+end
+
 Then 'An error message displays' do
   expect(page).to have_text('Error: Invalid Login')
+end
+
+Then 'The log in tooltip is displayed' do
+  expect(page).to have_css('span[title="Fill in all fields to log in."]')
+end
+
+Then 'The log in tooltip is not displayed' do
+  expect(page).to have_css('span[title=""]')
 end

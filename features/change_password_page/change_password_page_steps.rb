@@ -10,6 +10,14 @@ Then 'The change password button is unclickable' do
   expect(page).to have_button('change-password', disabled: true)
 end
 
+Then 'The change password tooltip is displayed' do
+  expect(page).to have_css('span[title="Fill in all fields to change password."]')
+end
+
+Then 'The change password tooltip is not displayed' do
+  expect(page).to have_css('span[title=""]')
+end
+
 Then 'I fill in the change password fields' do
   fill_in('password', with: '1234')
   fill_in('password-confirmation', with: '1234')

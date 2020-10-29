@@ -76,7 +76,7 @@ const LoginPage: React.FC<RouteComponentProps> = () => {
       <Box>
         {error ? <Typography id="error-message" color="error">Error: Invalid Login</Typography> : null}
       </Box>
-      <Tooltip title={formValid ? '' : 'Please fill in all fields to log in.'}>
+      <Tooltip title={formValid ? '' : 'Fill in all fields to log in.'}>
         <span>
           <Button
             id="login"
