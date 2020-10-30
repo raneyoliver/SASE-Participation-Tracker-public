@@ -11,8 +11,7 @@ describe Api::FormUsersController do
         @event_data = { id: 1, name: 'Test Event', description: 'description', event_type: 'GBM',
                         start_time: '2020-09-15T01:00:00.000Z', end_time: '2020-09-15T00:00:00.000Z' }
         Event.create(@event_data)
-        form_data = { id: '8888888888', event_id: 1, start_time: '2020-09-15T01:00:00.000Z',
-                      end_time: '2020-09-15T00:00:00.000Z', form_type: 'sign-in', questions: '[]' }
+        form_data = { id: '8888888888', event_id: 1, form_type: 'sign-in' }
         @form = Form.create(form_data)
       end
       it 'saves the form user' do
@@ -58,8 +57,7 @@ describe Api::FormUsersController do
         @event_data = { id: 1, name: 'Test Event', description: 'description',
                         start_time: '2020-09-15T01:00:00.000Z', end_time: '2020-09-15T00:00:00.000Z' }
         Event.create(@event_data)
-        form_data = { id: '8888888888', event_id: 1, start_time: '2020-09-15T01:00:00.000Z',
-                      end_time: '2020-09-15T00:00:00.000Z', form_type: 'sign-in', questions: '[]' }
+        form_data = { id: '8888888888', event_id: 1, form_type: 'sign-in' }
         @form = Form.create(form_data)
         form_user_data = { form_id: @form.id, user_id: @user.id }
         @form_user = FormUser.create(form_user_data)
@@ -112,10 +110,9 @@ describe Api::FormUsersController do
                         start_time: '2020-09-15T01:00:00.000Z', end_time: '2020-09-15T00:00:00.000Z' }
         Event.create(@event_data)
 
-        form_data = { id: '8888888888', event_id: 1, start_time: '2020-09-15T01:00:00.000Z',
-                      end_time: '2020-09-15T00:00:00.000Z', form_type: 'sign-in', questions: '[]',
-                      time_restricted: true }
+        form_data = { id: '8888888888', event_id: 1, form_type: 'sign-in', time_restricted: true }
         @form = Form.create(form_data)
+        expect(Form.count).to eq(1)
 
         @form_user_data = {
           form_id: '8888888888',

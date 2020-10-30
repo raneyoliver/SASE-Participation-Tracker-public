@@ -11,10 +11,7 @@ Before '@calendarEventDetails' do
   Form.new(
     id: 'de12b1128f3',
     event_id: 1,
-    start_time: DateTime.now,
-    end_time: DateTime.now + (1 / 24.0),
-    form_type: 'sign-in',
-    questions: '[]'
+    form_type: 'sign-in'
   ).save
 end
 

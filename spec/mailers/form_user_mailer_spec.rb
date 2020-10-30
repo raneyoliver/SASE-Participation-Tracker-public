@@ -11,8 +11,7 @@ RSpec.describe FormUserMailer, type: :mailer do
         event_data = { id: 1, name: 'Test Event', description: 'description', event_type: 'GBM',
                        start_time: '2020-09-15T01:00:00.000Z', end_time: '2020-09-15T00:00:00.000Z' }
         @event = Event.create(event_data)
-        form_data = { id: '8888888888', event_id: 1, start_time: '2020-09-15T01:00:00.000Z',
-                      end_time: '2020-09-15T00:00:00.000Z', form_type: 'sign-in', questions: '[]' }
+        form_data = { id: '8888888888', event_id: 1, form_type: 'sign-in' }
         @form = Form.create(form_data)
         form_user_data = { id: 1, form_id: '8888888888', user_id: '95e229d8aca716874c8feca1501379e06f239d03' }
         @form_user = FormUser.create(form_user_data)

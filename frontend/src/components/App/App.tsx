@@ -11,13 +11,9 @@ import CreateEventPage from '../CreateEventPage/CreateEventPage';
 import EditEventPage from '../EditEventPage/EditEventPage';
 import FormPage from '../FormPage/FormPage';
 import NewUserPage from '../NewUserPage/NewUserPage';
-import ConfirmSubmissionPage from '../ConfirmSubmissionPage/ConfirmSubmissionPage';
-import FormErrorPage from '../FormErrorPage/FormErrorPage';
-import FormUnavailablePage from '../FormUnavailablePage/FormUnavailablePage';
 import ChangePasswordPage from '../ChangePasswordPage/ChangePasswordPage';
-import ConfirmUpdatePage from '../ConfirmUpdatePage/ConfirmUpdatePage';
-import EditEventErrorPage from '../EditEventErrorPage/EditEventErrorPage';
 import ViewEventsPage from '../ViewEventsPage/ViewEventsPage';
+import TextBoxPage from '../TextBoxPage/TextBoxPage';
 import HelpPage from '../HelpPage/HelpPage';
 
 const App: React.SFC = () => (
@@ -30,15 +26,15 @@ const App: React.SFC = () => (
           <ViewEventsPage path="/view_events" />
           <CreateEventPage path="/create_event" />
           <EditEventPage path="/edit_event/:eventId" />
-          <EditEventErrorPage path="edit_event/error" />
+          <TextBoxPage path="/edit_event/error" title="Uh Oh!" text="There was an issue navigating to the event you are trying to edit. Please try again." />
           <LoginPage path="/login" />
           <ChangePasswordPage path="/change_password" />
           <FormPage path="/form/:formId" />
           <NewUserPage path="/form/:formId/new_user/:UIN" />
-          <ConfirmSubmissionPage path="/form/confirm_submission" />
-          <ConfirmUpdatePage path="/form/confirm_update" />
-          <FormErrorPage path="/form/error" />
-          <FormUnavailablePage path="/form/unavailable" />
+          <TextBoxPage path="/form/confirm_submission" title="Thank You!" text="Your submission has been recorded. You may safely close this page." />
+          <TextBoxPage path="/form/repeat_submission" title="Submission Already Received" text="You already responded to this form. Your submission remains unchanged." />
+          <TextBoxPage path="/form/error" title="Uh Oh!" text="There was an issue navigating to your form. Please try again." />
+          <TextBoxPage path="/form/unavailable" title="Form Unavailable" text="This form is unavailable at this time." />
           <HelpPage path="/help" />
         </Router>
       </Box>

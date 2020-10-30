@@ -3,8 +3,7 @@ Before('@formRequired') do
                  start_time: '2020-09-15T01:00:00.000Z', end_time: '2020-09-15T00:00:00.000Z',
                  event_type: 'Socials' }
   Event.create(event_data)
-  form_data = { id: 'de12b1128f3', event_id: 1, start_time: '2020-09-15T01:00:00.000Z',
-                end_time: '2020-09-15T00:00:00.000Z', form_type: 'sign-in', questions: '[]' }
+  form_data = { id: 'de12b1128f3', event_id: 1, form_type: 'sign-in' }
   Form.create(form_data)
 end
 
@@ -13,9 +12,7 @@ Before('@restrictedSignInFormRequired') do
                  start_time: '1970-01-01T06:00:00.000Z', end_time: '1970-01-01T06:00:00.000Z',
                  event_type: 'Socials' }
   Event.create(event_data)
-  form_data = { id: 'de12b1128f3', event_id: 1, start_time: '1970-01-01T06:00:00.000Z',
-                end_time: '1970-01-01T06:00:00.000Z', form_type: 'sign-in', questions: '[]',
-                time_restricted: true }
+  form_data = { id: 'de12b1128f3', event_id: 1, form_type: 'sign-in', time_restricted: true }
   Form.create(form_data)
 end
 
@@ -24,9 +21,7 @@ Before('@restrictedRSVPFormRequired') do
                  start_time: '1970-01-01T06:00:00.000Z', end_time: '1970-01-01T06:00:00.000Z',
                  event_type: 'Socials' }
   Event.create(event_data)
-  form_data = { id: 'de12b1128f3', event_id: 1, start_time: '1970-01-01T06:00:00.000Z',
-                end_time: '1970-01-01T06:00:00.000Z', form_type: 'RSVP', questions: '[]',
-                time_restricted: true }
+  form_data = { id: 'de12b1128f3', event_id: 1, form_type: 'RSVP', time_restricted: true }
   Form.create(form_data)
 end
 
@@ -47,8 +42,7 @@ Before('@RSVPFormRequired') do
                  start_time: '2020-09-15T01:00:00.000Z', end_time: '2020-09-15T00:00:00.000Z',
                  event_type: 'Socials' }
   Event.create(event_data)
-  form_data = { id: 'de12b1128f3', event_id: 1, start_time: '2020-09-15T01:00:00.000Z',
-                end_time: '2020-09-15T00:00:00.000Z', form_type: 'RSVP', questions: '[]' }
+  form_data = { id: 'de12b1128f3', event_id: 1, form_type: 'RSVP' }
   Form.create(form_data)
 end
 
