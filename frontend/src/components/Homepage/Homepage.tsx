@@ -12,15 +12,11 @@ const Homepage: React.FC<RouteComponentProps> = () => {
   // Need to re-render the page, navigate doesn't do that
   const handleFabClick = (): void => { window.location.href = '/create_event'; };
   const handlePasswordChangeClick = (): void => { window.location.href = '/change_password'; };
-  const handleHelpClick = (): void => { window.location.href = '/help'; };
 
   return (
     <>
       <Box textAlign="center">
         <Box display="flex" justifyContent="flex-end">
-          <Button id="help" color="secondary" onClick={handleHelpClick}>
-            Help
-          </Button>
           <ExportButton id="export" />
           <Button id="change-password" color="secondary" onClick={handlePasswordChangeClick}>
             Change Password

@@ -86,7 +86,7 @@ const HelpPage: React.FC<RouteComponentProps> = () => (
               <ListItem>
                 <ListItemText
                   primary="Quickly return to the homepage"
-                  secondary="Click 'SASE-Participation Tracker' at the very top
+                  secondary="Click 'SASE Participation Tracker' at the very top
                   of any page to return to the homepage."
                 />
               </ListItem>
