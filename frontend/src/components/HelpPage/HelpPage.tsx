@@ -7,15 +7,15 @@ import CardWithHeader from '../CardWithHeader/CardWithHeader';
 
 const HelpPage: React.FC<RouteComponentProps> = () => (
   <>
-    <Box textAlign="center" marginTop={5}>
+    <Box textAlign="center" marginTop={3}>
       <Typography variant="h4">
         Help and FAQ
       </Typography>
     </Box>
-    <Box padding={8}>
+    <Box padding={5}>
       <Grid container spacing={10}>
         <Grid item xs={12} md={6}>
-          <CardWithHeader title="FAQ">
+          <CardWithHeader title="Users">
             <List>
               <ListItem>
                 <ListItemText
@@ -25,15 +25,6 @@ const HelpPage: React.FC<RouteComponentProps> = () => (
                   or the RSVP form to be accessible before the event time. Another
                   reason may be that the form was deleted. Try refreshing your
                   browser."
-                />
-              </ListItem>
-              <ListItem>
-                <ListItemText
-                  primary="As an administrator, how do I make changes to an event?"
-                  secondary="In the top right corner of each event on the homepage,
-                  there is a dropdown box represented by three dots. Click
-                  them and select 'Edit Event' to change the event, or
-                  'Delete Event' to delete the event altogether."
                 />
               </ListItem>
               <ListItem>
@@ -54,30 +45,9 @@ const HelpPage: React.FC<RouteComponentProps> = () => (
                   next time."
                 />
               </ListItem>
-            </List>
-          </CardWithHeader>
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <CardWithHeader title="How To...">
-            <List>
               <ListItem>
                 <ListItemText
-                  primary="Add an RSVP form to an existing event as an administrator"
-                  secondary="From the homepage, click on the three dots on the
-                  top right corner of an event card. Select 'Create RSVP Form'"
-                />
-              </ListItem>
-              <ListItem>
-                <ListItemText
-                  primary="Change time restrictions of forms as an administrator"
-                  secondary="From the homepage, click on the three dots on the
-                  top right corner of an event card. Select 'Edit Event'. Then
-                  toggle which restrictions should apply at the bottom of the form."
-                />
-              </ListItem>
-              <ListItem>
-                <ListItemText
-                  primary="View past events in a list view"
+                  primary="How can I view past events as a list?"
                   secondary="Click 'List' at the top left of the homepage and then
                   go to 'Date Filter' and select 'All' or 'Past'. You can also use
                   combinations of filters to see exactly what events you need."
@@ -85,9 +55,39 @@ const HelpPage: React.FC<RouteComponentProps> = () => (
               </ListItem>
               <ListItem>
                 <ListItemText
-                  primary="Quickly return to the homepage"
+                  primary="How do I get back to the homepage?"
                   secondary="Click 'SASE Participation Tracker' at the very top
                   of any page to return to the homepage."
+                />
+              </ListItem>
+            </List>
+          </CardWithHeader>
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <CardWithHeader title="Admins">
+            <List>
+              <ListItem>
+                <ListItemText
+                  primary="How do I make changes to an event?"
+                  secondary="In the top right corner of each event on the homepage,
+                  there is a dropdown box represented by three dots. Click
+                  them and select 'Edit Event' to change the event, or
+                  'Delete Event' to delete the event altogether."
+                />
+              </ListItem>
+              <ListItem>
+                <ListItemText
+                  primary="Can I add an RSVP form to an existing event?"
+                  secondary="Yes. From the homepage, click on the three dots on the
+                  top right corner of an event card. Select 'Create RSVP Form'."
+                />
+              </ListItem>
+              <ListItem>
+                <ListItemText
+                  primary="How can I change time restrictions of forms?"
+                  secondary="From the homepage, click on the three dots on the
+                  top right corner of an event card. Select 'Edit Event'. Then
+                  toggle which restrictions should apply at the bottom of the form."
                 />
               </ListItem>
             </List>
