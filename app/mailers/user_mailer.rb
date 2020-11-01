@@ -1,6 +1,6 @@
 # Mailer for emails related to users
 class UserMailer < ApplicationMailer
-  default from: 'saseparticipationtracker@gmail.com'
+  default from: 'sasetamu.logistics@gmail.com'
 
   def new_user_email
     @user = params[:user]
