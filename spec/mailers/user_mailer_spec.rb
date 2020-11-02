@@ -6,7 +6,7 @@ RSpec.describe UserMailer, type: :mailer do
       before :each do
         user_data = { id: '95e229d8aca716874c8feca1501379e06f239d03', first_name: 'New', last_name: 'User',
                       major: 'computer science', graduation_year: 2021, email: 'email@address.com',
-                      phone_number: '333-333-3333' }
+                      phone_number: '3333333333' }
         @user = User.create(user_data)
       end
       let(:mail) { described_class.with(user: @user).new_user_email.deliver_now }
@@ -17,7 +17,7 @@ RSpec.describe UserMailer, type: :mailer do
         expect(mail.to).to eq([@user.email])
       end
       it 'renders the receiver email' do
-        expect(mail.from).to eq(['saseparticipationtracker@gmail.com'])
+        expect(mail.from).to eq(['sasetamu.logistics@gmail.com'])
       end
       it "contains the user's name" do
         expect(mail.body.encoded).to match("#{@user.first_name} #{@user.last_name}")

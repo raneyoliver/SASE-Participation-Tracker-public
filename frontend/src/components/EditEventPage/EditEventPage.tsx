@@ -12,7 +12,7 @@ import { Event, SerializedEvent } from '../../types/Event';
 import getCSRFToken from '../../utils/getCSRFToken';
 import getFormRestriction from '../../utils/getFormRestriction';
 import hasRSVP from '../../utils/hasRSVP';
-import { EventType } from '../../Enums';
+import { EventType, FormType } from '../../Enums';
 
 // Format datetimes like the following: 12/31/2020 12:00 PM
 const dateFormat = 'MM/dd/yyyy hh:mm a';
@@ -100,8 +100,8 @@ const EditEventPage: React.FC<RouteComponentProps> = () => {
       setEventType(response.event_type);
       setDisabledButton(!hasRSVP(response));
       setTimeRestriction({
-        sign_in: getFormRestriction('sign-in', response),
-        rsvp: getFormRestriction('RSVP', response),
+        sign_in: getFormRestriction(FormType.SIGN_IN, response),
+        rsvp: getFormRestriction(FormType.RSVP, response),
       });
     }).finally(() => setLoading(false));
   }, [eventId]);

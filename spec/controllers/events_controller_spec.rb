@@ -32,10 +32,7 @@ describe Api::EventsController do
         @expected_form = {
           id: '8888888888',
           event_id: 1,
-          start_time: '2020-09-15T01:00:00.000Z',
-          end_time: '2020-09-15T00:00:00.000Z',
           form_type: 'sign-in',
-          questions: '[]',
         }
         Form.new(**@expected_form).save
 
@@ -102,7 +99,6 @@ describe Api::EventsController do
         @end_time = 'Wed, 16 Sep 2020 06:27:32 GMT'
         @create_rsvp_form = false
         @form_type = 'sign-in'
-        @questions = '[]'
         @sign_in_restricted = true
         @rsvp_restricted = false
 
@@ -116,10 +112,7 @@ describe Api::EventsController do
 
         @form_expected = {
           event_id: Event.primary_key,
-          start_time: @start_time,
-          end_time: @end_time,
           form_type: @form_type,
-          questions: @questions,
         }
 
         post :create, params: { event: @event_expected,
@@ -131,10 +124,7 @@ describe Api::EventsController do
         expect(response).to have_http_status(:no_content)
         expect(Form.count).to eq(1)
         @created = Form.first
-        expect(@created.start_time.to_i).to eq(DateTime.parse(@start_time).to_i)
-        expect(@created.end_time.to_i).to eq(DateTime.parse(@end_time).to_i)
         expect(@created.form_type).to eq(@form_type)
-        expect(@created.questions).to eq(@questions)
         expect(@created.time_restricted).to eq(@sign_in_restricted)
 
         # Check if the form is linked to the event created
@@ -151,7 +141,6 @@ describe Api::EventsController do
         @end_time = 'Wed, 16 Sep 2020 06:27:32 GMT'
         @create_rsvp_form = true
         @form_type = 'RSVP'
-        @questions = '[]'
         @time_restricted = true
         @event_expected = {
           name: @name,
@@ -162,10 +151,7 @@ describe Api::EventsController do
 
         @form_expected = {
           event_id: Event.primary_key,
-          start_time: @start_time,
-          end_time: @end_time,
           form_type: @form_type,
-          questions: @questions,
           time_restricted: @time_restricted,
         }
 
@@ -177,10 +163,7 @@ describe Api::EventsController do
         expect(response).to have_http_status(:no_content)
         expect(Form.count).to eq(2)
         @created = Form.where(form_type: 'RSVP').first
-        expect(@created.start_time.to_i).to eq(DateTime.parse(@start_time).to_i)
-        expect(@created.end_time.to_i).to eq(DateTime.parse(@end_time).to_i)
         expect(@created.form_type).to eq(@form_type)
-        expect(@created.questions).to eq(@questions)
         expect(@created.time_restricted).to eq(@time_restricted)
 
         # Check if the form is linked to the event created
@@ -225,7 +208,6 @@ describe Api::EventsController do
         @start_time = 'Wed, 16 Sep 2020 05:27:32 GMT'
         @end_time = 'Wed, 16 Sep 2020 06:27:32 GMT'
         @form_type = 'RSVP'
-        @questions = '[]'
         @time_restricted = true
 
         # get event
@@ -249,10 +231,7 @@ describe Api::EventsController do
         expect(Form.count).to eq(1)
         @created_form = Form.first
 
-        expect(@created_form.start_time.to_i).to eq(DateTime.parse(@start_time).to_i)
-        expect(@created_form.end_time.to_i).to eq(DateTime.parse(@end_time).to_i)
         expect(@created_form.form_type).to eq(@form_type)
-        expect(@created_form.questions).to eq(@questions)
         expect(@created_form.time_restricted).to eq(@time_restricted)
 
         # remove any objects created
@@ -305,7 +284,6 @@ describe Api::EventsController do
         @event_type = 'GBM'
         @form_type = 'sign-in'
         @time_restricted = true
-        @questions = '[]'
         @form_id = '8888888888'
 
         # get event
@@ -315,10 +293,7 @@ describe Api::EventsController do
         @expected = {
           id: @form_id,
           event_id: @created.id,
-          start_time: @start_time,
-          end_time: @end_time,
           form_type: @form_type,
-          questions: @questions,
           time_restricted: @time_restricted,
         }
         Form.new(**@expected).save
@@ -385,10 +360,7 @@ describe Api::EventsController do
         @form = {
           id: '8888888888',
           event_id: @created.id,
-          start_time: @created.start_time,
-          end_time: @created.end_time,
           form_type: 'sign-in',
-          questions: '[]',
           time_restricted: true,
         }
         Form.new(**@form).save
@@ -559,10 +531,7 @@ describe Api::EventsController do
         @expected_form = {
           id: '8888888888',
           event_id: 1,
-          start_time: '2020-09-15T01:00:00.000Z',
-          end_time: '2020-09-15T00:00:00.000Z',
           form_type: 'sign-in',
-          questions: '[]',
         }
         Form.new(**@expected_form).save
 
@@ -573,7 +542,7 @@ describe Api::EventsController do
           major: 'computer science',
           graduation_year: 2021,
           email: 'email@address.com',
-          phone_number: '333-333-3333',
+          phone_number: '3333333333',
         }
         User.new(**@expected_user).save
 
@@ -595,7 +564,7 @@ describe Api::EventsController do
           first_name: 'New',
           last_name: 'User',
           email: 'email@address.com',
-          phone_number: '333-333-3333',
+          phone_number: '3333333333',
         }
 
         get :export

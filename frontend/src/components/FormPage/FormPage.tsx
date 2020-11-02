@@ -9,7 +9,7 @@ import CardWithHeader from '../CardWithHeader/CardWithHeader';
 import getCSRFToken from '../../utils/getCSRFToken';
 import { SerializedForm } from '../../types/Form';
 import { FormUser } from '../../types/FormUser';
-import { FormType } from '../../Enums';
+import { formattedFormType } from '../../Enums';
 
 const FormPage: React.FC<RouteComponentProps> = () => {
   const { formId } = useParams();
@@ -75,7 +75,7 @@ const FormPage: React.FC<RouteComponentProps> = () => {
           if (response2.status === 201) {
             navigate('/form/confirm_submission');
           } else if (response2.status === 200) {
-            navigate('/form/confirm_update');
+            navigate('/form/repeat_submission');
           }
         });
       } else if (response.status === 200) {
@@ -103,7 +103,7 @@ const FormPage: React.FC<RouteComponentProps> = () => {
   );
 
   return (
-    <CardWithHeader title={`${FormType[form.form_type as unknown as keyof typeof FormType]} for ${form.event.name} (${form.event.event_type || 'No Type Provided for'} Event)`} fixWidth>
+    <CardWithHeader title={`${formattedFormType.get(form.form_type)} for ${form.event.name} (${form.event.event_type || 'No Type Provided for'} Event)`} fixWidth>
 
       {form.event.description !== '' && descriptionBlock}
 

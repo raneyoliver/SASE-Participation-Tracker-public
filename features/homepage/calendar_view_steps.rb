@@ -1,6 +1,6 @@
 Before '@calendarView' do
   @two_months_ago = 2.months.ago
-  @now = Date.today
+  @now = DateTime.now
 
   Event.new(
     name: 'overthrow the government',
