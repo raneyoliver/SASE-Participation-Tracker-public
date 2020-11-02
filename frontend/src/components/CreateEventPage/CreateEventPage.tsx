@@ -3,7 +3,7 @@ import { RouteComponentProps } from '@reach/router';
 import ManageEventPage from '../ManageEventPage/ManageEventPage';
 
 const CreateEventPage: React.FC<RouteComponentProps> = () => (
-  <ManageEventPage eventId="create" />
+  <ManageEventPage />
 );
 
 export default CreateEventPage;

@@ -92,7 +92,7 @@ const ManageEventPage: React.FC<ManageEventProps> = (id) => {
 
   // Get event data based on its id, return error page if not found
   React.useEffect(() => {
-    if (eventId !== 'create') {
+    if (eventId) {
       fetch(`/api/events/${eventId}`).then((response) => {
         if (response.status === 404) {
           window.location.href = '/edit_event/error';
@@ -140,7 +140,7 @@ const ManageEventPage: React.FC<ManageEventProps> = (id) => {
       rsvp_restricted: timeRestriction.rsvp,
     };
 
-    if (eventId !== 'create') { // Edit Event
+    if (eventId) { // Edit Event
       fetch('/api/events/update', {
         method: 'POST',
         headers: {
@@ -189,7 +189,7 @@ const ManageEventPage: React.FC<ManageEventProps> = (id) => {
   );
   return (
     <Box margin="auto" width="50%" minWidth={500}>
-      <CardWithHeader title={eventId !== 'create' ? 'Edit Event' : 'Create Event'}>
+      <CardWithHeader title={eventId ? 'Edit Event' : 'Create Event'}>
         <Box paddingBottom={1}>
           <TextField id="event-name" required error={!name} label="Name" value={name} onChange={handleNameChange} />
         </Box>
@@ -216,7 +216,7 @@ const ManageEventPage: React.FC<ManageEventProps> = (id) => {
         </Box>
 
         <Box>
-          { eventId !== 'create' ? <></> : addRSVPToEvent }
+          { eventId ? <></> : addRSVPToEvent }
         </Box>
 
         <Box paddingBottom={1}>
@@ -243,7 +243,7 @@ const ManageEventPage: React.FC<ManageEventProps> = (id) => {
         </Box>
 
         <Button id="submit" variant="contained" color="secondary" disabled={!formValid} startIcon={<AddIcon />} onClick={handleSubmit}>
-          {eventId !== 'create' ? 'Update Event' : 'Create Event'}
+          {eventId ? 'Update Event' : 'Create Event'}
         </Button>
       </CardWithHeader>
     </Box>
