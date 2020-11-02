@@ -169,7 +169,7 @@ const CreateEventPage: React.FC<RouteComponentProps> = () => {
               />
               <FormControlLabel
                 control={(
-                  <Tooltip classes={{ tooltip: classes.removeMarginTop }} title={!disabledButton ? '' : 'Check mark the option to create an RSVP form to enable time restriction.'}>
+                  <Tooltip classes={{ tooltip: classes.removeMarginTop }} title={!disabledButton ? '' : 'Must create RSVP form.'}>
                     <span>
                       <Switch disabled={disabledButton} checked={timeRestriction.rsvp} onChange={handleTimeRestrictionChange} id="rsvp" name="rsvp" color="primary" />
                     </span>
@@ -181,7 +181,7 @@ const CreateEventPage: React.FC<RouteComponentProps> = () => {
           </FormControl>
         </Box>
 
-        <Tooltip title={formValid ? '' : 'Fill in all fields to create event.'}>
+        <Tooltip title={formValid ? '' : 'Fill in all fields in red to update event.'}>
           <span>
             <Button id="submit" variant="contained" color="secondary" disabled={!formValid} startIcon={<AddIcon />} onClick={handleSubmit}>
               Create Event

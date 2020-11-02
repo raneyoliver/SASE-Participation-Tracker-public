@@ -67,7 +67,7 @@ const ChangePasswordPage: React.FC<RouteComponentProps> = () => {
             onChange={handlePasswordConfirmationChange}
           />
         </Box>
-        <Tooltip title={formValid ? '' : 'Fill in all fields to change password.'}>
+        <Tooltip title={formValid ? '' : 'Password and confirmation fields must be filled in and match to change password.'}>
           <span>
             <Button
               id="change-password"

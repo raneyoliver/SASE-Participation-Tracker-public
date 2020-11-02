@@ -39,7 +39,7 @@ Then "I can't click the form submit button on the form page" do
 end
 
 Then 'The form submit tooltip is displayed' do
-  expect(page).to have_css('span[title="Fill in all fields to submit."]')
+  expect(page).to have_css('span[title="Fill in a valid UIN to submit."]')
 end
 
 Then 'The form submit tooltip is not displayed' do

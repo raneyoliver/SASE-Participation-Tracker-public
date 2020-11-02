@@ -17,7 +17,7 @@ Then 'I can click the submit button' do
 end
 
 Then 'The create event tooltip is displayed' do
-  expect(page).to have_css('span[title="Fill in all fields to create event."]')
+  expect(page).to have_css('span[title="Fill in all fields in red to create event."]')
 end
 
 Then 'The create event tooltip is not displayed' do

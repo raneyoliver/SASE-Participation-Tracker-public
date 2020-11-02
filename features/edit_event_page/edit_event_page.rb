@@ -47,7 +47,7 @@ Then 'I can click the update button' do
 end
 
 Then 'The update event tooltip is displayed' do
-  expect(page).to have_css('span[title="Fill in all fields to update event."]')
+  expect(page).to have_css('span[title="Fill in all fields in red to update event."]')
 end
 
 Then 'The update event tooltip is not displayed' do
