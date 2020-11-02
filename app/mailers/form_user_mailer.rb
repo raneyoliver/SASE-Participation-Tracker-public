@@ -1,6 +1,6 @@
 # Mailer for emails related to form_users
 class FormUserMailer < ApplicationMailer
-  default from: 'saseparticipationtracker@gmail.com'
+  default from: 'sasetamu.logistics@gmail.com'
 
   def confirmation_email
     @form_user = params[:form_user]

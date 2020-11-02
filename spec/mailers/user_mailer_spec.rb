@@ -17,7 +17,7 @@ RSpec.describe UserMailer, type: :mailer do
         expect(mail.to).to eq([@user.email])
       end
       it 'renders the receiver email' do
-        expect(mail.from).to eq(['saseparticipationtracker@gmail.com'])
+        expect(mail.from).to eq(['sasetamu.logistics@gmail.com'])
       end
       it "contains the user's name" do
         expect(mail.body.encoded).to match("#{@user.first_name} #{@user.last_name}")
