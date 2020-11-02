@@ -181,7 +181,7 @@ const CreateEventPage: React.FC<RouteComponentProps> = () => {
           </FormControl>
         </Box>
 
-        <Tooltip title={formValid ? '' : 'Fill in all fields in red to update event.'}>
+        <Tooltip title={formValid ? '' : 'Fill in all fields in red to create event.'}>
           <span>
             <Button id="submit" variant="contained" color="secondary" disabled={!formValid} startIcon={<AddIcon />} onClick={handleSubmit}>
               Create Event

@@ -11,7 +11,9 @@ Then 'The change password button is unclickable' do
 end
 
 Then 'The change password tooltip is displayed' do
-  expect(page).to have_css('span[title="Password and confirmation fields must be filled in and match to change password."]')
+  expect(page).to have_css(
+    'span[title="Password and confirmation fields must be filled in and match to change password."]'
+  )
 end
 
 Then 'The change password tooltip is not displayed' do
