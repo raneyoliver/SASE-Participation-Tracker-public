@@ -19,10 +19,10 @@ const dateFormat = 'MM/dd/yyyy hh:mm a';
 
 interface ManageEventProps {
   eventId?: any;
-  createEvent?: boolean;
 }
 
-const ManageEventPage: React.FC<ManageEventProps> = ({ eventId, createEvent }) => {
+const ManageEventPage: React.FC<ManageEventProps> = (id) => {
+  const { eventId } = id;
   const [loading, setLoading] = React.useState(true);
 
   const [name, setName] = React.useState('');
@@ -92,7 +92,7 @@ const ManageEventPage: React.FC<ManageEventProps> = ({ eventId, createEvent }) =
 
   // Get event data based on its id, return error page if not found
   React.useEffect(() => {
-    if (!createEvent) {
+    if (eventId !== 'create') {
       fetch(`/api/events/${eventId}`).then((response) => {
         if (response.status === 404) {
           window.location.href = '/edit_event/error';
@@ -113,7 +113,7 @@ const ManageEventPage: React.FC<ManageEventProps> = ({ eventId, createEvent }) =
     } else {
       setLoading(false);
     }
-  }, [eventId, createEvent]);
+  }, [eventId]);
 
   const handleSubmit = (): void => {
     if (!formValid) return;
@@ -140,7 +140,7 @@ const ManageEventPage: React.FC<ManageEventProps> = ({ eventId, createEvent }) =
       rsvp_restricted: timeRestriction.rsvp,
     };
 
-    if (!createEvent) { // Edit Event
+    if (eventId !== 'create') { // Edit Event
       fetch('/api/events/update', {
         method: 'POST',
         headers: {
@@ -189,7 +189,7 @@ const ManageEventPage: React.FC<ManageEventProps> = ({ eventId, createEvent }) =
   );
   return (
     <Box margin="auto" width="50%" minWidth={500}>
-      <CardWithHeader title={createEvent ? 'Create Event' : 'Edit Event'}>
+      <CardWithHeader title={eventId !== 'create' ? 'Edit Event' : 'Create Event'}>
         <Box paddingBottom={1}>
           <TextField id="event-name" required error={!name} label="Name" value={name} onChange={handleNameChange} />
         </Box>
@@ -216,7 +216,7 @@ const ManageEventPage: React.FC<ManageEventProps> = ({ eventId, createEvent }) =
         </Box>
 
         <Box>
-          { createEvent ? addRSVPToEvent : <></> }
+          { eventId !== 'create' ? <></> : addRSVPToEvent }
         </Box>
 
         <Box paddingBottom={1}>
@@ -243,7 +243,7 @@ const ManageEventPage: React.FC<ManageEventProps> = ({ eventId, createEvent }) =
         </Box>
 
         <Button id="submit" variant="contained" color="secondary" disabled={!formValid} startIcon={<AddIcon />} onClick={handleSubmit}>
-          {createEvent ? 'Create Event' : 'Update Event'}
+          {eventId !== 'create' ? 'Update Event' : 'Create Event'}
         </Button>
       </CardWithHeader>
     </Box>
