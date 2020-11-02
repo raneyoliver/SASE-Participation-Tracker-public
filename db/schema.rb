@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_14_235836) do
+ActiveRecord::Schema.define(version: 2020_10_22_163544) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,9 +35,6 @@ ActiveRecord::Schema.define(version: 2020_10_14_235836) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "event_type"
-    t.boolean "sign_in_restricted"
-    t.boolean "rsvp_restricted"
-    t.boolean "has_rsvp_form"
   end
 
   create_table "form", id: :string, force: :cascade do |t|
@@ -46,6 +43,7 @@ ActiveRecord::Schema.define(version: 2020_10_14_235836) do
     t.datetime "end_time"
     t.string "form_type"
     t.string "questions"
+    t.boolean "time_restricted"
   end
 
   create_table "form_user", force: :cascade do |t|
