@@ -184,7 +184,7 @@ const EventSortButtons: React.FC<EventSortButtonsProps> = ({ events, variant, on
     <>
       {dateSortButton}
       {dateFilterButtonGroup}
-      <Box display="flex" alignItems="center">
+      <Box display="flex" alignItems="center" marginBottom={1}>
         <Box marginRight={1}>
           <Typography>
             Event Types:

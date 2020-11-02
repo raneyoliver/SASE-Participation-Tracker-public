@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Typography, Box } from '@material-ui/core';
+import { Typography, Box, Grid } from '@material-ui/core';
 import { SerializedEvent } from '../../../../types/Event';
 import EventCard from './EventCard/EventCard';
 import CardWithHeader from '../../../CardWithHeader/CardWithHeader';
@@ -17,20 +17,20 @@ const EventCards: React.FC<EventCardsProps> = ({ events: initialEvents, renderCo
     setEvents(newEvents);
   }, []);
 
-  // Static number of columns for cards, we can change this to respond to page size later
-  const numColumns = 3;
-  const columnWidth = `${100 / numColumns}%`;
-
   const eventCards = events.map((event) => (
-    <Box width={columnWidth} padding={1} boxSizing="border-box" key={event.id}>
+    <Grid key={event.id} item xs={12} sm={6} md={4} lg={3}>
       <EventCard event={event} renderComponents={render} />
-    </Box>
+    </Grid>
   ));
 
   const sortButtons = events ? <EventSortButtons events={events} variant="cards" onSort={handleEventSort} /> : null;
 
   const cardList = events?.length ? (
-    eventCards
+    <Box margin={6}>
+      <Grid container spacing={8}>
+        {eventCards}
+      </Grid>
+    </Box>
   ) : (
     <Box margin="auto" width="50%" minWidth={500} paddingTop={1}>
       <CardWithHeader title="No Events">
@@ -44,9 +44,7 @@ const EventCards: React.FC<EventCardsProps> = ({ events: initialEvents, renderCo
   return (
     <>
       {sortButtons}
-      <Box display="flex" flexWrap="wrap" width="100%">
-        {cardList}
-      </Box>
+      {cardList}
     </>
   );
 };
