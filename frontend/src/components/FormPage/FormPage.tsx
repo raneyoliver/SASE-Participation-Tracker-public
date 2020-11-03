@@ -130,7 +130,7 @@ const FormPage: React.FC<RouteComponentProps> = () => {
       {submissionErrorText}
       <Tooltip title={formValid ? '' : 'Fill in a valid UIN to submit.'}>
         <span>
-          <Button id="submit" variant="contained" color="secondary" disabled={!formValid} startIcon={<AddIcon />} onClick={handleSubmit}>
+          <Button id="submit" variant="contained" color="secondary" disabled={!formValid || submitting} startIcon={<AddIcon />} onClick={handleSubmit}>
             Submit
           </Button>
         </span>
