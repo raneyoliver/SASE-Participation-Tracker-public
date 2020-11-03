@@ -76,11 +76,11 @@ To add a file for code coverage do the following:
 Cucumber is a tool for running automated tests.
 The gemfile has already been changed to include `gem 'cucumber'`.
 A features folder has been added to the root directory to include a sample testing for Cucumber.
+To run cucumber tests in a headless browser, run `export SELENIUM_CONFIG="HEADLESS"`.
 ### Test a Single Feature
 1. Run `cucumber features/demo.feature` in the root folder to see cucumber in action.
 ### Test all Features
-1. To run cucumber tests in a headless browser, run `export SELENIUM_CONFIG="HEADLESS"`.
-2. Run `bundler exec cucumber` in the root folder to see cucumber in action.
+1. Run `bundler exec cucumber` in the root folder to see cucumber in action.
 
 ## RSpec
 RSpec is a computer domain-specific language testing tool written in Ruby to test Ruby code.
