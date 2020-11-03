@@ -12,7 +12,7 @@ Run `bundle install` to install ruby dependencies
 
 ## Frontend setup
 1. Install npm
-2. Run `cd frontend/src`, then `npm i` to install packages
+2. Run `npm i` to install packages
 
 ## Database setup
 1. Install postgreSQL, make sure you remember your username and password
@@ -41,28 +41,31 @@ If you have VS Code, create a `.vscode` folder (if not already present) in the r
         }
     ],
     "eslint.workingDirectories": [
-        "./frontend/src"
+        "./"
     ],
 }
 ```
 Then, open the command palette and select "Tasks: Run Task" > "npm" > "npm: dev". This will watch the frontend files and automatically recompile them when changes are made.
 
-If you don't have VS code, you can cd to `frontend/src` and run `npm run dev` (to compile js files), or `npm run dev` (to run linting).
+If you don't have VS code, you can run `npm run dev` (to compile js files)
 
 # Running the server
 Run `rails server` and navigate to `localhost:3000` in your browser.
 
-
-# Tool Set Up
+# Testing Code
 Run `install bundler` to install new changes made in Gemfile.
 
 ## RuboCop
 RuboCop is a static code analyser and code formatter. It will auto-correct many of the code offenses it detects.
 The gemfile has already been changed to include  `gem 'rubocop', '~> 0.90.0', require: false`
-Run `rubocop` in the root folder
+Run `rubocop` in the root folder.
+
+## ESLint
+ESLint is a static code analysis tool for indentifying problematic patterns found in Javascript.
+Run `npm run lint` in the root folder.
 
 ## SimpleCov
-SimpleCov is a code coverage anaylis took for Ruby.
+SimpleCov is a code coverage anaylis tool for Ruby.
 The gemfile has already been changed to include `gem 'simplecov', require: false, group: :test`
 To add a file for code coverage do the following:
 Add `require "simplecov"` at the top of the ruby file.
@@ -73,11 +76,13 @@ Run `rake test` to generate the html file that has the coverage report.
 Cucumber is a tool for running automated tests.
 The gemfile has already been changed to include `gem 'cucumber'`
 A features folder has been added to the root directory to include a sample testing for Cucumber.
+### Test a Single Feature
 Run `cucumber features/demo.feature` in the root folder to see cucumber in action.
+### Test all Features
+To run cucumber tests in a headless browser, run `export SELENIUM_CONFIG="HEADLESS"`
+Run `bundler exec cucumber` in the root folder to see cucumber in action.
 
 ## RSpec
 RSpec is a computer domain-specific language testing tool written in Ruby to test Ruby code.
 The gemfile has already been changed to include `gem "rspec"`
-Run `rspec --init`
-
-
+Run `bundler exec rspec` in the root folder.
