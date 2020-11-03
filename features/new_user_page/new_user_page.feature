@@ -79,6 +79,7 @@ Scenario: Submit button is not clickable when the email is blank
   Then I select my graduation year on the new user page
   Then I enter my phone number on the new user page
   Then I can't click the form submit button on the new user page
+  Then The invalid email tooltip is displayed
   Then The new user submit tooltip is displayed
 
 @formRequired
@@ -93,6 +94,7 @@ Scenario: Submit button is not clickable when the email is missing both an @ fol
   Then I enter an email without @ followed by dot in it again on the new user page
   Then I enter my phone number on the new user page
   Then I can't click the form submit button on the new user page
+  Then The invalid email tooltip is displayed
   Then The new user submit tooltip is displayed
 
 @formRequired
@@ -107,6 +109,7 @@ Scenario: Submit button is not clickable when the email is missing an @ symbol
   Then I enter my email missing an @ symbol again on the new user page
   Then I enter my phone number on the new user page
   Then I can't click the form submit button on the new user page
+  Then The invalid email tooltip is displayed
   Then The new user submit tooltip is displayed
 
 @formRequired
@@ -121,6 +124,7 @@ Scenario: Submit button is not clickable when the email is missing a dot symbol 
   Then I enter my email missing a dot symbol after the @ again on the new user page
   Then I enter my phone number on the new user page
   Then I can't click the form submit button on the new user page
+  Then The invalid email tooltip is displayed
   Then The new user submit tooltip is displayed
 
 @formRequired
@@ -135,6 +139,7 @@ Scenario: Submit button is not clickable when the email confirmation does not ma
   Then I enter a non matching email on the new user page
   Then I enter my phone number on the new user page
   Then I can't click the form submit button on the new user page
+  Then The invalid confirmation email tooltip is displayed
   Then The new user submit tooltip is displayed
 
 @formRequired
@@ -146,9 +151,10 @@ Scenario: Submit button is not clickable when the phone number is invalid and no
   Then I enter my major on the new user page
   Then I select my graduation year on the new user page
   Then I enter my email on the new user page
-  Then I enter my email again on the new user page
   Then I enter an invalid phone number on the new user page
+  Then I enter my email again on the new user page
   Then I can't click the form submit button on the new user page
+  Then The invalid phone number tooltip is displayed
   Then The new user submit tooltip is displayed
 
 @formRequired
