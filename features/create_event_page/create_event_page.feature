@@ -29,6 +29,7 @@ Scenario: Submit button is clickable when the form is filled out
   Then I go back to the create event page
   Then I fill out the form
   Then I can click the submit button
+  Then The create event tooltip is not displayed
 
 @javascript
 @authRequired
@@ -38,6 +39,7 @@ Scenario: Submit button is not clickable when the form is missing a name
   Then I go back to the create event page
   Then I fill out the form without a name
   Then I can't click the submit button
+  Then The create event tooltip is displayed
 
 @javascript
 @authRequired
@@ -47,6 +49,7 @@ Scenario: Submit button is clickable when the form is missing a description
   Then I go back to the create event page
   Then I fill out the form without a description
   Then I can click the submit button on the create event page
+  Then The create event tooltip is not displayed
 
 @javascript
 @authRequired

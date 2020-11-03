@@ -2,7 +2,7 @@ import * as React from 'react';
 // import { useHistory } from 'react-router-dom';
 import { RouteComponentProps, navigate, useParams } from '@reach/router';
 import {
-  Box, TextField, Button, Typography, Card,
+  Box, TextField, Button, Typography, Card, Tooltip,
 } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import CardWithHeader from '../CardWithHeader/CardWithHeader';
@@ -82,7 +82,7 @@ const FormPage: React.FC<RouteComponentProps> = () => {
           if (response2.status === 201) {
             navigate('/form/confirm_submission');
           } else if (response2.status === 200) {
-            navigate('/form/confirm_update');
+            navigate('/form/repeat_submission');
           }
         });
       } else if (response.status === 200) {
@@ -128,9 +128,13 @@ const FormPage: React.FC<RouteComponentProps> = () => {
       </Box>
 
       {submissionErrorText}
-      <Button id="submit" variant="contained" color="secondary" disabled={!formValid || submitting} startIcon={<AddIcon />} onClick={handleSubmit}>
-        Submit
-      </Button>
+      <Tooltip title={formValid ? '' : 'Fill in a valid UIN to submit.'}>
+        <span>
+          <Button id="submit" variant="contained" color="secondary" disabled={!formValid} startIcon={<AddIcon />} onClick={handleSubmit}>
+            Submit
+          </Button>
+        </span>
+      </Tooltip>
     </CardWithHeader>
   );
 };

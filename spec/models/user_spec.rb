@@ -5,7 +5,7 @@ RSpec.describe User, type: :model do
     before :each do
       @user_data = { id: '3333333333333333333333333333333333333333', first_name: 'New', last_name: 'User',
                      major: 'computer science', graduation_year: 2021, email: 'email@address.com',
-                     phone_number: '333-333-3333' }
+                     phone_number: '3333333333' }
     end
     it 'is valid with all attributes' do
       expect(User.new(@user_data)).to be_valid
@@ -38,7 +38,6 @@ RSpec.describe User, type: :model do
       @user_data.delete(:phone_number)
       expect(User.new(@user_data)).to be_valid
     end
-
     it 'is not valid with a first_name larger than 255 characters' do
       @user_data[:first_name] = 'a' * 256
       expect(User.new(@user_data)).to_not be_valid
@@ -91,6 +90,30 @@ RSpec.describe User, type: :model do
       @user_data[:graduation_year] = 9998
       expect(User.new(@user_data)).to be_valid
     end
+    it 'is invalid with an email missing an @ sign and a dot' do
+      @user_data[:email] = 'emailaddresscom'
+      expect(User.new(@user_data)).to_not be_valid
+    end
+    it 'is invalid with an email missing an @ sign' do
+      @user_data[:email] = 'emailaddress.com'
+      expect(User.new(@user_data)).to_not be_valid
+    end
+    it 'is invalid with an email missing a dot after the @ sign' do
+      @user_data[:email] = 'email@addresscom'
+      expect(User.new(@user_data)).to_not be_valid
+    end
+    it 'is invalid with a non-blank phone number containing non-numerical characters' do
+      @user_data[:phone_number] = '333333333a'
+      expect(User.new(@user_data)).to_not be_valid
+    end
+    it 'is invalid with a non-blank phone number longer than 10 digits' do
+      @user_data[:phone_number] = '33333333333'
+      expect(User.new(@user_data)).to_not be_valid
+    end
+    it 'is invalid with a non-blank phone number shorter than 10 digits' do
+      @user_data[:phone_number] = '333333333'
+      expect(User.new(@user_data)).to_not be_valid
+    end
   end
 
   context 'when no Users exist in the database' do
@@ -102,7 +125,7 @@ RSpec.describe User, type: :model do
     before :all do
       user_data = { id: '3333333333333333333333333333333333333333', first_name: 'New', last_name: 'User',
                     major: 'computer science', graduation_year: 2021, email: 'email@address.com',
-                    phone_number: '333-333-3333' }
+                    phone_number: '3333333333' }
       @users = [User.create(user_data)]
     end
     it 'returns all to users.all' do

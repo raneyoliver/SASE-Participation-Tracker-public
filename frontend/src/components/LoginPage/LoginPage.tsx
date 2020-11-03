@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { RouteComponentProps } from '@reach/router';
 import {
-  Box, TextField, Button, Typography,
+  Box, TextField, Button, Typography, Tooltip,
 } from '@material-ui/core';
 import CardWithHeader from '../CardWithHeader/CardWithHeader';
 import getCSRFToken from '../../utils/getCSRFToken';
@@ -76,15 +76,19 @@ const LoginPage: React.FC<RouteComponentProps> = () => {
       <Box>
         {error ? <Typography id="error-message" color="error">Error: Invalid Login</Typography> : null}
       </Box>
-      <Button
-        id="login"
-        variant="contained"
-        color="secondary"
-        disabled={!formValid}
-        onClick={handleLogin}
-      >
-        Log In
-      </Button>
+      <Tooltip title={formValid ? '' : 'Fill in all fields to log in.'}>
+        <span>
+          <Button
+            id="login"
+            variant="contained"
+            color="secondary"
+            disabled={!formValid}
+            onClick={handleLogin}
+          >
+            Log In
+          </Button>
+        </span>
+      </Tooltip>
     </CardWithHeader>
   );
 };

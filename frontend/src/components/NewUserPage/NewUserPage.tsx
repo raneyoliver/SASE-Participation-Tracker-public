@@ -2,7 +2,7 @@ import * as React from 'react';
 import { RouteComponentProps, navigate, useParams } from '@reach/router';
 import { makeStyles } from '@material-ui/core/styles';
 import {
-  Box, TextField, Button, Typography, FormControl, NativeSelect, InputLabel,
+  Box, TextField, Button, Typography, FormControl, NativeSelect, InputLabel, Tooltip,
 } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import CardWithHeader from '../CardWithHeader/CardWithHeader';
@@ -208,21 +208,31 @@ const NewUserPage: React.FC<RouteComponentProps> = () => {
         </Box>
 
         <Box paddingBottom={1}>
-          <TextField id="new-user-email" required error={!validEmail} label="Email Address" value={email} onChange={handleEmailChange} />
+          <Tooltip title={validEmail ? '' : 'Fill in a valid email address.'} placement="right">
+            <TextField id="new-user-email" required error={!validEmail} label="Email Address" value={email} onChange={handleEmailChange} />
+          </Tooltip>
         </Box>
 
         <Box paddingBottom={1}>
-          <TextField id="new-user-confirmation-email" required error={!validConfirmationEmail} label="Confirm Email" value={confirmationEmail} onChange={handleConfirmationEmailChange} />
+          <Tooltip title={validConfirmationEmail ? '' : 'Email confirmation field must match email address.'} placement="right">
+            <TextField id="new-user-confirmation-email" required error={!validConfirmationEmail} label="Confirm Email" value={confirmationEmail} onChange={handleConfirmationEmailChange} />
+          </Tooltip>
         </Box>
 
         <Box paddingBottom={1}>
-          <TextField id="new-user-phone-number" error={!validPhoneNumber} label="Phone Number" value={normalizePhoneNumber(phoneNumber)} onChange={handlePhoneNumberChange} />
+          <Tooltip title={validPhoneNumber ? '' : 'Fill in a valid phone number or leave blank.'} placement="right">
+            <TextField id="new-user-phone-number" error={!validPhoneNumber} label="Phone Number" value={normalizePhoneNumber(phoneNumber)} onChange={handlePhoneNumberChange} />
+          </Tooltip>
         </Box>
 
         {submissionErrorText}
-        <Button id="submit" variant="contained" color="secondary" disabled={!formValid || submitting} startIcon={<AddIcon />} onClick={handleSubmit}>
-          Submit
-        </Button>
+        <Tooltip title={formValid ? '' : 'Fill in all fields in red with valid input to submit.'}>
+          <span>
+            <Button id="submit" variant="contained" color="secondary" disabled={!formValid || submitting} startIcon={<AddIcon />} onClick={handleSubmit}>
+              Submit
+            </Button>
+          </span>
+        </Tooltip>
       </CardWithHeader>
     </Box>
   );

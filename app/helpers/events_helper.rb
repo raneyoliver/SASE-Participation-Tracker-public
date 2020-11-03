@@ -26,10 +26,7 @@ module EventsHelper
     form = Form.new(
       id: make_unique_id,
       event_id: event.id,
-      start_time: event.start_time,
-      end_time: event.end_time,
       form_type: form_type,
-      questions: [].to_json,
       time_restricted: time_restricted
     )
     form.save
