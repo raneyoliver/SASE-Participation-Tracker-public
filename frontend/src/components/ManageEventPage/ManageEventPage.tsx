@@ -21,9 +21,8 @@ interface ManageEventProps {
   eventId?: any;
 }
 
-const ManageEventPage: React.FC<ManageEventProps> = (id) => {
-  const { eventId } = id;
-  const [loading, setLoading] = React.useState(true);
+const ManageEventPage: React.FC<ManageEventProps> = ({ eventId }) => {
+  const [loading, setLoading] = React.useState(eventId !== undefined);
 
   const [name, setName] = React.useState('');
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -113,8 +112,6 @@ const ManageEventPage: React.FC<ManageEventProps> = (id) => {
           rsvp: getFormRestriction(FormType.RSVP, response),
         });
       }).finally(() => setLoading(false));
-    } else {
-      setLoading(false);
     }
   }, [eventId]);
 
