@@ -40,6 +40,14 @@ Then 'I can click the update button' do
   expect(page).to have_button('submit', disabled: false)
 end
 
+Then 'The update event tooltip is displayed' do
+  expect(page).to have_css('span[title="Fill in all fields in red to update event."]')
+end
+
+Then 'The update event tooltip is not displayed' do
+  expect(page).to have_css('span[title=""]')
+end
+
 Then 'I remove the prefilled name' do
   fill_in('event-name', with: '')
   fill_in('event-description', with: 'update this event description')

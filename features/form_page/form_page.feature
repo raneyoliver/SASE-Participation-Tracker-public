@@ -9,6 +9,7 @@ Scenario: Submit button is clickable when the UIN is entered correctly
   When I go to the form page
   Then I enter my UIN on the form page
   Then I can click the form submit button on the form page
+  Then The form submit tooltip is not displayed
 
 @formRequired
 @javascript
@@ -16,6 +17,7 @@ Scenario: Submit button is not clickable when the UIN is too short
   When I go to the form page
   Then I enter a too short UIN on the form page
   Then I can't click the form submit button on the form page
+  Then The form submit tooltip is displayed
 
 @formRequired
 @javascript

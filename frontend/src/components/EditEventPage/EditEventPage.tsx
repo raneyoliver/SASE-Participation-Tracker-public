@@ -2,7 +2,7 @@ import * as React from 'react';
 import { RouteComponentProps, navigate, useParams } from '@reach/router';
 import {
   Box, TextField, Button, InputLabel, MenuItem, FormControl, FormHelperText,
-  Select, Typography, FormGroup, FormControlLabel, FormLabel, Switch,
+  Select, Typography, FormGroup, FormControlLabel, FormLabel, Switch, Tooltip,
 } from '@material-ui/core';
 import { DateTimePicker } from '@material-ui/pickers';
 import AddIcon from '@material-ui/icons/Add';
@@ -73,6 +73,9 @@ const EditEventPage: React.FC<RouteComponentProps> = () => {
   const useStyles = makeStyles(() => ({
     formLabel: {
       color: 'black',
+    },
+    removeMarginTop: {
+      marginTop: -2,
     },
   }));
   const classes = useStyles();
@@ -189,16 +192,26 @@ const EditEventPage: React.FC<RouteComponentProps> = () => {
                 label="Sign-In"
               />
               <FormControlLabel
-                control={<Switch disabled={disabledButton} checked={timeRestriction.rsvp} onChange={handleTimeRestrictionChange} id="rsvp" name="rsvp" color="primary" />}
+                control={(
+                  <Tooltip classes={{ tooltip: classes.removeMarginTop }} title={!disabledButton ? '' : 'Must create RSVP form.'}>
+                    <span>
+                      <Switch disabled={disabledButton} checked={timeRestriction.rsvp} onChange={handleTimeRestrictionChange} id="rsvp" name="rsvp" color="primary" />
+                    </span>
+                  </Tooltip>
+                )}
                 label="RSVP"
               />
             </FormGroup>
           </FormControl>
         </Box>
 
-        <Button id="submit" variant="contained" color="secondary" disabled={!formValid} startIcon={<AddIcon />} onClick={handleSubmit}>
-          Update Event
-        </Button>
+        <Tooltip title={formValid ? '' : 'Fill in all fields in red to update event.'}>
+          <span>
+            <Button id="submit" variant="contained" color="secondary" disabled={!formValid} startIcon={<AddIcon />} onClick={handleSubmit}>
+              Update Event
+            </Button>
+          </span>
+        </Tooltip>
       </CardWithHeader>
     </Box>
   );

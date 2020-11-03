@@ -66,6 +66,18 @@ Then 'I enter my email missing a dot symbol after the @ on the new user page' do
   fill_in('new-user-email', with: 'address@domaincom')
 end
 
+Then 'The invalid email tooltip is displayed' do
+  expect(page).to have_css('div[title="Fill in a valid email address."]')
+end
+
+Then 'The invalid phone number tooltip is displayed' do
+  expect(page).to have_css('div[title="Fill in a valid phone number or leave blank."]')
+end
+
+Then 'The invalid confirmation email tooltip is displayed' do
+  expect(page).to have_css('div[title="Email confirmation field must match email address."]')
+end
+
 Then 'I enter my email missing a dot symbol after the @ again on the new user page' do
   fill_in('new-user-confirmation-email', with: 'address@domaincom')
 end
@@ -88,6 +100,14 @@ end
 
 Then "I can't click the form submit button on the new user page" do
   expect(page).to have_button('submit', disabled: true)
+end
+
+Then 'The new user submit tooltip is displayed' do
+  expect(page).to have_css('span[title="Fill in all fields in red with valid input to submit."]')
+end
+
+Then 'The new user submit tooltip is not displayed' do
+  expect(page).to have_css('span[title=""]')
 end
 
 Then 'I am redirected to an error page from the new user page' do
