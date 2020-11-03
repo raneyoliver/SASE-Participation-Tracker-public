@@ -14,6 +14,7 @@ import NewUserPage from '../NewUserPage/NewUserPage';
 import ChangePasswordPage from '../ChangePasswordPage/ChangePasswordPage';
 import ViewEventsPage from '../ViewEventsPage/ViewEventsPage';
 import TextBoxPage from '../TextBoxPage/TextBoxPage';
+import HelpPage from '../HelpPage/HelpPage';
 
 const App: React.SFC = () => (
   <ThemeProvider theme={theme}>
@@ -34,6 +35,7 @@ const App: React.SFC = () => (
           <TextBoxPage path="/form/repeat_submission" title="Submission Already Received" text="You already responded to this form. Your submission remains unchanged." />
           <TextBoxPage path="/form/error" title="Uh Oh!" text="There was an issue navigating to your form. Please try again." />
           <TextBoxPage path="/form/unavailable" title="Form Unavailable" text="This form is unavailable at this time." />
+          <HelpPage path="/help" />
         </Router>
       </Box>
     </MuiPickersUtilsProvider>

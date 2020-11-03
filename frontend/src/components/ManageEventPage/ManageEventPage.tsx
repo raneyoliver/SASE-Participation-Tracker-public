@@ -2,7 +2,7 @@ import * as React from 'react';
 import { navigate } from '@reach/router';
 import {
   Box, TextField, Button, InputLabel, MenuItem, FormControl, FormHelperText,
-  Select, Typography, FormGroup, FormControlLabel, FormLabel, Switch, Checkbox,
+  Select, Typography, FormGroup, FormControlLabel, FormLabel, Switch, Checkbox, Tooltip,
 } from '@material-ui/core';
 import { DateTimePicker } from '@material-ui/pickers';
 import AddIcon from '@material-ui/icons/Add';
@@ -81,6 +81,9 @@ const ManageEventPage: React.FC<ManageEventProps> = (id) => {
   const useStyles = makeStyles(() => ({
     formLabel: {
       color: 'black',
+    },
+    removeMarginTop: {
+      marginTop: -2,
     },
   }));
   const classes = useStyles();
@@ -187,6 +190,7 @@ const ManageEventPage: React.FC<ManageEventProps> = (id) => {
       <FormControlLabel id="event-create-RSVP" label="Create an RSVP Form for this event?" labelPlacement="start" style={{ marginLeft: 0 }} control={RSVPCheckbox} />
     </Box>
   );
+  const submissionTipTitle = eventId ? 'update' : 'create';
   return (
     <Box margin="auto" width="50%" minWidth={500}>
       <CardWithHeader title={eventId ? 'Edit Event' : 'Create Event'}>
@@ -235,16 +239,26 @@ const ManageEventPage: React.FC<ManageEventProps> = (id) => {
                 label="Sign-In"
               />
               <FormControlLabel
-                control={<Switch disabled={disabledButton} checked={timeRestriction.rsvp} onChange={handleTimeRestrictionChange} id="rsvp" name="rsvp" color="primary" />}
+                control={(
+                  <Tooltip classes={{ tooltip: classes.removeMarginTop }} title={!disabledButton ? '' : 'Must create RSVP form.'}>
+                    <span>
+                      <Switch disabled={disabledButton} checked={timeRestriction.rsvp} onChange={handleTimeRestrictionChange} id="rsvp" name="rsvp" color="primary" />
+                    </span>
+                  </Tooltip>
+                )}
                 label="RSVP"
               />
             </FormGroup>
           </FormControl>
         </Box>
 
-        <Button id="submit" variant="contained" color="secondary" disabled={!formValid} startIcon={<AddIcon />} onClick={handleSubmit}>
-          {eventId ? 'Update Event' : 'Create Event'}
-        </Button>
+        <Tooltip title={formValid ? '' : `Fill in all fields in red to ${submissionTipTitle} event.`}>
+          <span>
+            <Button id="submit" variant="contained" color="secondary" disabled={!formValid} startIcon={<AddIcon />} onClick={handleSubmit}>
+              {eventId ? 'Update Event' : 'Create Event'}
+            </Button>
+          </span>
+        </Tooltip>
       </CardWithHeader>
     </Box>
   );

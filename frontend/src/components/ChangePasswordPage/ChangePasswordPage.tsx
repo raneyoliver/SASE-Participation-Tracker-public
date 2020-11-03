@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { RouteComponentProps } from '@reach/router';
 import {
-  Box, TextField, Button,
+  Box, TextField, Button, Tooltip,
 } from '@material-ui/core';
 import CardWithHeader from '../CardWithHeader/CardWithHeader';
 import getCSRFToken from '../../utils/getCSRFToken';
@@ -67,15 +67,19 @@ const ChangePasswordPage: React.FC<RouteComponentProps> = () => {
             onChange={handlePasswordConfirmationChange}
           />
         </Box>
-        <Button
-          id="change-password"
-          variant="contained"
-          color="secondary"
-          disabled={!formValid}
-          onClick={handleSubmission}
-        >
-          Change Password
-        </Button>
+        <Tooltip title={formValid ? '' : 'Password and confirmation fields must be filled in and match to change password.'}>
+          <span>
+            <Button
+              id="change-password"
+              variant="contained"
+              color="secondary"
+              disabled={!formValid}
+              onClick={handleSubmission}
+            >
+              Change Password
+            </Button>
+          </span>
+        </Tooltip>
       </CardWithHeader>
     </Box>
   );

@@ -19,8 +19,10 @@ Scenario: Change Password button is unclickable without both fields being equal
   Then I click the change password button
   Then I am redirected to the change password page
   Then The change password button is unclickable
+  Then The change password tooltip is displayed
   Then I fill in the change password fields
   Then I can click the change password button
+  Then The change password tooltip is not displayed
 
 @javascript
 @authRequired
