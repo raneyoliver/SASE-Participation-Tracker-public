@@ -19,16 +19,18 @@ const FormPage: React.FC<RouteComponentProps> = () => {
   const [form, setForm] = React.useState<SerializedForm>();
   React.useEffect(() => {
     fetch(`/api/forms/${formId}`).then((response) => {
-      if (response.status === 404) {
-        window.location.href = '/form/error';
-      }
-      if (response.status === 403) {
-        window.location.href = '/form/unavailable';
-      }
-      return response.json();
+      if (response.status === 404) window.location.href = '/form/error';
+      else if (response.status === 403) window.location.href = '/form/unavailable';
+      else return response.json();
+      return undefined;
     }).then((response: SerializedForm) => {
-      setForm(response);
-    }).finally(() => setLoading(false));
+      if (response) {
+        setForm(response);
+        setLoading(false);
+      }
+    }).catch(() => {
+      window.location.href = '/form/error';
+    });
   }, [formId]);
 
   const [UIN, setUIN] = React.useState('');
@@ -39,11 +41,16 @@ const FormPage: React.FC<RouteComponentProps> = () => {
     }
   };
 
+  const [submitting, setSubmitting] = React.useState(false);
+  const [submissionError, setSubmissionError] = React.useState(false);
+
   const UINValid = UIN.length === 9;
   const formValid = UINValid;
 
   const handleSubmit = (): void => {
     if (!formValid) return;
+    setSubmissionError(false);
+    setSubmitting(true);
 
     const body = {
       id: UIN,
@@ -81,6 +88,9 @@ const FormPage: React.FC<RouteComponentProps> = () => {
       } else if (response.status === 200) {
         navigate(`/form/${formId}/new_user/${UIN}`);
       }
+    }).catch(() => {
+      setSubmitting(false);
+      setSubmissionError(true);
     });
   };
 
@@ -102,6 +112,12 @@ const FormPage: React.FC<RouteComponentProps> = () => {
     </Card>
   );
 
+  const submissionErrorText = submissionError ? (
+    <Typography color="error">
+      There was an error submitting the form. Please try again.
+    </Typography>
+  ) : null;
+
   return (
     <CardWithHeader title={`${formattedFormType.get(form.form_type)} for ${form.event.name} (${form.event.event_type || 'No Type Provided for'} Event)`} fixWidth>
 
@@ -111,9 +127,10 @@ const FormPage: React.FC<RouteComponentProps> = () => {
         <TextField id="form-UIN" required error={!UINValid} label="UIN" value={UIN} onChange={handleUINChange} />
       </Box>
 
+      {submissionErrorText}
       <Tooltip title={formValid ? '' : 'Fill in a valid UIN to submit.'}>
         <span>
-          <Button id="submit" variant="contained" color="secondary" disabled={!formValid} startIcon={<AddIcon />} onClick={handleSubmit}>
+          <Button id="submit" variant="contained" color="secondary" disabled={!formValid || submitting} startIcon={<AddIcon />} onClick={handleSubmit}>
             Submit
           </Button>
         </span>
