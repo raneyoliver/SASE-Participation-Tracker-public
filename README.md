@@ -23,7 +23,7 @@ POSTGRES_PASSWORD=<your password here>
 ```
 3. If you want to setup email confirmations, put the gmail address and app password (created after 2-step verification is activated) in the .env file:
 ```
-GMAIL_USERNAME=<your gemail address here>
+GMAIL_USERNAME=<your gmail address here>
 GMAIL_PASSWORD=<your app password here>
 ```
 
