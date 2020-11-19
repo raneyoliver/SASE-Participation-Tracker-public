@@ -92,3 +92,19 @@ To run cucumber tests in a headless browser, run `export SELENIUM_CONFIG="HEADLE
 RSpec is a computer domain-specific language testing tool written in Ruby to test Ruby code.
 The gemfile has already been changed to include `gem "rspec"`.
 1. Run `bundler exec rspec` in the root folder.
+
+# Heroku Deployment
+
+## Setting up Heroku
+1. Install Git
+2. Install npm
+3. Run `npm i -g heroku`
+4. Run `heroku login` and enter your credentials.
+5. Run `git clone https://github.com/ryan-conn/SASE-Participation-Tracker.git` to get the project locally.
+6. Go into the directory that got created after running the previous command.
+7. Run `heroku git:remote -a sase-participation-tracker` to link your local installation with heroku.
+
+## Deploying
+1. Run `git fetch; git checkout master; git reset --hard origin/master` to preview the changes you want to deploy.
+2. Run `git push heroku master` to upload the new project to heroku.
+3. If database changes have been made, run `heroku run rails db:migrate`
