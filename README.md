@@ -93,6 +93,15 @@ RSpec is a computer domain-specific language testing tool written in Ruby to tes
 The gemfile has already been changed to include `gem "rspec"`.
 1. Run `bundler exec rspec` in the root folder.
 
+## CI
+All tests will run on every push to a given branch.
+
+## Security tests
+Security tests are integrated into RSpec and Cucumber tests, they will run along with all other tests. 
+
+### Security Analysis
+There are multiple layers of security in the Participation Tracker application. Authentication is checked both on the front end and for sensitive API routes. This provides redundancy in case one layer should fail or be bipassed. Additionally, all user input is validated and properly handled such that injection attacks are mitigated. The only thing that might be considered a security vulnerability is that Heroku does not force HTTPS by default. This means that credentials are available in plaintext in transit, and could potentially be extracted if a malicious actor were listening on the network where a login occured. Even should this happen, however, the most sensitive student information, such as UIN's, is stored as a hash, meaning it would be useless outside the context of the application. Still, to avoid this risk it is best to always access the site using https://, and avoid logging in if you think someone might be listening to your wifi traffic.
+
 # Heroku Deployment
 
 ## Setting up Heroku
