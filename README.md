@@ -1,3 +1,7 @@
+# Description
+This repository is a public version of a full-stack web application developed by me (Oliver Raney) and others at Texas A&M in 2020 for SASE TAMU.
+It uses React (Typescript), Ruby on Rails, Unit testing (Cucumber), PostgreSQL, and was deployed using Heroku.
+
 # Installation and Setup
 
 ## Repo setup
